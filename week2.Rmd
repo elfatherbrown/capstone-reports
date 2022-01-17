@@ -7,7 +7,7 @@ bibliography: references.bib
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE,include = FALSE)
 library(tidyverse)
 library(tidytext)
 library(dtplyr)
@@ -167,20 +167,43 @@ sampled_files<-list.files(en_data_dir)%>%
     )
 ```
 
+## Introduction
+
+This document was written as a status report to a manager. As such
+
 ## The data
 
-I loaded a 33% normally drawn sample of each file as my exploration dataset. I intend to split and train further down the line when modeling. A 33% random sample stratified by file (blogs, twitter, news) should be more than enough for exploration.
+Files in several languages from three sources where provided:
 
-```{r}
+-   Sources
+
+    -   Twitter
+
+    -   News
+
+    -   Blogs
+
+-   Languages
+
+    -   Deutsch
+
+    -   Finish
+
+    -   Russian
+
+However, we limit ourselves to english
+
+```{r include=TRUE}
 
 basic_file_stats %>% 
   mutate(across(1:3,~ parse_number(.x))) %>%
   mutate(across(1:3,~ scales::label_comma()(.x))) %>%
   rename(lines=1,words=2,bytes=3) %>% 
+  filter(str_detect(file_name,"en_")) %>% 
   knitr::kable()
 ```
 
-We are only interested in english, but thats what is included in our corpus.
+Attempting to do full analysis of this corpus would be ill advised due to memory and cpu constraints. I sampled 33% of each source and analyzed them separately to render this exercise.
 
 ## Cleaning
 
