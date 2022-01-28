@@ -7,126 +7,12 @@ bibliography: references.bib
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE,include = FALSE)
-library(tidyverse)
-library(tidytext)
-library(dtplyr)
-library(doParallel)
-registerDoParallel(cores=6)
-raw_data_dir<-paste0(here::here(),"/../capstone raw data/")
-en_data_dir<-paste0(raw_data_dir,"final/en_US")
-board_folder=glue::glue("{Sys.getenv('PIN_LOCAL_FOLDER')}capstone")
-board <- pins::board_folder(board_folder,versioned = TRUE)
-## Helper functions for down the road
-
-write_sampled_and_tokenized <- function() {
-  pins::pin_write(board = board,
-                  x = sampled_files,
-                  name = "sampled_files",
-                  description = "Coursera capstone 33% sampled files",
-                  type="arrow")
-
-pins::pin_write(board = board,
-                x = tok_corpora %>% as_tibble(),
-                name = "tok_corpora",
-                description = "Coursera capstone tokenized no stopwords",
-                type="arrow")
-
-
-pins::pin_write(board = board,
-                x = tok_corpora_bigram%>% as_tibble(),
-                name = "tok_corpora_bigram",
-                description = "Coursera capstone bigram tokenized no stopwords",
-                type="arrow")
-
-pins::pin_write(board = board,
-                x = tok_corpora_trigram%>% as_tibble(),
-                name = "tok_corpora_trigram",
-                description = "Coursera capstone trigram tokenized no stopwords",
-                type="arrow")
- 
-pins::pin_write(board = board,
-                x = tok_corpora_freq %>% as_tibble(),
-                name = "tok_corpora_freq",
-                description = "Coursera capstone tokenized no stopwords",
-                type="arrow")
-
-pins::pin_write(board = board,
-                  x = tok_corpora_bigram_freq,
-                  name = "tok_corpora_bigram_freq",
-                  type="arrow" )
-
-pins::pin_write(board = board,
-                  x = tok_corpora_trigram_freq,
-                  name = "tok_corpora_trigram_freq",
-                  type="arrow" )
-
-pins::pin_write(board = board,
-                x = tok_corpora_freq_idf %>% as_tibble(),
-                name = "tok_corpora_freq_idf",
-                description = "Coursera capstone tokenized no stopwords",
-                type="arrow")
-
-pins::pin_write(board = board,
-                  x = tok_corpora_bigram_freq_idf,
-                  name = "tok_corpora_bigram_freq_idf",
-                  type="arrow" )
-
-pins::pin_write(board = board,
-                  x = tok_corpora_trigram_freq_idf,
-                  name = "tok_corpora_trigram_freq_idf",
-                  type="arrow" )
-}
-
-read_sampled_and_tokenized <- function() {
-  
-  sampled_files <<- pins::pin_read(board = board,
-                                   name = "sampled_files")
-  tok_corpora <<- pins::pin_read(board = board,
-                                   name = "tok_corpora")
-  tok_corpora_bigram <<- pins::pin_read(board = board,
-                                   name = "tok_corpora_bigram")
- tok_corpora_trigram <<- pins::pin_read(board = board,
-                                   name = "tok_corpora_trigram")
- 
- tok_corpora_freq <<- pins::pin_read(board = board,
-                                   name = "tok_corpora_freq")
- tok_corpora_bigram_freq <<- pins::pin_read(board = board,
-                                   name ="tok_corpora_bigram_freq")
- tok_corpora_trigram_freq <<- pins::pin_read(board = board,
-                                   name = "tok_corpora_trigram_freq")
- 
- 
- tok_corpora_freq_idf <<- pins::pin_read(board = board,
-                                   name = "tok_corpora_freq_idf")
- tok_corpora_bigram_freq_idf <<- pins::pin_read(board = board,
-                                   name ="tok_corpora_bigram_freq_idf")
- tok_corpora_trigram_freq_idf <<- pins::pin_read(board = board,
-                                   name = "tok_corpora_trigram_freq_idf")
-}
-
-calc_frequency <- function(data,colname){
-  colname_freq <- paste0(colname,"_freq")
-  colname_total <- glue::glue("total_{colname}")
-  colname_count <- glue::glue("{colname}_count")
-  data %>% 
-    select(.data[[colname]]) %>% 
-    add_count(sort = TRUE,name = colname_total) %>% 
-    add_count(.data[[colname]],name=colname_count,sort=TRUE) %>%
-    distinct() %>% 
-    mutate(
-        {{colname_freq}} := .data[[colname_count]]/.data[[colname_total]]
-    )
-}
-
-
-clean_text <- function(data,colname="text"){
-  data %>% 
-  filter(!str_detect(.data[[colname]],"^[0-9]+$|^rt$|^lol$|^_+$|^[0-9\\._]{2,}$|class=\\.*|style=\\.*")) %>% 
-    mutate(text=str_remove(text,"ø"))
-}
-
-read_sampled_and_tokenized_m <-  memoise::memoise(read_sampled_and_tokenized)
+knitr::opts_chunk$set(
+	echo = FALSE,
+	message = FALSE,
+	warning = FALSE
+)
+source("globals.R")
 ```
 
 ```{r include=FALSE,cache=TRUE}
@@ -209,7 +95,7 @@ Attempting to do full analysis of this corpus would be ill advised due to memory
 
 There is a lot to clean in the text. Blog text data can and does include html code that is useless to us. Twitter is a culture of hashtags and codewords due to its character limits, and some of those need to be excluded.
 
-This is an iterative process that would be too long to document here, the code of the clean_text function is available in the source code for this RMD file for reproducibility purposes.
+This is an iterative process that would be too long to document here.
 
 ## Exploratory Analysis
 
@@ -217,13 +103,15 @@ After cleaning the basic text, I parsed it in three distinct datasets.
 
 -   tok_corpora: a 1 word per row token dataset
 
--   tok_corpora_bigram: same as above, for bigrams
+-   tok_corpora_bigram: same as above, for two words per token
 
 -   tok_corpora_trigram: same, but for three words
 
-Once we have this kind of formating, we can start showing you the basics of what this data set contains. Calculations are in order to tokenize and thus from this three base datasets, others are produced: some have frequencies, some have other text mining measures like TF-IDF. All of this is available in the source code. Once that is done, we get basic frequency analysis for one, bi and trigrams.
+Once we have this kind of data format, we can start showing the basics of what this data set contains.
 
 ### Distribution of ngram frequencies
+
+A first approach to check the sanity of the data sets is looking at the term frequency. Languages have a small set of words that get repeated a lot and a lot of words that are not as frequent. We would thus expect frequencies to have long tails. If we didnt, the data would be immediately suspect.
 
 #### one-grams
 
@@ -258,6 +146,7 @@ tok_corpora_bigram_freq %>%
 
 ```{r}
 tok_corpora_trigram_freq %>% 
+   filter(!str_detect(trigram,"^amazon[\\. ].*$|omg omg omg|cake cake cake|rt rt rt|ass ass ass|follow follow follow|^NA NA NA$|^amazon[\\. ]|([0-9]+) ([0-9]+) ([0-9]+)")) %>%
   ggplot(aes(x=trigram_freq,fill=from)) +
   geom_histogram() +
   facet_wrap(
@@ -268,7 +157,11 @@ tok_corpora_trigram_freq %>%
   labs(title = "Trigram frequency distribution by source of text")
 ```
 
-### Top 20 most frequent words
+All of this distributions look like they should: high at the most frequent and a long tail to the right.
+
+### Top 20 most frequent terms
+
+Now we can start looking at the most frequent terms for one, two and three worded terms:
 
 #### For one-grams 
 
@@ -285,6 +178,8 @@ tok_corpora_freq %>%
     facet_wrap(~from,ncol=1,scales="free")+
   coord_flip()+theme(axis.text.x = element_text(angle = -30, vjust = 1, hjust = 0),legend.position = "none")
 ```
+
+Love, day, people, time stand out in all three sources of text. It is interesting even at this early stage how some words are more "news"y (percent, million, county), others more "blog"y (god, family, books), others well... yup, very twitteresque (rt, lol, im, game)...
 
 #### For bigrams
 
@@ -305,11 +200,13 @@ tok_corpora_bigram_freq %>%
   theme(axis.text.x = element_text(angle = -30, vjust = 1, hjust = 0),legend.position = "none")
 ```
 
+When we do it by bigrams, then some meaning starts to emerge. Names of cities, government positions in the news, salutations in twitter, everyday interests in blogs.\
+
 #### For trigrams
 
 ```{r}
 tok_corpora_trigram_freq %>%
-    filter(!str_detect(trigram,"^NA NA NA$|^amazon[\\. ]|([0-9]+) ([0-9]+) ([0-9]+)")) %>% 
+   filter(!str_detect(trigram,"^amazon[\\. ].*$|omg omg omg|cake cake cake|rt rt rt|ass ass ass|follow follow follow|^NA NA NA$|^amazon[\\. ]|([0-9]+) ([0-9]+) ([0-9]+)")) %>%
     arrange(desc(trigram_freq)) %>% 
     group_by(from) %>% 
     slice_head(n = 20) %>%
@@ -324,15 +221,15 @@ tok_corpora_trigram_freq %>%
   theme(axis.text.x = element_text(angle = -30, vjust = 1, hjust = 0),legend.position = "none")
 ```
 
-##  
+Trigrams continue offering more meaning than bigrams, and now its a more interesting characterization of what people talk about in these three text sources.
 
 ### TF-IDF: a better frequency analysis
 
-From the previous plots you can see that plain analysis frequency of n-grams (**or term frequency**) only gets us so far. In [the book](https://www.tidytextmining.com/) im using as a base for this project, the authors propose text frequency-inverse document frequency (TF-IDF) as a way to summarize a document by ngram frequency:
+From the previous plots you can see that plain analysis frequency of n-grams (**or term frequency**) only gets us so far. In [the book Tidy Text Mining](https://www.tidytextmining.com/) @silge2016, the authors propose term frequency-inverse document frequency (TF-IDF) as a way to summarize a document by ngram frequency in such a way that the most commonly used words weigh less than the lesser used. This yields a ranked list of terms characteristic of each document. From @silge2016:
 
 > The statistic **tf-idf** is intended to measure how important a word is to a document in a collection (or corpus) of documents, for example, to one novel in a collection of novels or to one website in a collection of websites.
 
-tf-idf is confusing since it looks like a substraction when in fact the statistic is calulated by multiplying the two quantities:
+The term *tf-idf* is confusing because it looks like a substraction when in fact the statistic is calulated by multiplying two quantities:
 
 $$
 tf\_idf=tf\ *\ idf
@@ -344,7 +241,7 @@ $$
 idf(term) = ln(\frac{n_{documents}}{n_{documents\ containing\ term}})
 $$
 
-The {tidytext}[@silge2016] package im using calculates TF-IDF given a tidy dataset with at least two columns with: *term*,*term_count*, one row per term. As before, I direct you to the source code if you want to see how its done.
+So lets look at the most important terms for each text source, in one, two and three worded grams:
 
 #### For one-grams
 
@@ -399,4 +296,10 @@ tok_corpora_trigram_freq_idf %>%
     labs(fill=NULL)
 ```
 
-In all three of the above cases, we can see a very different list of the 20 top terms appears when using tf-idf compared to plain frequency analysis. By the way, tf-idf distribution has the same long tail of the distributions of term frequencies. This is to be expected in any language, as far as we know.
+In all three of the above cases, we can see a very different list of the 20 top terms appears when using tf-idf compared to plain frequency analysis. The top 20 tf-idf terms is a much better way to get a gist of what is in the news, blogs and twitter since it eliminates terms that have too much frequency within each source document.
+
+By the way, tf-idf distribution has the same long tail of the distributions of term frequencies. This is to be expected in any language, as far as we know, thus lending to the idea that our sources are somewhat well cleaned and actually have mostly English text in them.
+
+## Conclusion
+
+With this exploration, I believe we are ready to do some analysis.
