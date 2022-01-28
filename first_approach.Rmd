@@ -1,0 +1,107 @@
+---
+title: "first_approach"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{first_approach}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r eval=FALSE, include=FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  eval = FALSE,
+  include = FALSE
+)
+```
+
+```{r setup, eval=FALSE}
+library(capstone)
+library(tidytext)
+library(tidyverse)
+```
+
+# Loading and understanding the data
+I already loaded all the files as text blobs, and here I answer the questions of the quiz that cannot be done without simple shell scripts.
+
+```{r}
+raw_data_dir<-paste0(here::here(),"/../capstone raw data/")
+en_data_dir<-paste0(raw_data_dir,"final/en_US")
+
+```
+
+## Longest line length of each file
+```{r}
+library(tidyverse)
+chunk_reader<-function(x,pos,acum) {
+    size<-nchar(x)
+    m<-max(size)
+    if(m<=acum){ 
+        return(acum)
+        } 
+    else {
+        return(m)
+        }
+}
+
+```
+
+### The blogs
+```{r}
+readr::read_lines_chunked(paste0(en_data_dir,"/en_US.blogs.txt"),
+                          callback = AccumulateCallback$new(chunk_reader,acc = 0))
+```
+
+### Twitter
+```{r}
+readr::read_lines_chunked(paste0(en_data_dir,"/en_US.twitter.txt"),
+                           callback = AccumulateCallback$new(chunk_reader,acc = 0))
+```
+
+### News
+```{r}
+readr::read_lines_chunked(paste0(en_data_dir,"/en_US.news.txt"),
+                          callback = AccumulateCallback$new(chunk_reader,acc = 0))
+```
+
+### Question 4
+
+In the en_US twitter data set, if you divide the number of lines where the word "love" (all lowercase) occurs by the number of lines the word "hate" (all lowercase) occurs, about what do you get?
+
+```{r}
+loves_reader<-function(x,pos,acum) {
+    sum(stringr::str_detect(x,"love"))+acum
+}
+hates_reader<-function(x,pos,acum) {
+    sum(stringr::str_detect(x,"hate"))+acum
+}
+loves<-readr::read_lines_chunked(paste0(en_data_dir,"/en_US.twitter.txt"),
+                           callback = AccumulateCallback$new(loves_reader,acc = 0))
+hates<-readr::read_lines_chunked(paste0(en_data_dir,"/en_US.twitter.txt"),
+                           callback = AccumulateCallback$new(hates_reader,acc = 0))
+loves/hates
+```
+### The one tweet in the en_US twitter data set that matches the word "biostats" says what?
+
+```{r}
+biostats_reader<-function(x,pos) {
+    f<-stringr::str_detect(x,"biostats")
+    if(any(f)==TRUE){
+      res<<-x[f]
+    }
+}
+readr::read_lines_chunked(paste0(en_data_dir,"/en_US.twitter.txt"),
+                           callback = biostats_reader)
+res
+```
+### How many tweets have a string in them?
+```{r}
+beatchess_reader<-function(x,pos,acum) {
+    f<-stringr::str_detect(x,"A computer once beat me at chess, but it was no match for me at kickboxing")
+    sum(f)+acum
+}
+readr::read_lines_chunked(paste0(en_data_dir,"/en_US.twitter.txt"),
+                           callback = AccumulateCallback$new(beatchess_reader,acc = 0))
+```
+

@@ -1,0 +1,708 @@
+---
+title: "explore"
+output: html_notebook
+editor_options: 
+  chunk_output_type: inline
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  eval = FALSE,
+  echo = TRUE,
+  include=FALSE
+)
+```
+
+```{r setup, eval=FALSE}
+library(capstone)
+library(tidyverse)
+library(tidytext)
+library(dtplyr)
+library(doParallel)
+registerDoParallel(cores=6)
+raw_data_dir<-paste0(here::here(),"/../capstone raw data/")
+en_data_dir<-paste0(raw_data_dir,"final/en_US")
+board_folder=glue::glue("{Sys.getenv('PIN_LOCAL_FOLDER')}capstone")
+board <- pins::board_folder(board_folder,versioned = TRUE)
+## Helper functions for down the road
+
+write_sampled_and_tokenized <- function() {
+  pins::pin_write(board = board,
+                  x = sampled_files,
+                  name = "sampled_files",
+                  description = "Coursera capstone 33% sampled files",
+                  type="arrow")
+
+pins::pin_write(board = board,
+                x = tok_corpora %>% as_tibble(),
+                name = "tok_corpora",
+                description = "Coursera capstone tokenized no stopwords",
+                type="arrow")
+
+
+pins::pin_write(board = board,
+                x = tok_corpora_bigram%>% as_tibble(),
+                name = "tok_corpora_bigram",
+                description = "Coursera capstone bigram tokenized no stopwords",
+                type="arrow")
+
+pins::pin_write(board = board,
+                x = tok_corpora_trigram%>% as_tibble(),
+                name = "tok_corpora_trigram",
+                description = "Coursera capstone trigram tokenized no stopwords",
+                type="arrow")
+ 
+pins::pin_write(board = board,
+                x = tok_corpora_freq %>% as_tibble(),
+                name = "tok_corpora_freq",
+                description = "Coursera capstone tokenized no stopwords",
+                type="arrow")
+
+pins::pin_write(board = board,
+                  x = tok_corpora_bigram_freq,
+                  name = "tok_corpora_bigram_freq",
+                  type="arrow" )
+
+pins::pin_write(board = board,
+                  x = tok_corpora_trigram_freq,
+                  name = "tok_corpora_trigram_freq",
+                  type="arrow" )
+
+pins::pin_write(board = board,
+                x = tok_corpora_freq_idf %>% as_tibble(),
+                name = "tok_corpora_freq_idf",
+                description = "Coursera capstone tokenized no stopwords",
+                type="arrow")
+
+pins::pin_write(board = board,
+                  x = tok_corpora_bigram_freq_idf,
+                  name = "tok_corpora_bigram_freq_idf",
+                  type="arrow" )
+
+pins::pin_write(board = board,
+                  x = tok_corpora_trigram_freq_idf,
+                  name = "tok_corpora_trigram_freq_idf",
+                  type="arrow" )
+}
+
+read_sampled_and_tokenized <- function() {
+  
+  sampled_files <<- pins::pin_read(board = board,
+                                   name = "sampled_files")
+  tok_corpora <<- pins::pin_read(board = board,
+                                   name = "tok_corpora")
+  tok_corpora_bigram <<- pins::pin_read(board = board,
+                                   name = "tok_corpora_bigram")
+ tok_corpora_trigram <<- pins::pin_read(board = board,
+                                   name = "tok_corpora_trigram")
+ 
+ tok_corpora_freq <<- pins::pin_read(board = board,
+                                   name = "tok_corpora_freq")
+ tok_corpora_bigram_freq <<- pins::pin_read(board = board,
+                                   name ="tok_corpora_bigram_freq")
+ tok_corpora_trigram_freq <<- pins::pin_read(board = board,
+                                   name = "tok_corpora_trigram_freq")
+ 
+ 
+ tok_corpora_freq_idf <<- pins::pin_read(board = board,
+                                   name = "tok_corpora_freq_idf")
+ tok_corpora_bigram_freq_idf <<- pins::pin_read(board = board,
+                                   name ="tok_corpora_bigram_freq_idf")
+ tok_corpora_trigram_freq_idf <<- pins::pin_read(board = board,
+                                   name = "tok_corpora_trigram_freq_idf")
+}
+
+calc_frequency <- function(data,colname){
+  colname_freq <- paste0(colname,"_freq")
+  colname_total <- glue::glue("total_{colname}")
+  colname_count <- glue::glue("{colname}_count")
+  data %>% 
+    select(.data[[colname]]) %>% 
+    add_count(sort = TRUE,name = colname_total) %>% 
+    add_count(.data[[colname]],name=colname_count,sort=TRUE) %>%
+    distinct() %>% 
+    mutate(
+        {{colname_freq}} := .data[[colname_count]]/.data[[colname_total]]
+    )
+}
+
+
+clean_text <- function(data,colname="text"){
+  data %>% 
+  filter(!str_detect(.data[[colname]],"^[0-9]+$|^rt$|^lol$|^_+$|^[0-9\\._]{2,}$|class=\\.*|style=\\.*")) %>% 
+    mutate(text=str_remove(text,"ø"))
+}
+
+read_sampled_and_tokenized()
+
+```
+
+```{r}
+wcout<- system("wc $PWD/../capstone\\ raw\\ data/final/*/*",intern = TRUE)
+
+basic_file_stats <- tibble( line=wcout) %>% 
+    extract(
+        line,
+        into=c("nl_count","word_count","byte_count","file_name"),
+        regex = regex("^ +([0-9]+) +([0-9]+) +([0-9]+).+\\/([^\\/]+)$",ignore_case = TRUE)
+    )
+
+```
+
+## Loading helper function
+
+Lets just sample the files for about 30% of their content to work with them
+
+```{r eval=FALSE}
+random_chunk_reader<-function(x,pos){
+    tibble(
+        text=sample(x,length(x)*0.33)
+    )
+}
+sampled_files<-list.files(en_data_dir)%>%
+    purrr::map_df(.,function(fname){
+        tibble(file=fname,
+               content=list(readr::read_lines_chunked(paste0(en_data_dir,"/",fname),
+                                  callback = DataFrameCallback$new(random_chunk_reader))
+               ))
+    })%>%
+  unnest(cols=c(content))%>%
+  group_by(file)%>%
+  mutate(rnum=row_number())%>%
+  ungroup()%>%
+   mutate(
+        from=str_remove(file,"en_US\\."),
+        from=str_remove(from,"\\.txt")
+    )
+```
+
+## Exploring with tidytext
+
+Im basing everything on [Julia Silges new book](https://www.tidytextmining.com/).
+
+```{r}
+sampled_files <- sampled_files %>%
+  dtplyr::lazy_dt() %>% 
+  group_by(file) %>% 
+  clean_text() %>% 
+  ungroup() %>% 
+  as_tibble() 
+```
+
+## Playful poking around
+
+### Tokenification
+
+```{r eval=FALSE}
+
+tok_corpora <- sampled_files %>% 
+  unnest_tokens( input = "text", output = "word" )%>%
+  anti_join(stop_words)
+  
+```
+
+### Top 10 analysis
+
+Lets see what we've got:
+
+```{r}
+top10_words<-tok_corpora%>%
+    group_by(file)%>%
+    count(word,sort=TRUE)%>%
+    slice_max(order_by=n,n=10)
+
+top10_words
+```
+
+Narrow it down:
+
+```{r}
+top10_words%>%
+    mutate(
+        from=str_remove(file,"en_US\\."),
+        from=str_remove(from,"\\.txt")
+    )%>%
+    group_by(from,word)%>%
+    mutate(word=fct_reorder(word,n))%>%
+    ggplot(aes(x=word,y=n))+
+    geom_col()+
+    facet_wrap(.~from)+
+    coord_flip()
+```
+
+Well that is poor. Words that are just integers, rt and follow do not seem like that interesting to see whats up.
+
+```{r}
+top10_words<-tok_corpora%>%
+    group_by(file)%>%
+    filter(!str_detect(word,"^[0-9]+$|^it’s$|^don’t$|^i’m$|^rt$|^lol$") )%>%
+    count(word,sort=TRUE)%>%
+    slice_max(order_by=n,n=10)%>%
+  mutate(
+        from=str_remove(file,"en_US\\."),
+        from=str_remove(from,"\\.txt")
+    )
+
+```
+
+```{r}
+top10_words%>%
+    group_by(from)%>%
+    mutate(word=fct_reorder(word,n))%>%
+    ggplot(aes(x=word,y=n))+
+    geom_col()+
+    facet_wrap(.~from)+
+    coord_flip()+
+  theme(axis.text.x = element_text(angle = -30, vjust = 1, hjust = 0))
+```
+
+Now that's more likely. I like this plot because it lets us see some intersections between the top 10 most frequent words in our three source datasets.
+
+Furthermore, word frequency analysis for the purpose of cleaning by using the next code and visually exploring the resulting table:
+
+```{r}
+tok_table<-tok_corpora%>%
+    count(from,word,sort=TRUE,name = "word_count")
+tok_table%>%
+    group_by(from)%>%
+    arrange(word_count)%>%
+  knitr::kable()
+```
+
+This shows us that for the three origins there are a bunch of underscores. Sometimes just as lines, sometimes surrounding words.
+
+Also, there are many long strings of numbers. This requires a set of cleaning functions akin to those seen in the top10 analysis. This needs to be more thorough perhaps even applying it to the base sampled_files corpora, then tokenizing again, and then proceed with ngram analysis.
+
+```{r}
+
+sampled_files<-sampled_files%>%
+    mutate(text=str_remove_all(text,"^_+$|^[0-9\\._]{2,}"))%>%
+    filter(!(text==""))
+tok_corpora<-sampled_files%>%
+    unnest_tokens(word,text)%>%
+    anti_join(stop_words)
+tok_table<-tok_corpora%>%
+    count(from,word,sort=TRUE,name = "word_count")
+tok_table%>%
+    group_by(from)%>%
+    arrange(word_count)%>%
+  knitr::kable()
+```
+
+After analyzing im getting to the point that the wierder words are really low frequency. It will take longer to remove them than to simply go ahead and do frequency analysis and see if the meaningful most frequent words arent garbage.
+
+### Found filter regex that makes it saner
+
+The only thing I will apply is this previous filter plus the one from the top10 analysis and save it to the tok_corpora:
+
+```{r clean_frequency}
+tok_corpora<-tok_corpora%>%
+  filter(!str_detect(word,"^[0-9]+$|^it’s$|^don’t$|^i’m$|^rt$|^lol$|^_+$|^[0-9\\._]{2,}$")) %>% 
+  mutate(word=str_extract(word,regex("[a-z']+")))
+
+tok_table<-tok_corpora%>%
+    count(from,word,sort=TRUE,name = "word_count")
+word_freq<-tok_table%>%
+    group_by(from)%>%
+    arrange(desc(word_count))
+word_freq%>%
+    knitr::kable()
+```
+
+Following Silge's book, im going to make a frequency plot of news versus twitter and blogs to see how frequencies fare between sources.
+
+First a suitable dataset:
+
+```{r}
+
+word_freq_news_vs_other<-word_freq%>%
+    group_by(from)%>%
+    mutate(proportion=word_count/sum(word_count))%>%
+    select(-word_count)%>%
+    pivot_wider(names_from = from,values_from = proportion)%>%
+    pivot_longer(c(twitter,blogs),names_to="origin",values_to="proportion")
+knitr::kable(word_freq_news_vs_other%>%slice_sample(n = 10))
+```
+
+So there. Now the plot, simplified version:
+
+```{r}
+word_freq_news_vs_other%>%
+    ggplot(aes(x=proportion,y=news))+
+    geom_jitter(alpha = 0.1, size = 2.5, width = 0.3, height = 0.3) +
+    geom_text(aes(label = word), check_overlap = TRUE, vjust = 1.5)+
+    scale_color_gradient(limits = c(0, 0.001), 
+                         low = "darkslategray4", high = "gray75") +
+    facet_wrap(~origin,ncol=2)+
+    theme(legend.position="none")+
+    labs(y="News",x=NULL)
+```
+
+Well that does errr.... nothing for us. It is clear love is a popular word. It is the constant here. But nothing else.
+
+We gotta n-grammify this thing cause its too big, babe. Or maybe split by alphabet and look at stuff, but that will be another rabbit hole.
+
+## Serious business
+
+From task 2 week 2:
+
+[Questions to consider]{.ul}
+
+1.  Some words are more frequent than others - what are the distributions of word frequencies?
+
+2.  What are the frequencies of 2-grams and 3-grams in the dataset?
+
+3.  How many unique words do you need in a frequency sorted dictionary to cover 50% of all word instances in the language? 90%?
+
+4.  How do you evaluate how many of the words come from foreign languages?
+
+5.  Can you think of a way to increase the coverage -- identifying words that may not be in the corpora or using a smaller number of words in the dictionary to cover the same number of phrases?
+
+From the tidytext book: <https://www.tidytextmining.com/tfidf.html>,
+
+> The statistic **tf-idf** is intended to measure how important a word is to a document in a collection (or corpus) of documents, for example, to one novel in a collection of novels or to one website in a collection of websites.
+
+### 1. What are the distrubitions of word Frequency
+
+Word frequency is the amount of times a word appears divided by the total number of words. Distribution of word frequencies can be appreciated in Silge's book: <https://www.tidytextmining.com/tfidf.html>
+
+Words are "acceptable" or not. So corpora must be clean first and we must agree what that means.
+
+```{r}
+
+all_words <- tok_corpora %>% 
+  count(from,word,sort = TRUE)
+totals_from <- all_words %>% 
+  group_by(from) %>% 
+  summarize(total = sum(n))
+
+all_words <- left_join(all_words,totals_from)
+all_words
+```
+
+So thats all the word counts (n) from all sources, with the total words per soruce in total. Frequency of each word is n/total (obviously) and thus the distributions are:
+
+```{r}
+all_words%>% 
+  ggplot(aes(n/total,fill=from)) +
+  geom_histogram()+
+  xlim(NA,0.000009)+
+  facet_wrap(.~from,scales="free_y" )+
+  theme(axis.text.x = element_text(angle = -30, vjust = 1, hjust = 0))+
+  labs(x="Word frequency")
+
+  
+```
+
+In \[setup\] I created a function for calculating frequency based on any column. This frequency tables will come in handy:
+
+```{r}
+tok_corpora_freq <- tok_corpora %>% 
+  dtplyr::lazy_dt() %>% 
+  group_by(from) %>% 
+    calc_frequency(
+        colname = "word"
+    ) %>% 
+  as_tibble()
+
+```
+
+```{r}
+
+tok_corpora_freq %>% as_tibble() %>% 
+  pins::pin_write(board = board,x = .,name = "tok_corpora_freq",type = "arrow")
+```
+
+### Frequencies of 2-grams and 3-grams...
+
+Okay then. Now we have to meddle with n-grams. Its fine, no problem. Tidytext allows us to tokenize n-grams no problem.
+
+Bigrams
+
+```{r bigrams_split}
+library(tidyverse)
+library(tidytext)
+tok_corpora_bigram <- tidytext::unnest_tokens(
+  sampled_files,
+  output = bigram,
+  input = text,
+  token = "ngrams",
+  to_lower = TRUE ,
+  n=2
+)
+
+
+```
+
+Clean bigrams
+
+```{r clean_bigrams}
+tok_corpora_bigram <- tok_corpora_bigram %>%
+    lazy_dt() %>%  
+  separate(bigram, c("word1", "word2"), sep = " ") %>% 
+    filter(!word1 %in% tidytext::stop_words$word) %>%
+    filter(!word2 %in% tidytext::stop_words$word) %>% 
+  as_tibble()
+```
+
+```{r bigrams_freq}
+library(tidyverse)
+library(tidytext)
+tok_corpora_bigram_freq <- tok_corpora_bigram %>% 
+  unite(bigram,word1,word2,sep=' ') %>% 
+  dtplyr::lazy_dt() %>%
+  group_by(from) %>% 
+    calc_frequency(
+        colname = "bigram"
+    ) %>% as_tibble(
+      
+    )
+
+```
+
+```{r bigrams_pin,eval=FALSE }
+tok_corpora_bigram_freq %>% 
+  as_tibble() %>% 
+  pins::pin_write(board = board,
+                  x = .,
+                  name = "tok_corpora_bigram_freq",
+                  type="arrow" )
+```
+
+Trigrams
+
+```{r trigrams_split}
+library(tidyverse)
+library(tidytext)
+tok_corpora_trigram <- tidytext::unnest_tokens(
+  sampled_files,
+  output = trigram,
+  input = text,
+  token = "ngrams",
+  to_lower = TRUE ,
+  n=3
+)
+```
+
+```{r clean_trigrams}
+tok_corpora_trigram <- tok_corpora_trigram %>%
+    lazy_dt() %>%  
+  separate(trigram, c("word1", "word2","word3"), sep = " ") %>% 
+    filter(!word1 %in% tidytext::stop_words$word) %>%
+    filter(!word2 %in% tidytext::stop_words$word) %>% 
+    filter(!word3 %in% tidytext::stop_words$word) %>% 
+  as_tibble()
+```
+
+```{r trigrams_freq}
+library(tidyverse)
+library(tidytext)
+tok_corpora_trigram_freq <- tok_corpora_trigram %>%
+  unite(trigram,word1, word2,word3,sep = " ") %>% 
+  dtplyr::lazy_dt() %>% 
+  group_by(from) %>% 
+    calc_frequency(
+        colname = "trigram"
+    ) %>% 
+  as_tibble()
+
+```
+
+```{r trigrams_pin,eval=FALSE}
+tok_corpora_trigram_freq %>% as_tibble() %>% 
+  pins::pin_write(board = board,x = .,name = "tok_corpora_trigram_freq",type = "arrow")
+```
+
+### Visualizing freqs
+
+Basic by word/source
+
+```{r}
+pb <- tok_corpora_freq %>% 
+    ggplot(aes(x=word_freq,fill=from))+ 
+    geom_histogram()+
+    facet_wrap(
+        . ~ from,scales = "free"
+    )+
+    xlim(NA,0.000009)+
+    theme(axis.text.x = element_text(angle = -30, vjust = 1, hjust = 0))+labs(title = "Word frequency distribution by source of text")
+pb
+```
+
+Bigrams
+
+```{r}
+tok_corpora_bigram_freq %>% as_tibble()->tok_corpora_bigram_freq
+```
+
+```{r}
+pbigr <- tok_corpora_bigram_freq %>% 
+  ggplot(aes(x=bigram_freq,fill=from)) +
+  geom_histogram() +
+  facet_wrap(
+        . ~ from,scales = "free"
+    )+
+    xlim(NA,0.000009)+
+    theme(axis.text.x = element_text(angle = -30, vjust = 1, hjust = 0))+
+  labs(title = "Bigram distribution by source of text")
+pbigr
+  
+  
+```
+
+Trigrams
+
+```{r}
+tok_corpora_trigram_freq %>% as_tibble()->tok_corpora_trigram_freq
+```
+
+```{r}
+ptrigr <- tok_corpora_trigram_freq %>% 
+  ggplot(aes(x=trigram_freq,fill=from)) +
+  geom_histogram() +
+  facet_wrap(
+        . ~ from,scales = "free"
+    )+
+    xlim(NA,0.000009)+
+    theme(axis.text.x = element_text(angle = -30, vjust = 1, hjust = 0))+
+  labs(title = "Trigram distribution by source of text")
+ptrigr
+```
+
+### Top frequency analysis, revisited:
+
+#### 1gram
+
+```{r}
+tok_corpora_freq %>% 
+    arrange(desc(word_freq)) %>% 
+    group_by(from) %>% 
+    slice_head(n = 20) %>%
+    mutate(word=tidytext::reorder_within(word,word_freq,from)) %>% 
+    ggplot(aes(x=word_freq,y=word,fill=word)) +
+    geom_col()+
+    tidytext::scale_y_reordered()+
+    facet_wrap(~from,ncol=1,scales="free")
+```
+
+#### Bigrams
+
+```{r}
+tok_corpora_bigram_freq %>% 
+    arrange(desc(bigram_freq)) %>% 
+    group_by(from) %>% 
+    slice_head(n = 20) %>%
+    mutate(
+        bigram=tidytext::reorder_within(bigram,bigram_freq,from)
+        )%>% 
+    ggplot(aes(x=bigram_freq,y=bigram,fill=bigram)) +
+    geom_col()+
+    tidytext::scale_y_reordered()+
+    facet_wrap(~from,ncol=1,scales="free")
+```
+
+Trigrams
+
+```{r}
+tok_corpora_trigram_freq %>%
+    filter(!str_detect(trigram,"^NA NA NA$|^amazon[\\. ]")) %>% 
+    arrange(desc(trigram_freq)) %>% 
+    group_by(from) %>% 
+    slice_head(n = 20) %>%
+    mutate(
+        trigram=tidytext::reorder_within(trigram,trigram_freq,from)
+        )%>% 
+    ggplot(aes(x=trigram_freq,y=trigram,fill=trigram)) +
+    geom_col()+
+    tidytext::scale_y_reordered()+
+    facet_wrap(~from,ncol=1,scales="free")
+```
+
+### TF-IDF
+
+This can only get us so far. There is the [tf-idf](https://www.tidytextmining.com/tfidf.html){.uri}. As put by the book's authors:
+
+> Another approach is to look at a term's inverse document frequency (idf), which decreases the weight for commonly used words and increases the weight for words that are not used very much in a collection of documents. This can be combined with term frequency to calculate a term's tf-idf (the two quantities multiplied together), the frequency of a term adjusted for how rarely it is used.
+
+
+For words:
+
+```{r}
+tok_corpora_freq_idf <- tok_corpora_freq %>%
+bind_tf_idf(
+word,
+from,
+word_count
+)
+```
+
+```{r}
+tok_corpora_freq_idf %>%
+    filter(!str_detect(word,"^amazon\\..*$")) %>% 
+    group_by(from) %>% 
+    slice_max(tf_idf,n = 20) %>%
+    mutate(word=reorder_within(word,desc(tf_idf),from)) %>% 
+    # ungroup() %>% 
+    ggplot(aes(x=word,y=tf_idf,fill=from))+
+    geom_col()+
+    scale_x_reordered()+
+    facet_wrap(~ from,scales = "free",ncol = 1)+
+    theme(axis.text.x = element_text(angle = -30, vjust = 1, hjust = 0))+labs(fill=NULL)
+
+```
+
+For bigram:
+
+```{r}
+tok_corpora_bigram_freq_idf <- tok_corpora_bigram_freq %>%
+bind_tf_idf(
+bigram,
+from,
+bigram_count
+)
+```
+
+```{r}
+
+
+tok_corpora_bigram_freq_idf %>%
+    filter(!str_detect(bigram,"^amazon[\\. ].*$")) %>% 
+    group_by(from) %>% 
+    slice_max(tf_idf,n = 20) %>%
+    mutate(bigram=reorder_within(bigram,desc(tf_idf),from)) %>% 
+    ungroup() %>% 
+    ggplot(aes(x=bigram,y=tf_idf,fill=from))+
+    geom_col()+
+    scale_x_reordered()+
+    facet_wrap(~ from,scales = "free",ncol = 1)+
+    theme(axis.text.x = element_text(angle = -30, vjust = 1, hjust = 0))+labs(fill=NULL)
+
+
+
+```
+
+For trigrams:
+```{r}
+tok_corpora_trigram_freq_idf <- tok_corpora_trigram_freq %>%
+bind_tf_idf(
+trigram,
+from,
+trigram_count
+)
+```
+
+```{r}
+tok_corpora_trigram_freq_idf %>%
+    filter(!str_detect(trigram,"^amazon[\\. ].*$|omg omg omg|cake cake cake|rt rt rt|ass ass ass|follow follow follow")) %>% 
+    group_by(from) %>% 
+    slice_max(tf_idf,n = 20) %>%
+    mutate(trigram=reorder_within(trigram,tf_idf,from)) %>% 
+    ungroup() %>% 
+    ggplot(aes(y=trigram,x=tf_idf,fill=from))+
+    geom_col()+
+    scale_y_reordered()+
+    facet_wrap(~ from,scales = "free",nrow = 1)+
+    labs(fill=NULL)
+```

@@ -1,0 +1,70 @@
+---
+title: "Week 2 - model"
+author: "Alejandro Borges Sanchez"
+date: "1/27/2022"
+output: html_notebook
+editor_options: 
+  chunk_output_type: inline
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+install.packages(c('quanteda.textmodels',"quanteda.textstats","quanteda.textplot","readtext","spacyr"))
+devtools::install_github("quanteda/quanteda.corpora")
+devtools::install_github("kbenoit/quanteda.dictionaries")
+source("globals.R")
+sampled_files <- pins::pin_read(board = board,
+                                   name = "sampled_files")
+```
+
+## Model
+
+A per source analysis was performed during exploration, but now we need to think about the text as the whole full corpora. We are suposed to create a predictive text model wherein someone introduces an ngram and we give the most probable next steps.
+
+This implies that we need a way to compute which ngrams are more probable. Lets begin.
+
+## Probability of a monogram
+
+Begin by separating a small subsample of our main sample.
+
+```{r}
+small_sample <- sampled_files %>% 
+    slice_sample(n=10000) %>% 
+    clean_text() 
+
+```
+
+```{r}
+head(small_sample)
+```
+
+Get monograms
+
+```{r}
+tok_mono <- small_sample %>% 
+  unnest_tokens(word,text) %>% 
+  anti_join(stop_words,"word")
+```
+
+```{r}
+head(tok_mono)
+```
+
+Probability of each monogram would be its frequency:
+
+```{r}
+tok_mono %>% 
+  count(word) %>% 
+  arrange(desc(n))
+```
+
+And then frequency:
+
+```{r}
+tok_mono_f <- tok_mono %>% 
+    calc_frequency('word') %>% 
+  select(word,freq=word_freq)
+tok_mono_f
+```
+

@@ -1,0 +1,11 @@
+name: Publish Document
+title:
+username:
+account: rpubs
+server: rpubs.com
+hostUrl: rpubs.com
+appId: https://api.rpubs.com/api/v1/document/856215/80c5e19fae6446dc860a7d03d5e155ec
+bundleId: https://api.rpubs.com/api/v1/document/856215/80c5e19fae6446dc860a7d03d5e155ec
+url: http://rpubs.com/elfatherbrown/856215
+when: 1642453857.82918
+lastSyncTime: 1642453857.82919
