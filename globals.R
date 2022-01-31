@@ -220,11 +220,11 @@ sample_files <- function(seed = 1212, prop = 0.33)
     ungroup() %>%
     mutate(from = str_remove(file, "en_US\\."),
            from = str_remove(from, "\\.txt")) %>%
-    dtplyr::lazy_dt() %>%
+
     group_by(file) %>%
     clean_text() %>%
     ungroup() %>%
-    as_tibble()
+    data.table::as.data.table()
 }
 
 #' Creates an n-gram set wih proportion and log(proportions). Asumes input is
@@ -588,7 +588,7 @@ c_star <- function(ngrams,k=5) {
 r_create_ngram_set <- function(data,order=2){
   data %>%
     select(text) %>%
-    unnest_ngrams(ngram,text,n=order) %>%
+    unnest_ngrams(ngram,text,n=order)
     mutate(
       prediction=v_last_word(ngram),
       base=str_remove(ngram,prediction) %>% str_trim()
@@ -606,4 +606,6 @@ v_last_word <- function(istring,pick=0){
   }
   str_split(istring, ' ') %>%
     map_chr(~paste0(.x[(length(.x)-pick):length(.x)],collapse=" "))
-  }
+}
+
+
