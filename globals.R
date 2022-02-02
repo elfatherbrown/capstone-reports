@@ -586,9 +586,11 @@ c_star <- function(ngrams,k=5) {
 # By :https://github.com/lgreski/datasciencectacontent/blob/master/markdown/capstone-simplifiedApproach.md
 
 r_create_ngram_set <- function(data,order=2){
+
+
   data %>%
     select(text) %>%
-    unnest_ngrams(ngram,text,n=order)
+    unnest_ngrams(ngram,text,n=order) %>%
     mutate(
       prediction=v_last_word(ngram),
       base=str_remove(ngram,prediction) %>% str_trim()
@@ -596,16 +598,57 @@ r_create_ngram_set <- function(data,order=2){
   relocate(ngram,base,prediction) %>%
   add_count(ngram,name='n_count') %>%
   add_count(base,name='b_count') %>%
-  mutate(p_pred_given_base=n_count/b_count) %>%
+  mutate(odds_of_prediction_given_base=n_count/b_count) %>%
   distinct()
 }
 
-v_last_word <- function(istring,pick=0){
-  if(pick>0){
-    pick=pick-1
-  }
-  str_split(istring, ' ') %>%
-    map_chr(~paste0(.x[(length(.x)-pick):length(.x)],collapse=" "))
+r_tokenize_and_count_base_folowed_by <- function(data,max_order) {
+
+    map_dfr(.x = c(1:max_order),function(x,...){
+      sofar <- data %>%
+        unnest_ngrams(ngram,text,n=x) %>%
+        count(ngram,name='ngram_count') %>%
+        mutate(
+          order=x,
+          prefix=if_else(order>1,
+                         str_remove(ngram,paste0(" [^ ]+$")),
+                         NA_character_)
+        )
+    })
+#
+#   prefixes <- r %>% count(prefix,name='prefix_count')
+#   ngrams <- r %>% count(ngram,name='ngram_count')
+#   r %>% inner_join(
+#     prefixes,
+#     by=c(prefix='prefix')
+#     ) %>%
+#   inner_join(
+#     ngrams,
+#     by=c(ngram='ngram')
+#     )
+
 }
 
+v_last_words <- function(istring,how_many=1){
+  how_many <- how_many -1
+  str_split(istring, ' ') %>%
+    map_chr(~paste0(.x[length(.x)-how_many],collapse=" "))
+}
+
+
+
+r_parse_gram <- function(phrase,order=3){
+  wc <- phrase|>str_count(" ")+1
+  stopifnot(order<=wc)
+  sp <- phrase |> str_split(" ") %>% .[[1]]
+  begins <- wc-order+1
+
+  map_dfr(c(begins:wc),~tibble_row(
+    ngram=paste0(sp[.x:wc],collapse=" "),
+                                order=wc-.x+1))
+  }
+
+ods_of_phrases <- function(phrases) {
+
+  }
 
