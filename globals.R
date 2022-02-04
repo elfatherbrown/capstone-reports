@@ -2,12 +2,31 @@ library(tidyverse)
 library(tidytext)
 library(dtplyr)
 library(doParallel)
-registerDoParallel(cores = 6)
+library(furrr)
+library(future)
+library(data.table)
+registerDoParallel(cores = 4)
+plan(future::multisession(workers = 4))
 raw_data_dir <- paste0(here::here(), "/../capstone raw data/")
 en_data_dir <- paste0(raw_data_dir, "final/en_US")
+clean_files_dir <- paste0(raw_data_dir, "final/en_US/clean")
+out_data_dir <- paste0(en_data_dir, '/', 'output_csvs')
 board_folder = glue::glue("{Sys.getenv('PIN_LOCAL_FOLDER')}capstone")
 board <- pins::board_folder(board_folder, versioned = TRUE)
 
+file_clean_text_col <-
+  paste0(clean_files_dir, '/', 'clean_text_column.csv')
+parquet_dir <- paste0(clean_files_dir, '/', 'as_parquet')
+
+load_all_of_it <- function() {
+  all_of_it <<-
+    fread(
+      file = file_clean_text_col,
+      header = TRUE,
+      quote = "",
+      sep = '\n'
+    )
+}
 
 #' write_sampled_and_topkenized
 #'
@@ -158,6 +177,9 @@ calc_frequency <- function(data, colname) {
 #'
 #' @examples
 clean_text <- function(data, colname = "text") {
+  if (nrow(data) == 0) {
+    return(data)
+  }
   data %>%
     filter(
       !str_detect(
@@ -179,8 +201,29 @@ clean_text <- function(data, colname = "text") {
       {
         colname
       }
-    } := str_replace_all(.data[[colname]], "&", " and "))
+    } := str_replace_all(.data[[colname]], "&", " and ")) %>%
+    mutate({
+      {
+        colname
+      }
+    } := str_to_lower(.data[[colname]]))
 
+}
+
+clean_files <- function(files,
+                        s_files_dir = en_data_dir,
+                        c_files_dir = clean_files_dir) {
+  ins <- paste0(s_files_dir, '/', files)
+  outs <- paste0(c_files_dir, '/', files)
+  furrr::future_walk2(.x = ins,
+                      .y = outs,
+                      function(x, y) {
+                        readr::read_file(x) %>%
+                          stringi::stri_conv(from = '', to = 'UTF-8') %>%
+                          str_remove_all(., fixed('')) %>%
+                          readr::write_file(x = ., file = y)
+                      })
+  return(outs)
 }
 
 read_sampled_and_tokenized_m <-
@@ -197,20 +240,41 @@ read_sampled_and_tokenized_m <-
 #' @examples
 #'
 #'
-sample_files <- function(seed = 1212, prop = 0.33)
+sample_files <- function(seed = 1212,
+                         prop = 0.33,
+                         preprocess = function(char_vector) {
+                           return(char_vector)
+                         },
+                         postprocess = function(data) {
+                           return(data)
+                         })
 {
   set.seed(seed)
   random_chunk_reader <- function(x, pos) {
-    tibble(text = sample(x, length(x) * prop))
+    if (prop != 1) {
+      sample(x, length(x) * prop) %>%
+        tibble(text = .) %>%
+        mutate(rnum = row_number()) %>%
+        preprocess() %>%
+        postprocess()
+    } else
+    {
+      x %>%
+        tibble(text = x) %>%
+        mutate(rnum = row_number()) %>%
+        preprocess() %>%
+        postprocess()
+    }
   }
 
-  list.files(en_data_dir) %>%
-    purrr::map_df(., function(fname) {
+  ret <- list.files(en_data_dir, pattern = "en_US*") %>%
+    purrr::map_dfr(., function(fname) {
       tibble(file = fname,
              content = list(
                readr::read_lines_chunked(
                  paste0(en_data_dir, "/", fname),
-                 callback = DataFrameCallback$new(random_chunk_reader)
+                 callback = DataFrameCallback$new(random_chunk_reader),
+                 chunk_size = 20000
                )
              ))
     }) %>%
@@ -222,9 +286,40 @@ sample_files <- function(seed = 1212, prop = 0.33)
            from = str_remove(from, "\\.txt")) %>%
 
     group_by(file) %>%
-    clean_text() %>%
-    ungroup() %>%
-    data.table::as.data.table()
+    ungroup()
+  gc()
+  return(ret)
+}
+
+on_the_fly_sampler <- function(seed = 1212,
+                               prop = 0.33,
+                               preprocess = function(char_vector) {
+                                 return(char_vector)
+                               })
+{
+  thefiles <- sample_files(
+    prop = prop,
+    postprocess = function(d) {
+      f <- tempfile(tmpdir = glue::glue("{out_data_dir}/chunks"))
+      e <- d %>%
+        r_tokenize(5) %>%
+        write_csv(x = .,
+                  file = f)
+      tibble(tempfile = f)
+    }
+
+  )
+  set.seed(seed)
+  files_sep <- sample(letters, 50) %>% paste0(collapse = '')
+  files_fname <- glue::glue("THE_FILES_{files_sep}.csv")
+  write.csv(thefiles,
+            glue::glue("{out_data_dir}/{files_fname}"))
+
+  thefiles %>%
+    distinct(tempfile) %>%
+    pull(tempfile) %>%
+    map(~ data.table::fread(file = .x,)) %>%
+    data.table::rbindlist()
 }
 
 #' Creates an n-gram set wih proportion and log(proportions). Asumes input is
@@ -437,19 +532,19 @@ less_good_turing <- function(ngrams) {
     as_tibble()
 }
 
-good_turing <- function(ngrams,k=5){
+good_turing <- function(ngrams, k = 5) {
   sofar <- ngrams %>% nr_plus_one()
 
-  N1 <- sofar %>% filter(r==1) %>% slice_head(n=1) %>% pull(Nr)
+  N1 <- sofar %>% filter(r == 1) %>% slice_head(n = 1) %>% pull(Nr)
   sofar %>%
     mutate(
-      r_star=(r+1) * (Nrp1/Nr),
-      mle=r/sum(r),
-      Pgt=if_else(r==0,N1/sum(r),r_star/sum(r)),
-      Pgt_1=if_else(r<=k,Pgt,mle),
-      Pgt_2=Pgt_1/sum(Pgt_1)
+      r_star = (r + 1) * (Nrp1 / Nr),
+      mle = r / sum(r),
+      Pgt = if_else(r == 0, N1 / sum(r), r_star / sum(r)),
+      Pgt_1 = if_else(r <= k, Pgt, mle),
+      Pgt_2 = Pgt_1 / sum(Pgt_1)
     )
-  }
+}
 
 #' katz_dr
 #'
@@ -527,12 +622,12 @@ searcher <- function() {
 #'
 #' @examples
 nr_plus_one <- function(ngrams) {
-  arrs <- ngrams %>% count(r=ngram_count,name='Nr')
+  arrs <- ngrams %>% count(r = ngram_count, name = 'Nr')
   arrs %>%
-  full_join(arrs %>%
-              select(r) %>%
-              mutate(r = as.integer(r + 1)),
-            by='r') %>%
+    full_join(arrs %>%
+                select(r) %>%
+                mutate(r = as.integer(r + 1)),
+              by = 'r') %>%
     arrange(r) %>%
     mutate(Nrp1 = if_else(
       is.na(Nr),
@@ -541,114 +636,190 @@ nr_plus_one <- function(ngrams) {
               as.integer(0),
               lead(Nr))
     )) %>%
-  select(r,Nr,Nrp1) %>%
-  right_join(
-    ngrams,
-    by=c("r"='ngram_count')
-    ) %>%
-  select(ngram,prefix,r,Nr,Nrp1)
+    select(r, Nr, Nrp1) %>%
+    right_join(ngrams,
+               by = c("r" = 'ngram_count')) %>%
+    select(ngram, prefix, r, Nr, Nrp1)
 }
 
-c_star <- function(ngrams,k=5) {
-  sofar <-ngrams %>%
+c_star <- function(ngrams, k = 5) {
+  sofar <- ngrams %>%
     nr_plus_one()
 
   Nkp1 <- sofar %>%
-    filter(r == k+1) %>%
-    slice_head(n=1) %>%
+    filter(r == k + 1) %>%
+    slice_head(n = 1) %>%
     pull(Nr)
 
-  if(is.na(Nkp1)){
-    Nkp1=0
+  if (is.na(Nkp1)) {
+    Nkp1 = 0
   }
 
-  N1 <- sofar %>% filter(r==1) %>% slice_head(n=1) %>% pull(Nr)
+  N1 <- sofar %>% filter(r == 1) %>% slice_head(n = 1) %>% pull(Nr)
   sofar %>%
+    mutate(c_star = if_else(r > k, as.numeric(r), NA_real_)) %>%
     mutate(
-      c_star=if_else(
-        r > k, as.numeric(r),NA_real_
-      )
+      c1 = (r + 1) * (Nrp1 / Nr),
+      c2 = r * (((k + 1) * Nkp1) / N1),
+      cd1 = 1 - (((k + 1) * Nkp1) / N1),
+      c_star = if_else(is.na(c_star),
+                       (c1 - c2) / cd1,
+                       c_star)
     ) %>%
-    mutate(
-      c1=(r+1)*(Nrp1/Nr),
-      c2=r*(((k+1)*Nkp1)/N1),
-      cd1=1-(((k+1)*Nkp1)/N1),
-      c_star=if_else(is.na(c_star),
-                     (c1-c2)/cd1,
-                     c_star
-      )
-    ) %>%
-  select(-c1,-c2,-cd1)
+    select(-c1, -c2, -cd1)
 
 }
 
 # Refurbish plainly -------
 # By :https://github.com/lgreski/datasciencectacontent/blob/master/markdown/capstone-simplifiedApproach.md
 
-r_create_ngram_set <- function(data,order=2){
+r_create_ngram_set <- function(data, order = 2) {
+
+}
+
+r_tokenize <- function(data, max_order, threads = 100) {
+  # It can happen we get fed empty data. We return an empty set
+  if (nrow(data) == 0) {
+    return(tribble(~ rnum,  ~ ngram,  ~ order))
+  }
+
+  map_dfr(
+    c(1:max_order),
+    ~ data %>%
+      as.data.table() %>%
+      clean_text() %>%
+      as_tibble() %>%
+      unnest_ngrams(ngram, text, n = .x) %>%
+      as.data.table() %>%
+      r_count_and_followed_by() %>%
+      mutate(order = .x) %>%
+      as_tibble()
+  )
+}
 
 
+r_count_and_followed_by <- function(data) {
   data %>%
-    select(text) %>%
-    unnest_ngrams(ngram,text,n=order) %>%
-    mutate(
-      prediction=v_last_word(ngram),
-      base=str_remove(ngram,prediction) %>% str_trim()
-    ) %>%
-  relocate(ngram,base,prediction) %>%
-  add_count(ngram,name='n_count') %>%
-  add_count(base,name='b_count') %>%
-  mutate(odds_of_prediction_given_base=n_count/b_count) %>%
-  distinct()
+    count(ngram, name = 'ngram_count') %>%
+    mutate(prefix = str_remove(ngram, paste0(" [^ ]+$")))
 }
 
-r_tokenize_and_count_base_folowed_by <- function(data,max_order) {
-
-    map_dfr(.x = c(1:max_order),function(x,...){
-      sofar <- data %>%
-        unnest_ngrams(ngram,text,n=x) %>%
-        count(ngram,name='ngram_count') %>%
-        mutate(
-          order=x,
-          prefix=if_else(order>1,
-                         str_remove(ngram,paste0(" [^ ]+$")),
-                         NA_character_)
-        )
-    })
-#
-#   prefixes <- r %>% count(prefix,name='prefix_count')
-#   ngrams <- r %>% count(ngram,name='ngram_count')
-#   r %>% inner_join(
-#     prefixes,
-#     by=c(prefix='prefix')
-#     ) %>%
-#   inner_join(
-#     ngrams,
-#     by=c(ngram='ngram')
-#     )
-
-}
-
-v_last_words <- function(istring,how_many=1){
-  how_many <- how_many -1
+v_last_words <- function(istring, how_many = 1) {
+  how_many <- how_many - 1
   str_split(istring, ' ') %>%
-    map_chr(~paste0(.x[length(.x)-how_many],collapse=" "))
+    map_chr(~ paste0(.x[length(.x) - how_many], collapse = " "))
 }
 
 
 
-r_parse_gram <- function(phrase,order=3){
-  wc <- phrase|>str_count(" ")+1
-  stopifnot(order<=wc)
-  sp <- phrase |> str_split(" ") %>% .[[1]]
-  begins <- wc-order+1
-
-  map_dfr(c(begins:wc),~tibble_row(
-    ngram=paste0(sp[.x:wc],collapse=" "),
-                                order=wc-.x+1))
+#' r_parse_ngram
+#' Returns a tibble with up to order ngrams of phrase
+#'
+#' @param phrase
+#' @param order
+#'
+#' @return
+#' @export
+#'
+#' @examples
+r_parse_gram <- function(phrase, max_order = 3) {
+  wc <- phrase  |> str_count(" ") + 1
+  sp <- phrase |> str_to_lower() |> str_split(" ") %>% .[[1]]
+  if (max_order >= wc) {
+    max_order = wc
   }
+  begins <- wc - max_order + 1
 
-ods_of_phrases <- function(phrases) {
+  map_dfr(c(begins:wc),  ~ tibble_row(ngram = paste0(sp[.x:wc], collapse =
+                                                       " "),
+                                      order = wc - .x + 1)) %>%
+    mutate(prefix = if_else(order > 1,
+                            str_remove(ngram, paste0(" [^ ]+$")),
+                            NA_character_))
+}
 
-  }
+r_odds_table <- function(parsed_ngram) {
 
+}
+
+odds_of_phrases <- function(ngram_model, phrases, max_order = 4) {
+  counted_ngrams <- ngram_model$counted_ngrams
+
+  total_ngrams <- ngram_model$total_ngrams
+
+  the_gram <- r_parse_gram(phrases, max_order) %>% dtplyr::lazy_dt()
+  backoff_counts <- counted_ngrams %>%
+    select(ngram, ngram_count) %>%
+    right_join(the_gram) %>%
+    mutate(ngram_count = coalesce(ngram_count, as.integer(0)))
+
+  counted_ngrams %>%
+    select(prefix = ngram, prefix_count = ngram_count) %>%
+    right_join(the_gram) %>%
+    inner_join(backoff_counts) %>%
+    mutate(
+      prefix_count = if_else(is.na(prefix), total_ngrams, prefix_count),
+      odds = coalesce(ngram_count / prefix_count, 0.0)
+    )
+}
+
+#' get_model
+#' Given an ngram dataset, it will give out a list with named elements
+#' for the basic data needed for mle and other estimations
+#'
+#' @param ngrams
+#'
+#' @return
+#' @export
+#'
+#' @examples
+get_model <- function(ngrams) {
+  ngrams <- ngrams %>% dtplyr::lazy_dt()
+  counted_ngrams <- ngrams %>%
+    count(ngram, name = "ngram_count") %>%
+    drop_na()
+
+  total_ngrams <- ngrams %>%
+    filter(order == 1) %>%
+    count() %>%
+    pull(n)
+
+  list(
+    counted_ngrams = counted_ngrams,
+    total_ngrams = total_ngrams,
+    ngrams = ngrams
+  )
+}
+
+
+tokenize_to <- function(all_of_it,
+                        ddir = parquet_dir,
+                        to = arrow::write_feather) {
+  all_of_it %>%
+    rename(text = V1) %>%
+    group_by(chunk = row_number() %% 1000) %>%
+    nest() %>%
+    as_tibble() %>%
+    future_pwalk(
+      function(chunk, data, ddir, ...) {
+        files_sep <-
+          sample(letters, 50, replace = TRUE) %>% paste0(collapse = '')
+        files_fname <-
+          glue::glue("{ddir}/{files_sep}")
+        data %>%
+          as_tibble() %>%
+          r_tokenize(5) %>%
+          to(., files_fname)
+        return(0)
+      },
+      .options = furrr_options(seed = 123),
+      .progress = TRUE,
+      ddir = ddir
+    )
+}
+
+
+get_arrow_ds <- function(ddir,f) {
+  options(arrow.skip_nul = TRUE)
+  arrow::open_dataset(ddir, partitioning = NULL,format = f)
+}
