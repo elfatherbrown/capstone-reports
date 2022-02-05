@@ -392,7 +392,7 @@ parse_gram <- function(phrase, n) {
 #' trunc_phrase
 #'
 #' Extracts the last n words from a sentence. This is the only real way to
-#' go about this since n* gram models can only relky in the last n words.
+#' go about this since n* gram models can only rely in the last n words.
 #'
 #' @param i_string
 #' @param n
@@ -689,11 +689,7 @@ r_tokenize <- function(data, max_order, threads = 100) {
       as.data.table() %>%
       clean_text() %>%
       as_tibble() %>%
-      unnest_ngrams(ngram, text, n = .x) %>%
-      as.data.table() %>%
-      r_count_and_followed_by() %>%
-      mutate(order = .x) %>%
-      as_tibble()
+      unnest_ngrams(ngram, text, n = .x)
   )
 }
 
@@ -702,6 +698,16 @@ r_count_and_followed_by <- function(data) {
   data %>%
     count(ngram, name = 'ngram_count') %>%
     mutate(prefix = str_remove(ngram, paste0(" [^ ]+$")))
+}
+
+r_count <- function(data){
+  data %>%
+  count(ngram, name = 'ngram_count')
+}
+
+r_followed_by <- function(data){
+  data %>%
+  mutate(prefix = str_remove(ngram, paste0(" [^ ]+$")))
 }
 
 v_last_words <- function(istring, how_many = 1) {
@@ -809,6 +815,9 @@ tokenize_to <- function(all_of_it,
         data %>%
           as_tibble() %>%
           r_tokenize(5) %>%
+          dtplyr::lazy_dt() %>%
+          count(ngram, name = 'ngram_count') %>%
+          as.data.table() %>%
           to(., files_fname)
         return(0)
       },
