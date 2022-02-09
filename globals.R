@@ -5,6 +5,7 @@ library(doParallel)
 library(furrr)
 library(future)
 library(data.table)
+library(progressr)
 registerDoParallel(cores = 4)
 plan(future::multisession(workers = 4))
 raw_data_dir <- paste0(here::here(), "/../capstone raw data/")
@@ -13,6 +14,10 @@ clean_files_dir <- paste0(raw_data_dir, "final/en_US/clean")
 out_data_dir <- paste0(en_data_dir, '/', 'output_csvs')
 board_folder = glue::glue("{Sys.getenv('PIN_LOCAL_FOLDER')}capstone")
 board <- pins::board_folder(board_folder, versioned = TRUE)
+
+inter_data_dir <- paste0(raw_data_dir, "final/en_US/intermediate")
+
+
 
 file_clean_text_col <-
   paste0(clean_files_dir, '/', 'clean_text_column.csv')
@@ -210,21 +215,6 @@ clean_text <- function(data, colname = "text") {
 
 }
 
-clean_files <- function(files,
-                        s_files_dir = en_data_dir,
-                        c_files_dir = clean_files_dir) {
-  ins <- paste0(s_files_dir, '/', files)
-  outs <- paste0(c_files_dir, '/', files)
-  furrr::future_walk2(.x = ins,
-                      .y = outs,
-                      function(x, y) {
-                        readr::read_file(x) %>%
-                          stringi::stri_conv(from = '', to = 'UTF-8') %>%
-                          str_remove_all(., fixed('')) %>%
-                          readr::write_file(x = ., file = y)
-                      })
-  return(outs)
-}
 
 read_sampled_and_tokenized_m <-
   memoise::memoise(read_sampled_and_tokenized)
@@ -295,7 +285,8 @@ on_the_fly_sampler <- function(seed = 1212,
                                prop = 0.33,
                                preprocess = function(char_vector) {
                                  return(char_vector)
-                               })
+                               },
+                               delete_files=TRUE)
 {
   thefiles <- sample_files(
     prop = prop,
@@ -677,20 +668,16 @@ r_create_ngram_set <- function(data, order = 2) {
 
 }
 
-r_tokenize <- function(data, max_order, threads = 100) {
+r_tokenize <- function(data, order, threads = 100) {
   # It can happen we get fed empty data. We return an empty set
   if (nrow(data) == 0) {
     return(tribble(~ rnum,  ~ ngram,  ~ order))
   }
-
-  map_dfr(
-    c(1:max_order),
-    ~ data %>%
-      as.data.table() %>%
-      clean_text() %>%
-      as_tibble() %>%
-      unnest_ngrams(ngram, text, n = .x)
-  )
+  data %>%
+    as.data.table() %>%
+    clean_text() %>%
+    as_tibble() %>%
+    unnest_ngrams(ngram, text, n = order)
 }
 
 
@@ -700,14 +687,14 @@ r_count_and_followed_by <- function(data) {
     mutate(prefix = str_remove(ngram, paste0(" [^ ]+$")))
 }
 
-r_count <- function(data){
+r_count <- function(data) {
   data %>%
-  count(ngram, name = 'ngram_count')
+    count(ngram, name = 'ngram_count')
 }
 
-r_followed_by <- function(data){
+r_followed_by <- function(data) {
   data %>%
-  mutate(prefix = str_remove(ngram, paste0(" [^ ]+$")))
+    mutate(prefix = str_remove(ngram, paste0(" [^ ]+$")))
 }
 
 v_last_words <- function(istring, how_many = 1) {
@@ -828,7 +815,156 @@ tokenize_to <- function(all_of_it,
 }
 
 
-get_arrow_ds <- function(ddir,f) {
+get_arrow_ds <- function(ddir, f) {
   options(arrow.skip_nul = TRUE)
-  arrow::open_dataset(ddir, partitioning = NULL,format = f)
+  arrow::open_dataset(ddir, partitioning = NULL, format = f)
 }
+
+
+# AGAIN ==================
+
+
+clean_files <- function(files,
+                        s_files_dir = en_data_dir,
+                        c_files_dir = clean_files_dir) {
+  ins <- paste0(s_files_dir, '/', files)
+  outs <- paste0(c_files_dir, '/', files)
+  p <- progressor(along = ins)
+  furrr::future_walk2(.x = ins,
+                      .y = outs,
+                      function(x, y) {
+                        r <- readr::read_file_raw(x)
+                        r[r == as.raw(0)] = as.raw(0x20)
+                        r %>%
+                          rawToChar(.) %>%
+                          stringi::stri_enc_toascii(.) %>%
+                          str_replace_all(., "\032", "") %>%
+                          str_remove_all(., fixed('')) %>%
+                          stringi::stri_enc_toutf8() %>%
+                          str_to_lower() %>%
+                          str_remove_all('[0-9!@#$%^&\\*\\(\\)-=_\\+\\.,<>`\\[\\]\\{\\}"\'\\\\]?')  %>%
+                          readr::write_file(x = ., file = y)
+                        p(y)
+                        return(0)
+                      }, .progress = TRUE)
+  return(outs)
+}
+
+get_clean_files <- function() {
+  list.files(paste0(clean_files_dir)) %>%
+    .[str_detect(., 'txt')] %>%
+    paste0(clean_files_dir, '/', .) %>%
+    future_map_dfr( ~ fread(
+      .x,
+      sep = '\n',
+      quote = "",
+      header = FALSE,
+      col.names = 'text'
+    ),.progress = TRUE)
+
+}
+
+do_map_split_tokens <- function()
+{
+  all_text %>%
+    mutate(chunk = row_number() %% 20000) %>%
+    group_by(chunk) %>%
+    nest() %>%
+    as_tibble() %>%
+    future_pwalk(function(chunk, data) {
+      if (nrow(data) == 0) {
+        return(tribble(~ rnum,  ~ ngram,  ~ order))
+      } else {
+        files_sep <-
+          sample(letters, 50, replace = TRUE) %>% paste0(collapse = '')
+        fname <- paste0(inter_data_dir, '/', files_sep)
+        r <- data %>%
+          as_tibble() %>%
+          unnest_ngrams(ngram, text, n = 1) %>%
+          dtplyr::lazy_dt() %>%
+          count(ngram, name = "ngram_counts") %>%
+          as.data.table() %>%
+          fwrite(x = .,
+                 file = fname)
+        return(0)
+      }
+    },
+    .progress = TRUE,
+    .options = furrr_options(seed = TRUE))
+}
+
+
+
+#' bagofwords
+#'
+#' @description
+#' description
+#' @return the bagofwords class
+#'
+#' @noRd
+
+
+bagofwords <- R6::R6Class(
+  classname = "bagofwords",
+  public = list (
+    bag = NULL,
+    initialize = function() {
+      self$bag = c()
+    },
+    addString = function(a_string) {
+      nu <- 1
+      names(nu) <- a_string
+      if (is.null(self$bag)) {
+        self$bag <<- nu
+        return()
+      } else if (is.na(self$bag[a_string])) {
+        self$bag[a_string] <<- nu
+      } else {
+        nu <- self$bag[a_string] + nu
+        self$bag[a_string] <<- nu
+      }
+
+    },
+    as_tibble=function(){
+      self$bag %>%
+        future_map2_dfr(names(.),., ~tibble::tibble_row(ngram=.x,ngram_count=.y),
+                       .progress = TRUE,.options = furrr_options(
+                         seed=TRUE))
+      }
+  )
+)
+
+#' Title
+#'
+#' @param vec
+#' @param a_string
+#'
+#' @return
+#' @export
+#'
+#' @examples
+add_to_vec <- function(vec,a_string){
+  nu <- 1
+  names(nu) <- a_string
+  if (is.null(vec)) {
+    vec <- nu
+
+  } else if (is.na(vec[a_string])) {
+    vec[a_string] <- nu
+  } else {
+    nu <- vec[a_string] + nu
+    vec[a_string] <- nu
+  }
+  return(vec)
+}
+scratch <- function(){
+  all_of_it %>%
+    mutate(nrow=row_number()%%100) %>%
+    slice_sample(prop=0.001) %>%
+    pull(text) %>%
+    tokenizers::tokenize_words() %>%
+    tokens(remove_symbols = TRUE,remove_numbers = TRUE,remove_url = TRUE, split_hyphens = TRUE) %>%
+    tokens_remove(c(stopwords('english'),'?',"'",'"',"\\")) %>%
+    tokens_ngrams(concatenator = " ") -> small_tokens
+
+  }
