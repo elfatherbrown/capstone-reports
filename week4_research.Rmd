@@ -1,0 +1,38 @@
+---
+title: "Week 4 research"
+author: "Alejandro Borges Sanchez"
+date: "2/10/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Notes
+
+We are supposed to fine tune this thing considering cpu/mem complexity and also precision.
+
+## Accomplished
+
+By now we have accomplished
+
+1.  We now know what a language model "is": a table of ngrams, ending and their frequency.
+2.  We know there are many ways to build them. For now, our models have been open (no end of phrase, begin of phrase or UNK) tokens.
+3.  We can painfully build them on SMP using furrr... sigh... its okay, but my box is a 40gb monster and it took so, so long to get right.
+
+## **Research**
+
+Clearly the Standford resources stand out:
+
+<https://web.stanford.edu/~jurafsky/slp3/?utm_source=pocket_mylist>
+
+As do some medium posts of implementation details mostly in python and a machine learning focus.
+
+I am currently reading and looking around kenLM: <https://kheafield.com/code/kenlm/>. Hey, wouldnt you know it, this ngram language model thingies are "tough" and smarter than me people have really thought about it.
+
+## Weeks objective
+
+So Dr. Peng calls this "creative exploration". Honestly, I dont have the stats/math chops to treat this as a generic problem. But this Kenneth Heatfield dude clearly has it quite fixed since 2011. So im going to see what I can learn from his stuff.
+
+<https://kheafield.com/code/kenlm/>

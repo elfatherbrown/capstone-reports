@@ -1,0 +1,142 @@
+---
+title: "Week 3 - model"
+author: "Alejandro Borges Sanchez"
+date: "1/27/2022"
+output: html_notebook
+editor_options: 
+  chunk_output_type: inline
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+# install.packages(c('quanteda.textmodels',"quanteda.textstats","quanteda.textplot","readtext","spacyr"))
+# devtools::install_github("quanteda/quanteda.corpora")
+# devtools::install_github("kbenoit/quanteda.dictionaries")
+source("globals.R")
+sampled_files <- pins::pin_read(board = board,
+                                   name = "sampled_files_week_3")
+```
+
+## Model
+
+A per source analysis was performed during exploration, but now we need to think about the text as the whole full corpora. We are suposed to create a predictive text model wherein someone introduces an ngram and we give the most probable next steps.
+
+This implies that we need a way to compute which ngrams are more probable. Lets begin thinking about this.
+
+## Probability of a monogram
+
+Begin by separating a small subsample of our main sample.
+
+```{r}
+small_sample <- sampled_files %>% 
+    slice_sample(n=10000) %>% 
+    clean_text() 
+
+```
+
+```{r}
+head(small_sample)
+```
+
+Get monograms
+
+```{r}
+small_mono <- small_sample %>% 
+  clean_text() %>% 
+  unnest_tokens(word,text) %>% 
+  anti_join(stop_words,"word")
+```
+
+```{r}
+head(small_mono)
+```
+
+Probability of each monogram would be its frequency:
+
+```{r}
+small_mono %>% 
+  count(word) %>% 
+  arrange(desc(n))
+```
+
+And then frequency:
+
+```{r}
+small_mono_f <- small_mono %>% 
+    calc_frequency('word') %>% 
+  select(word,freq=word_freq)
+small_mono_f
+```
+
+Now for something to calculate the frequency of a phrase, we build:
+
+```{r}
+mono_probs <- function(phrase){
+    t <- str_split(phrase," ") %>% pluck(1)
+    print(t)
+    wrds <- small_mono_f %>% 
+        filter(word %in% t) 
+    print(wrds)
+    wrds%>% 
+        summarize(
+            lprob=sum(log(freq)),
+            prob=prod(freq)
+        )
+}
+```
+
+And with that, we can examine:
+
+```{r}
+
+mono_probs("love people")
+```
+
+So thats one way. Now to (we are looking at <https://youtu.be/MUNFfBGdF1k?list=PLLssT5z_DsK8HbD2sPcUIDfQ7zmBarMYv&t=225>) do better, we gonna have to do bigrams. Monograms dont cut it because we are supposed to predict "the next word", so we need a previous word for that.
+
+The maximum likelyhood estimator for a word given another , by <https://youtu.be/MUNFfBGdF1k?list=PLLssT5z_DsK8HbD2sPcUIDfQ7zmBarMYv&t=23>, is $$p(w_i|w_{i-1})=\frac{count(w_{i-1},w_i)}{count(w_{i-1})}$$
+
+So lets make a bigram table, then do the counts of everything:\
+
+```{r}
+small_bigrams <- small_sample %>% 
+    clean_text() %>% 
+    unnest_ngrams(ngram,text,n=2) 
+```
+
+```{r}
+small_bigrams
+```
+
+Now we can split the bigrams and do some counting:
+
+```{r}
+small_bigrams_separated <- small_bigrams %>% 
+  select(ngram) %>% 
+  separate(ngram,c('word1','word2'), sep = " ")
+```
+
+```{r}
+
+small_bigrams_separated
+```
+
+Now we need the full count for each word:
+
+```{r}
+small_count_words <- small_mono %>% 
+    count(word,name='word_count')
+```
+
+```{r}
+small_bigrams_with_freq <- small_bigrams %>% 
+    count(ngram,name="ngram_count") %>% 
+    mutate(
+        ngram_freq=ngram_count/sum(ngram_count),
+        ngram_log=log(ngram_freq)
+    ) %>% 
+    separate(
+        ngram,c("word_1","word_2"),sep = " ",remove = FALSE
+    )
+```

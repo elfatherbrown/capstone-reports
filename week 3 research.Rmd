@@ -1,0 +1,205 @@
+---
+title: "week 3 - research"
+author: "Alejandro Borges Sanchez"
+date: "1/28/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Notes
+
+The coursera forum seems the best entry point.
+
+<https://www.coursera.org/learn/data-science-project/discussions/forums/P8l_SSj0Eea7jBLLHPwd0w/threads/e8B6KaqGEeajYA4pTkuJ4g> 
+
+\
+
+Github of instructor:
+
+<https://github.com/lgreski/datasciencectacontent/blob/master/markdown/makeItRun.md>
+
+<https://github.com/lgreski/datasciencectacontent/blob/master/markdown/capstone-simplifiedApproach.md>
+
+\
+\
+
+Then you have the katz backoff handwritten notes:
+
+[Kbot_complete_hand_written_example.pdf](https://drive.google.com/open?id=1jqu1YJxVJjFHhplFvf6dSZ7Yp-cFHAFQ)
+
+# our base
+
+The Chenb-Goodman paper
+
+An empyrical study of smoothing techniques. <https://u.cs.biu.ac.il/~yogo/courses/mt2013/papers/chen-goodman-99.pdf>
+
+Then the stanford notes on smoothing ia a trully excellent resource:
+
+[20050421-smoothing-tutorial.pdf](https://drive.google.com/open?id=1FADM4NZYxd38zagSBpFHx97CRElmiiC3)
+
+Also standford notes:
+
+<https://duckduckgo.com/?q=katz+backoff+turing+smoothing+implementation&t=brave&ia=web>
+
+Then the Stanford course on NLP here is pure gold:\
+<https://www.youtube.com/watch?v=oWsMIW-5xUc&list=PLLssT5z_DsK8HbD2sPcUIDfQ7zmBarMYv>
+
+Then this isip lecture does a good job in interpretation:
+
+<https://isip.piconepress.com/courses/msstate/ece_8463/lectures/current/lecture_33/lecture_33.pdf>
+
+A more modern view with feelings and everything:
+
+<https://www.eecis.udel.edu/~mccoy/courses/cisc882.09f/lectures/language-modeling.key.pdf>
+
+For all this sources, what seems to be most important is that the ngram language model is a function such that you feed it an (n-1)gram and it spits out the list of most probable nth words, taking into account that that last word might not even have been seen accompanying the preceding n-1.
+
+One such algorithm is Katz's backoff model. This yields rich literature:
+
+<https://duckduckgo.com/?q=katz+backoff+ngram+model&t=brave&ia=web>
+
+Aside from the [wikipedia link](https://en.wikipedia.org/wiki/Katz%27s_back-off_model), this seems most promising:
+
+<https://www.cs.cornell.edu/courses/cs4740/2014sp/lectures.htm> 
+
+This is helpful and very specific:
+
+<https://safierinx-a.github.io/Katz-Backoff-Implementation/> 
+
+This general course from the scottish math behemoth: <https://www.inf.ed.ac.uk/teaching/courses/fnlp/> 
+
+# Discussions and musings
+
+The file globals.R has all functions. We can load, pin, generate, sample arbitrary stuff from the input files. Also, we can generate arbitrary "n" gram tables.
+
+This is a nice implementation, katz backoff with good turing smoothing (i think) by one of the course participants for sure:
+
+<https://github.com/ThachNgocTran/KatzBackOffModelImplementationInR/blob/master/calculateDiscount.R>
+
+A wonderful down to detail paper of smoothing and katzs backoff is given here:\
+<https://u.cs.biu.ac.il/~yogo/courses/mt2013/papers/chen-goodman-99.pdf>
+
+All methods seem to base themselves in the MLE which given a series of words:
+
+"hi i am alex"
+
+1.  hi
+2.  i
+3.  am
+4.  alex
+
+Counts how many "alex" appear after "am" if within a bigram model or after "i am", if a trigram, or after "hi i am" for tetragrams... and so on. That would be the $count(W_4)$ and then divide it by the sum of the counts of previous words $\sum_{i=1\cdots3} count(W_i)$ .
+
+In the end, the language "model" is a function operating on a matrix such that given an ngram, it produces a list of the most probable *nth* word given the preceding *n-1* words. This list can just be the list of counts, which can then be discounted or modified according to several smoothing algorithms.
+
+So from an implementation standpoint:
+
+```{r eval=FALSE}
+
+a_model <- function(sentence,n,training_set,cutoff=10) {
+  ngrams <- tokenize(sentence,n=n)
+  prefix=ngrams[1:(n-1)]
+  next_words <- training_set %>% 
+    filter(prefix %in% ngram) %>% 
+    arrange(desc(ngram_count)) %>% 
+    slice_top(n=cutoff)
+}
+
+```
+
+Trick is to build the training set. To this end, Ive checked some implementations available online:
+
+1.  <https://thachtranerc.wordpress.com/2016/04/12/katzs-backoff-model-implementation-in-r/>
+
+    1.  <https://github.com/ThachNgocTran/KatzBackOffModelImplementationInR>
+
+Basic tables for mono to trigram models are simple enough and we have a function for that *create_ngram_set*. Now we need to calculate the katz backoff with good turing. The gist of it is:
+
+![](images/paste-7F1CDA4D.png)
+
+For some parameter k, which is usually not important and sometimes assumed to be zero.
+
+Then....
+
+![](images/paste-B2BE350B.png)
+
+So, for D we have: <https://u.cs.biu.ac.il/~yogo/courses/mt2013/papers/chen-goodman-99.pdf> where we find:
+
+![](images/paste-BAA1206F.png)
+
+A basic implementation of good turing then might be, through direct implementation of <https://isip.piconepress.com/courses/msstate/ece_8463/lectures/current/lecture_33/lecture_33.pdf>:
+
+```{r eval=FALSE}
+good_turing <- function(ngrams) {
+  ngrams %>% 
+    rename(r=ngram_count) %>% 
+    count(r,name="n_r") %>% 
+    arrange(r) %>% 
+    mutate(
+        n_r_plus_one=lead(n_r),
+        r_star=(r+1)*(n_r_plus_one/n_r)
+    ) 
+}
+
+```
+
+From the same source, katz smoothing:
+
+![](images/paste-A9626C2A.png)
+
+For a given *k*, we need to compute all that stuff. Lets see if we can do dr:
+
+```{r eval=FALSE}
+katz_dr <- function(gt_ngrams,k){
+k <- 5
+gt_ngrams <- gt_ngrams %>% dtplyr::lazy_dt()
+n_k <- gt_ngrams %>% 
+    filter(r==k) %>% 
+    pull(n_r)
+n_k_plus_one <- gt_ngrams %>% 
+    filter(r==k) %>% 
+    pull(n_r_plus_one)
+
+n_one <-  gt_ngrams %>% 
+    filter(r==1) %>% 
+    pull(n_r)
+
+gt_ngrams %>% 
+    mutate(
+        d_r_num=(r_star/r)-(
+          (
+            (k+1)*n_k_plus_one
+            )/n_one),
+        d_r_den=1- (((k+1)*n_k_plus_one)/n_one),
+        d_r=d_r_num/d_r_den
+    )
+as_tibble(gt_ngrams)
+}
+```
+
+Now lets do alpha:
+
+```{r}
+katz_alpha <- function(){
+  
+}
+```
+
+However, for implementation, we will go with:
+
+<https://docs.google.com/presentation/d/17BLR8h02kMTux75zmGLIAM9koVEEhTZX/edit?usp=sharing&ouid=118371832223293614944&rtpof=true&sd=true>
+
+The stanford ppt notes for a course somewhere over there.
+
+![](images/paste-2BD2A38E.png)
+
+This is the actual shiite:
+
+![](images/paste-46239B82.png)
+
+Also very useful for detailed explanation:
+
+<https://web.stanford.edu/~jurafsky/slp3/3.pdf>
