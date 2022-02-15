@@ -33,3 +33,28 @@ outfiles <- c("onegram.csv","twogram.csv","threegram.csv","fourgram.csv","fivegr
   print("Did our models")
   print("they are in")
   print(outfiles)
+
+
+
+# Add the end counts
+#
+
+  source('globals.R')
+  process_this <- c("twogram.csv","threegram.csv","fourgram.csv","fivegram.csv")
+  plan(future::multicore(workers = 6))
+  future_walk(
+    process_this,
+    function(x){
+      tf <- fread(list.files(path = out_data_dir,pattern = x,full.names = TRUE))
+      one_gram_model <- c("onegram.csv") %>% paste0(out_data_dir,'/',.) %>% fread()
+      tf %>%
+        inner_join(
+          one_gram_model %>% select(ends,end_count=ngram_count)
+        ) %>%
+        mutate(MLE=ngram_count/end_count) %>%
+        as.data.table() %>%
+        fwrite(x = .,file = paste0(out_data_dir,'/','endcounted_',x))
+      gc()
+      },
+    .options = furrr_options(seed=TRUE)
+    )

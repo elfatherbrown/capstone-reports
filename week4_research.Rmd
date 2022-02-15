@@ -36,3 +36,6 @@ I am currently reading and looking around kenLM: <https://kheafield.com/code/ken
 So Dr. Peng calls this "creative exploration". Honestly, I dont have the stats/math chops to treat this as a generic problem. But this Kenneth Heatfield dude clearly has it quite fixed since 2011. So im going to see what I can learn from his stuff.
 
 <https://kheafield.com/code/kenlm/>
+
+## Perplexity
+

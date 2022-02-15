@@ -12,17 +12,10 @@ NgramModelStore <- R6::R6Class(
   public = list (
     base_dir = NULL,
     tag = NULL,
+    files=NULL,
     initialize = function(base_dir, tag) {
       self$base_dir <- base_dir
       self$tag <- tag
-      if(dir.exists(path(base_dir, tag))){
-        self$load_model(path(base_dir,tag))
-      } else {
-        self$scaffold_model_dir(path(base_dir,tag))
-      }
-    },
-    scaffold_model_dir=function(path){
-
     },
     #' build_onegram_hash
     #' Try to build as tight as possible word/num hash to pack ngrams in R

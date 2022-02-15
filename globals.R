@@ -271,6 +271,18 @@ annotate_and_tokenize <- function(text, ngram_size) {
 
 }
 
+annotate <- function(text) {
+  tokenizers::tokenize_sentences(text) %>%
+    map(~ str_replace(.x, "^", TOKEN_BOS) %>%
+          str_replace("$", TOKEN_EOS)) %>%
+    unlist()
+
+}
+
+probability <- function(model, test_text) {
+
+}
+
 
 do_model <-
   function(file = "/home/alex/Devel-nosync/OAS-projects/cursos/capstone reports/../capstone raw data/final/en_US/intermediate/cuvrmjsoxt_2_gram.csv") {
@@ -297,7 +309,7 @@ do_model <-
 #' @examples
 parse_gram <-
   function(phrase, max_order = 3) {
-    phrase <- tibble(text = phrase) %>% clean_text() %>% pull(text)
+    phrase <- tibble(text = phrase) %>% pull(text) %>% str_squish()
     wc <- phrase  |> str_count(" ") + 1
     sp <-
       phrase |> str_to_lower() |> str_split(" ") %>% .[[1]]
@@ -309,9 +321,10 @@ parse_gram <-
     map_dfr(c(begins:wc),  ~ tibble_row(ngram = paste0(sp[.x:wc], collapse =
                                                          " "),
                                         order = wc - .x + 1)) %>%
-      mutate(prefix = if_else(order > 1,
+      mutate(begins = if_else(order > 1,
                               str_remove(ngram, paste0(" [^ ]+$")),
-                              NA_character_))
+                              NA_character_),
+             ends = str_extract(ngram,"[^ ]+$"))
   }
 
 #EXPERIMENTAL ==================================
@@ -553,4 +566,36 @@ c_star <- function(ngrams, k = 5) {
     ) %>%
     select(-c1, -c2, -cd1)
 
+}
+
+
+## ScraTCH =========
+##
+##
+
+recode_ngrams <- function(hash, ngram_table) {
+  ngram_table <-
+    ngram_table %>%
+    mutate(ngram_id = row_number()) %>% as.data.table()
+  #begins
+  done_begin <- ngram_table %>%
+    select(ngram_id, ngram = begins) %>%
+    full_join(hash) %>%
+    drop_na() %>%
+    select(ngram_id, begins = wid) %>%
+    full_join(ngram_table %>% select(-begins)) %>%
+    as.data.table()
+}
+
+recode_single <- function(hash, a_table) {
+  a_table <-
+    a_table %>%
+    rename(ngram = 1) %>%
+    select(ngram_id, ngram = 1) %>%
+    as.data.table()
+  a_table %>%
+    full_join(hash) %>%
+    drop_na() %>%
+    select(ngram_id, ngram = wid) %>%
+    as.data.table()
 }
