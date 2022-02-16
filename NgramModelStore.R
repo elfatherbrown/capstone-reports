@@ -1,4 +1,12 @@
 
+
+
+
+
+
+
+
+
 #' NgramModelStore
 #'
 #' @description
@@ -12,7 +20,7 @@ NgramModelStore <- R6::R6Class(
   public = list (
     base_dir = NULL,
     tag = NULL,
-    files=NULL,
+    files = NULL,
     initialize = function(base_dir, tag) {
       self$base_dir <- base_dir
       self$tag <- tag
@@ -61,3 +69,176 @@ NgramModelStore <- R6::R6Class(
   )
 )
 
+#' NgramModel
+#'
+#' @description
+#' An ngram model with a backend file and some basic operations
+#' @return the NgramModel class
+#'
+#' @noRd
+
+NgramModel <- R6::R6Class(
+  classname = "NgramModel",
+  public = list (
+    ds = NULL,
+    N = NULL,
+    fname = NULL,
+    ogHash = NULL,
+    order = NULL,
+    initialize = function(themodel, ogHash) {
+      self$ogHash <- ogHash
+      self$ds <- themodel
+    },
+    odds_of = function(ngram_df) {
+      ngram_df %>%
+        inner_join(self$ds) %>%
+        inner_join(
+          self$ogHash$ogm %>%
+            select(prefix_count = ngram_count, ngram = ends),
+          by = c(ends = "ngram")
+        ) %>%
+        mutate(odds = log(ngram_count / prefix_count))
+    },
+    next_options = function(ngram_ds, maxopts = 40) {
+      self$ds %>%
+        inner_join(ngram_ds %>% select(begins)) %>%
+        slice_max(ngram_count, n = maxopts) %>%
+        select(begins, ends, ngram_count)
+    },
+    perplexity = function(odds_df) {
+      N <- nrow(odds_df)
+      odds_df %>%
+        summarize(perplexity = (1 / exp(sum(odds))) ^ (1 / N))
+    }
+
+  )
+)
+
+#' testNgramModel
+#'
+#' @description
+#' Testing for ngram models
+#' @return the testNgramModel class
+#'
+#' @noRd
+
+testNgramModel <- R6::R6Class(classname = "testNgramModel",
+                              public = list (
+                                NGM = NULL,
+                                initialize = function() {
+                                  self$NGM = NgramModel$new(paste0(out_data_dir, '/threegram.csv'))
+                                }
+
+                              ))
+
+#' oneGramHash
+#'
+#' @description
+#' The special monogram hash, as packed as possible.
+#' @return the oneGramHash class
+#'
+#' @noRd
+
+oneGramHash <- R6::R6Class(
+  classname = "oneGramHash",
+  inherit = R6P::Singleton,
+  public = list (
+    theHash = NULL,
+    ogm = NULL,
+    N = NULL,
+    initialize = function(fname) {
+      self$ogm <- fread(fname) %>%
+        select(onegram = ends, ngram_count) %>%
+        as.data.table() %>%
+        data.table::setindex(ngram)
+
+      self$theHash <- self$ogm %>%
+        dtplyr::lazy_dt() %>%
+        select(ngram = ends) %>%
+        distinct(ngram) %>%
+        mutate(wid = seq_along(ngram)) %>%
+        as.data.table() %>%
+        data.table::setindex(wid, ngram) %>%
+        data.table::setindex(ngram) %>%
+        data.table::setindex(wid)
+      self$N = self$ogm %>% as.data.table() %>%  nrow()
+    }
+
+  )
+
+)
+
+#' NgramCorpus
+#'
+#' @description
+#' Given a set of files, builds an ngram dataset
+#'
+#' @return the NgramCorpus class
+#'
+#' @noRd
+
+NgramCorpus <- R6::R6Class(
+  classname = "ngramCorpus",
+  public = list (
+    corpus = NULL,
+    N = NULL,
+    initialize = function(corpus = NULL,basedir = NULL,
+                          filenames = c("twogram.csv",
+                                        "threegram.csv",
+                                        "fourgram.csv",
+                                        "fivegram.csv"),
+                          seed = 123,
+                          slice_maximum = NULL) {
+      if(!is.null(corpus)){
+        self$corpus <- corpus
+        self$set_N()
+      } else {
+        self$load(
+          basedir,filenames,seed,slice_maximum
+          )
+        }
+    },
+    load = function(basedir = NULL,
+                    filenames = c("twogram.csv",
+                                  "threegram.csv",
+                                  "fourgram.csv",
+                                  "fivegram.csv"),
+                    seed = 123,
+                    slice_maximum = NULL,
+                    lines_maximum=NULL) {
+      set.seed(seed)
+      if (is.null(basedir)) {
+        basedir <- out_data_dir
+      }
+      sliceif <- function(data) {
+        if (is.null(slice_maximum)) {
+          data
+        } else {
+          data %>%
+            dtplyr::lazy_dt() %>%
+            group_by(begins) %>%
+            slice_max(ngram_count,
+                      n = slice_maximum,
+                      with_ties = FALSE) %>%
+            as.data.table()
+        }
+      }
+      self$corpus <-  filenames %>%
+        paste0("^", .) %>%
+        map_chr(~ list.files(basedir, .x, full.names = T)) %>%
+        map(~ fread(.x) %>% sliceif()) %>%
+        data.table::rbindlist() %>%
+        self$set_indexes()
+    },
+    set_N=function() {
+      self$N <- self$corpus %>% nrow()
+    },
+    set_indexes=function(dt){
+      dt %>%
+      data.table::setindex(order, begins, ends) %>%
+        data.table::setindex(begins) %>%
+        data.table::setindex(ends) %>%
+        data.table::setindex(order)
+      }
+  )
+)

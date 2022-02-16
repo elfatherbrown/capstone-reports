@@ -11,6 +11,8 @@ library(progressr)
 library(quanteda)
 library(rsample)
 library(pins)
+library(R6)
+library(R6P)
 registerDoParallel(cores = 4)
 plan(future::multisession(workers = 4))
 board_folder = glue::glue("{Sys.getenv('PIN_LOCAL_FOLDER')}capstone")
@@ -273,8 +275,8 @@ annotate_and_tokenize <- function(text, ngram_size) {
 
 annotate <- function(text) {
   tokenizers::tokenize_sentences(text) %>%
-    map(~ str_replace(.x, "^", TOKEN_BOS) %>%
-          str_replace("$", TOKEN_EOS)) %>%
+    map( ~ str_replace(.x, "^", TOKEN_BOS) %>%
+           str_replace("$", TOKEN_EOS)) %>%
     unlist()
 
 }
@@ -321,11 +323,25 @@ parse_gram <-
     map_dfr(c(begins:wc),  ~ tibble_row(ngram = paste0(sp[.x:wc], collapse =
                                                          " "),
                                         order = wc - .x + 1)) %>%
-      mutate(begins = if_else(order > 1,
+      mutate(ends = str_extract(ngram, "[^ ]+$"),
+             begins = if_else(order > 1,
                               str_remove(ngram, paste0(" [^ ]+$")),
-                              NA_character_),
-             ends = str_extract(ngram,"[^ ]+$"))
+                              ends)) %>%
+      select(order, begins, ends)
   }
+
+parse_grams <- function(texts,
+                        order,
+                        my_slice = function(data) {
+                          slice_head(data, n = 1)
+                        }) {
+  ord <- order
+  texts %>%
+    pull(text) %>%
+    annotate() %>%
+    map_dfr( ~ parse_gram(.x, max_order = ord), id = "gramid") %>%
+    my_slice()
+}
 
 #EXPERIMENTAL ==================================
 #
