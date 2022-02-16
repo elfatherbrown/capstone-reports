@@ -61,22 +61,23 @@ clean_text <- function(data, colname = "text") {
         .data[[colname]],
         "^[0-9\\W]+$|^rt$|^lol$|^_+$|^[0-9\\._]{2,}$|class=\\.*|style=\\.*"
       )
-    ) %>%
-    mutate({
-      {
-        colname
-      }
-    } := str_remove_all(.data[[colname]], "ø|_+|[0-9]|")) %>%
-    mutate({
-      {
-        colname
-      }
-    } := str_remove_all(.data[[colname]], "\"")) %>%
-    mutate({
-      {
-        colname
-      }
-    } := str_replace_all(.data[[colname]], "&", " and "))
+    )
+  # %>%
+  #   mutate({
+  #     {
+  #       colname
+  #     }
+  #   } := str_remove_all(.data[[colname]], "ø|_+|[0-9]|")) %>%
+  #   mutate({
+  #     {
+  #       colname
+  #     }
+  #   } := str_remove_all(.data[[colname]], "\"")) %>%
+  #   mutate({
+  #     {
+  #       colname
+  #     }
+  #   } := str_replace_all(.data[[colname]], "&", " and "))
 
 }
 
@@ -113,14 +114,16 @@ clean_files <- function(files,
                           stringi::stri_enc_toascii(.) %>%
                           str_replace_all(., "\032", "") %>%
                           stringi::stri_enc_toutf8() %>%
-                          str_remove_all('[0-9@#$%^&\\*\\(\\)-=_\\+,<>`\\[\\]\\{\\}"\'\\\\]')  %>%
+                          str_remove_all('[0-9]')  %>%
                           str_remove_all('\u001') %>%
                           str_remove_all(TOKEN_BOS) %>%
                           str_remove_all(TOKEN_EOS) %>%
                           str_remove_all(TOKEN_UNK) %>%
-                          str_remove_all(., fixed(''))
+                          str_replace_all('([@#$%^&\\*\\(\\)-=_\\+,<>`\\[\\]\\{\\}"\'\\\\])',
+                                          ' \\1 ') %>%
+                          str_remove_all(., fixed('')) %>%
 
-                        readr::write_file(x = r, file = y)
+                          readr::write_file(x = r, file = y)
                         p(y)
                         rm(r)
                         return(0)
@@ -273,10 +276,15 @@ annotate_and_tokenize <- function(text, ngram_size) {
 
 }
 
-annotate <- function(text) {
+annotate <- function(text, with_eos = FALSE) {
   tokenizers::tokenize_sentences(text) %>%
-    map( ~ str_replace(.x, "^", TOKEN_BOS) %>%
-           str_replace("$", TOKEN_EOS)) %>%
+    map(function(x) {
+     sf <-  str_replace(x, "^", TOKEN_BOS)
+     if(with_eos){
+       sf <- sf %>%  str_replace("$", TOKEN_EOS)
+     }
+     return(sf)
+    }) %>%
     unlist()
 
 }
@@ -326,21 +334,20 @@ parse_gram <-
       mutate(ends = str_extract(ngram, "[^ ]+$"),
              begins = if_else(order > 1,
                               str_remove(ngram, paste0(" [^ ]+$")),
-                              ends)) %>%
+                              NA_character_)) %>%
       select(order, begins, ends)
   }
 
 parse_grams <- function(texts,
                         order,
-                        my_slice = function(data) {
-                          slice_head(data, n = 1)
-                        }) {
+                        with_eos = FALSE) {
   ord <- order
+  if(class(texts) %in% c('data.table','tibble','data.frame')){
+    texts <- pull(text)
+  }
   texts %>%
-    pull(text) %>%
-    annotate() %>%
-    map_dfr( ~ parse_gram(.x, max_order = ord), id = "gramid") %>%
-    my_slice()
+    annotate(with_eos = with_eos) %>%
+    map_dfr( ~ parse_gram(.x, max_order = ord), .id = "sentence_id")
 }
 
 #EXPERIMENTAL ==================================
