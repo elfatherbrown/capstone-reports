@@ -52,16 +52,27 @@ CAPSTONE_TAG = "capstone_split_"
 #'
 #' @examples
 clean_text <- function(data, colname = "text") {
+  ret_as_tibble <- TRUE
+  if(is.character(data)){
+    data <- tibble(text=data)
+    ret_as_tibble <- FALSE
+  }
   if (nrow(data) == 0) {
     return(data)
   }
-  data %>%
+
+  r <- data %>%
     filter(
       !str_detect(
         .data[[colname]],
         "^[0-9\\W]+$|^rt$|^lol$|^_+$|^[0-9\\._]{2,}$|class=\\.*|style=\\.*"
       )
     )
+  if(ret_as_tibble){
+    r
+  } else {
+    r %>% pull('text')
+    }
   # %>%
   #   mutate({
   #     {
@@ -119,17 +130,17 @@ clean_files <- function(files,
                           str_remove_all(TOKEN_BOS) %>%
                           str_remove_all(TOKEN_EOS) %>%
                           str_remove_all(TOKEN_UNK) %>%
-                          str_replace_all('([@#$%^&\\*\\(\\)-=_\\+,<>`\\[\\]\\{\\}"\'\\\\])',
-                                          ' \\1 ') %>%
-                          str_remove_all(., fixed('')) %>%
+                          str_remove_all('([@#$%^&\\*\\(\\)-=_\\+,<>`\\[\\]\\{\\}"\'\\\\])') %>%
+                          str_remove_all(., fixed(''))
 
-                          readr::write_file(x = r, file = y)
+                        readr::write_file(x = r, file = y)
                         p(y)
                         rm(r)
                         return(0)
                       }, .progress = TRUE)
   return(outs)
 }
+
 
 #' get clean files
 #'
@@ -162,7 +173,6 @@ get_clean_files <-
     gc()
     return(ret)
   }
-
 #' get_clean_splits
 #'
 #' @return
@@ -263,7 +273,7 @@ do_map_split_tokens <- function(all_text,
   return(fname)
 }
 
-annotate_and_tokenize <- function(text, ngram_size) {
+annotate_and_tokenize <- function(text, ngram_size,with_sentence_id=NULL) {
   tokenizers::tokenize_sentences(text) %>%
     map_dfr(
       ~ str_replace(.x, "^", TOKEN_BOS) %>%
@@ -271,7 +281,8 @@ annotate_and_tokenize <- function(text, ngram_size) {
         tokenizers::tokenize_ngrams(n = ngram_size) %>%
         pluck(1) %>%
         as.character(.) %>%
-        enframe(name = NULL, value = 'ngram')
+        enframe(name = NULL, value = 'ngram'),
+      .id=with_sentence_id
     )
 
 }
@@ -317,7 +328,7 @@ do_model <-
 #' @export
 #'
 #' @examples
-parse_gram <-
+parse_gram_from_user_input <-
   function(phrase, max_order = 3) {
     phrase <- tibble(text = phrase) %>% pull(text) %>% str_squish()
     wc <- phrase  |> str_count(" ") + 1
@@ -334,11 +345,11 @@ parse_gram <-
       mutate(ends = str_extract(ngram, "[^ ]+$"),
              begins = if_else(order > 1,
                               str_remove(ngram, paste0(" [^ ]+$")),
-                              NA_character_)) %>%
+                              ngram)) %>%
       select(order, begins, ends)
   }
 
-parse_grams <- function(texts,
+parse_grams_from_user_input <- function(texts,
                         order,
                         with_eos = FALSE) {
   ord <- order
@@ -349,6 +360,18 @@ parse_grams <- function(texts,
     annotate(with_eos = with_eos) %>%
     map_dfr( ~ parse_gram(.x, max_order = ord), .id = "sentence_id")
 }
+
+parse_grams_for_evaluation <- function(text,max_order){
+  text %>%
+  map2_dfr(c(1:max_order),.,
+           ~annotate_and_tokenize(text = .y,ngram_size = .x) %>%
+             mutate(
+               ends = str_extract(ngram, "[^ ]+$"),
+               begins = str_remove(ngram, " [^ ]+$"),
+               order = .x
+             )
+           )
+  }
 
 #EXPERIMENTAL ==================================
 #
@@ -622,3 +645,16 @@ recode_single <- function(hash, a_table) {
     select(ngram_id, ngram = wid) %>%
     as.data.table()
 }
+
+
+whole_eval_kabang <- function(toyngc,ngramds){
+
+  'waitress brought us our food the asked if she can get us anything else and I said one thing and her responseIll try if I have time LOL' %>%
+    parse_grams_for_evaluation(max_order = 5) %>%
+    as.data.table() %>%
+    toyngc$corpus[.,on=.(begins,order),nomatch=0] %>%
+    .[order(begins,order),.(order,begins,ngram_count)] %>%
+    .[,.(prefix_count=sum(ngram_count)),by=.(order,begins)] %>%
+    toyngc$corpus[.,on=.(order,begins),nomatch=0]
+
+  }

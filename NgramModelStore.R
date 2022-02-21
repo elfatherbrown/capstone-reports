@@ -173,7 +173,8 @@ NgramCorpus <- R6::R6Class(
     N = NULL,
     initialize = function(corpus = NULL,
                           basedir = NULL,
-                          filenames = c("twogram.csv",
+                          filenames = c("onegram.csv",
+                                        "twogram.csv",
                                         "threegram.csv",
                                         "fourgram.csv",
                                         "fivegram.csv"),
@@ -194,7 +195,8 @@ NgramCorpus <- R6::R6Class(
       }
     },
     load = function(basedir = NULL,
-                    filenames = c("twogram.csv",
+                    filenames = c("onegram.csv",
+                                  "twogram.csv",
                                   "threegram.csv",
                                   "fourgram.csv",
                                   "fivegram.csv"),
@@ -211,7 +213,7 @@ NgramCorpus <- R6::R6Class(
         if (is.null(slice_maximum)) {
           data
         } else {
-          p(message="slicing")
+          p(message = "slicing")
           data %>%
             # data.table::setindex(begins) %>%
             group_by(begins) %>%
@@ -221,72 +223,76 @@ NgramCorpus <- R6::R6Class(
             as.data.table()
         }
       }
-      self$corpus <-  filenames %>%
+      list_of_data_tables = list()
+      ngrams_meta = list()
+      filenames %>%
         paste0("^", .) %>%
-        map_chr( ~ list.files(basedir, .x, full.names = T)) %>%
-        future_map_dfr(function(x)
+        map_chr(~ list.files(basedir, .x, full.names = T)) %>%
+        walk(function(x)
         {
-
           p(x)
           if (is.null(lines_maximum)) {
-            ngram_set <- fread(x) %>%  sliceif() %>% self$set_indexes()
+            ngram_set <- fread(x)
           } else {
             ngram_set <-
-              fread(x, nrows = lines_maximum) %>%
-              data.table::setindex(begins) %>%
-              sliceif() %>%
-              self$set_indexes()
+              fread(x, nrows = lines_maximum)
           }
-           order <- ngram_set %>% slice_head(n = 1) %>% pull(order)
+          if (str_detect(x, '/onegram.csv$')) {
+            ngram_set <- ngram_set %>%
+              mutate(ends = NA_character_) %>%
+              as.data.table()
+          }
+          ngram_set <- ngram_set %>% sliceif()
+          order <- ngram_set %>% slice_head(n = 1) %>% pull(order)
           N <- ngram_set %>% nrow()
-          tibble(ngram_set = list(ngram_set),
-                 order = order,
-                 N=N)
+          list_of_data_tables[[as.character(order)]] <<- ngram_set
+          ngrams_meta[[as.character(order)]][["N"]] <<- N
         })
-
+      self$corpus <-
+        rbindlist(list_of_data_tables) %>% self$set_indexes()
     },
     set_N = function() {
       self$N <- self$corpus %>% nrow()
     },
     set_indexes = function(dt) {
       dt %>%
-        mutate(ngram_id=row_number()) %>%
+        mutate(ngram_id = row_number()) %>%
         as.data.table() %>%
+        data.table::setindex(begins,order) %>%
+        data.table::setindex(order,begins) %>%
         data.table::setindex(begins) %>%
         data.table::setindex(ends) %>%
-        data.table::setindex(begins,ends) %>%
+        data.table::setindex(begins, ends) %>%
         data.table::setindex(order)
     },
-    get = function(order) {
-      o <- order
-      self$corpus %>% filter(order == o) %>% pull(ngram_set) %>% pluck(1)
-    },
-    fullmatches=function(dt,ngram_ds){
-      dt[ngram_ds,on=.(begins,ends),nomatch=0] %>%
+    fullmatches = function(dt, ngram_ds) {
+      dt[ngram_ds, on = .(begins, ends), nomatch = 0] %>%
         select(-i.order) %>%
         as.data.table()
-      },
-#' begincounts
-#' Adds counts for the begins part of an ngram by searching for the previous order
-#' ngram count
-#' @param ngram_ds
-#'
-#' @return
-#' @export
-#'
-#' @examples
-    begincounts=function(ngram_ds){
-      fullmatches <- self$fullmatches(self$corpus,ngram_ds)
-      fullmatches[,prefix:=str_remove(begins,' [^ ]+$')]
-    begincounts <- fullmatches %>%
-        .[
-        order>2,
-        #Reduce the begins part of the ngram to its base, and previous order
-        .(begins=str_remove(begins,' [^ ]+$'),order=order-1),
-      ] %>%
-        self$corpus[.,.(order,begins,ngram_count),on=.(order,begins),nomatch=0] %>%
-        .[,.(begins_count=sum(ngram_count)),by=.(order,begins)]
-    fullmatches <- fullmatches[begincounts,on=.(prefix),nomatches=0]
-      }
+    },
+    #' begincounts
+    #' Adds counts for the begins part of an ngram by searching for the previous order
+    #' ngram count
+    #' @param ngram_ds
+    #'
+    #' @return
+    #' @export
+    #'
+    #' @examples
+    begincounts = function(ngram_ds) {
+      fullmatches <- self$fullmatches(self$corpus, ngram_ds)
+      fullmatches[, prefix := str_remove(begins, ' [^ ]+$')]
+      begincounts <- fullmatches %>%
+        .[order >= 2,
+          #Reduce the begins part of the ngram to its base, and previous order
+          .(begins = str_remove(begins, ' [^ ]+$'), order = order - 1),] %>%
+        self$corpus[., .(order, begins, ngram_count), on = .(order, begins), nomatch =
+                      0] %>%
+        .[, .(begins_count = sum(ngram_count)), by = .(order, begins)]
+      fullmatches <-
+        fullmatches[begincounts, on = .(prefix = begins), nomatch =
+                      0][, i.order := NULL]
+      print(fullmatches)
+    }
   )
 )
