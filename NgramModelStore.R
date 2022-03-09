@@ -171,7 +171,9 @@ NgramCorpus <- R6::R6Class(
   public = list (
     corpus = NULL,
     N = NULL,
+    is_indexed = NULL,
     initialize = function(corpus = NULL,
+                          do_index = NULL,
                           basedir = NULL,
                           filenames = c("onegram.csv",
                                         "twogram.csv",
@@ -181,9 +183,17 @@ NgramCorpus <- R6::R6Class(
                           seed = 123,
                           slice_maximum = NULL,
                           lines_maximum = NULL) {
-      if (!is.null(corpus)) {
+      if (!is.null(corpus) && !is.null(do_index)) {
+
         self$corpus <- corpus
+
         self$set_N()
+        if (do_index == TRUE) {
+          numcols=c('order','ngram_count')
+          self$corpus[,(numcols):=lapply(.SD,as.numeric),.SDcols=numcols]
+          self$set_indexes()
+        }
+        return(self)
       } else {
         self$load(
           basedir = basedir,
@@ -192,6 +202,7 @@ NgramCorpus <- R6::R6Class(
           slice_maximum = slice_maximum,
           lines_maximum = lines_maximum
         )
+        return(self)
       }
     },
     load = function(basedir = NULL,
@@ -227,7 +238,7 @@ NgramCorpus <- R6::R6Class(
       ngrams_meta = list()
       filenames %>%
         paste0("^", .) %>%
-        map_chr(~ list.files(basedir, .x, full.names = T)) %>%
+        map_chr( ~ list.files(basedir, .x, full.names = T)) %>%
         walk(function(x)
         {
           p(x)
@@ -254,21 +265,18 @@ NgramCorpus <- R6::R6Class(
     set_N = function() {
       self$N <- self$corpus %>% nrow()
     },
-    set_indexes = function(dt) {
-      dt %>%
-        mutate(ngram_id = row_number()) %>%
-        as.data.table() %>%
-        data.table::setindex(begins,order) %>%
-        data.table::setindex(order,begins) %>%
-        data.table::setindex(begins) %>%
-        data.table::setindex(ends) %>%
-        data.table::setindex(begins, ends) %>%
-        data.table::setindex(order)
+    set_indexes = function() {
+        self$corpus <- self$corpus %>%
+          mutate(ngram_id=row_number()) %>%
+            as.data.table()
+        data.table::setkey(self$corpus,ngram_id)
+        data.table::setindex(self$corpus,begins,order)
+        data.table::setindex(self$corpus,ends)
+        data.table::setindex(self$corpus,begins)
     },
     fullmatches = function(dt, ngram_ds) {
-      dt[ngram_ds, on = .(begins, ends), nomatch = 0] %>%
-        select(-i.order) %>%
-        as.data.table()
+      dt[ends %chin% ngram_ds$ends][begins %chin% ngram_ds$begins] %>%
+        return(.)
     },
     #' begincounts
     #' Adds counts for the begins part of an ngram by searching for the previous order
@@ -282,17 +290,24 @@ NgramCorpus <- R6::R6Class(
     begincounts = function(ngram_ds) {
       fullmatches <- self$fullmatches(self$corpus, ngram_ds)
       fullmatches[, prefix := str_remove(begins, ' [^ ]+$')]
-      begincounts <- fullmatches %>%
+      sofar <-  fullmatches %>%
         .[order >= 2,
           #Reduce the begins part of the ngram to its base, and previous order
-          .(begins = str_remove(begins, ' [^ ]+$'), order = order - 1),] %>%
-        self$corpus[., .(order, begins, ngram_count), on = .(order, begins), nomatch =
-                      0] %>%
-        .[, .(begins_count = sum(ngram_count)), by = .(order, begins)]
+          .(begins = str_remove(begins, ' [^ ]+$'), order = order - 1), ]
+       setindex(sofar,begins,order)
+      begincounts <-
+        self$corpus[begins %chin% sofar$begins & order %in% sofar$order] %>%
+        .[, .(begins_count = sum(ngram_count)), by = .(begins,order)]
       fullmatches <-
-        fullmatches[begincounts, on = .(prefix = begins), nomatch =
-                      0][, i.order := NULL]
-      print(fullmatches)
+        fullmatches[begincounts, on = .(prefix = begins,order), nomatch =
+                      0]
+      fullmatches
+    },
+    nextmatches=function(ngram_ds){
+      searchfor <- ngram_ds %>%
+        mutate(ngram=paste0(begins," ",ends))
+      self$corpus[begins %chin% searchfor$ngram & order==searchfor$order]
     }
   )
 )
+
