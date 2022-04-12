@@ -173,7 +173,7 @@ NgramCorpus <- R6::R6Class(
     N = NULL,
     is_indexed = NULL,
     initialize = function(corpus = NULL,
-                          do_index = NULL,
+                          do_index = TRUE,
                           basedir = NULL,
                           filenames = c("onegram.csv",
                                         "twogram.csv",
@@ -183,14 +183,14 @@ NgramCorpus <- R6::R6Class(
                           seed = 123,
                           slice_maximum = NULL,
                           lines_maximum = NULL) {
-      if (!is.null(corpus) && !is.null(do_index)) {
+      if (!is.null(corpus) ) {
 
         self$corpus <- corpus
 
         self$set_N()
-        if (do_index == TRUE) {
-          numcols=c('order','ngram_count')
-          self$corpus[,(numcols):=lapply(.SD,as.numeric),.SDcols=numcols]
+        numcols=c('order','ngram_count')
+        self$corpus[,(numcols):=lapply(.SD,as.numeric),.SDcols=numcols]
+        if (!is.null(do_index) && do_index == TRUE) {
           self$set_indexes()
         }
         return(self)
@@ -269,10 +269,15 @@ NgramCorpus <- R6::R6Class(
         self$corpus <- self$corpus %>%
           mutate(ngram_id=row_number()) %>%
             as.data.table()
-        data.table::setkey(self$corpus,ngram_id)
-        data.table::setindex(self$corpus,begins,order)
-        data.table::setindex(self$corpus,ends)
-        data.table::setindex(self$corpus,begins)
+        # data.table::setkey(self$corpus,ngram_id)
+        # data.table::setindex(self$corpus,begins,order)
+        # data.table::setindex(self$corpus,ends)
+        # data.table::setindex(self$corpus,begins)
+        data.table::setkeyv(self$corpus,c("order",
+                                          "begins",
+                                          "ends",
+                                          "ngram_id")
+        )
     },
     fullmatches = function(dt, ngram_ds) {
       dt[ends %chin% ngram_ds$ends][begins %chin% ngram_ds$begins] %>%
@@ -303,11 +308,17 @@ NgramCorpus <- R6::R6Class(
                       0]
       fullmatches
     },
-    nextmatches=function(ngram_ds){
-      searchfor <- ngram_ds %>%
-        mutate(ngram=paste0(begins," ",ends))
-      self$corpus[begins %chin% searchfor$ngram & order==searchfor$order]
-    }
+    nextmatches=function(user_input){
+      r <- user_input %>%
+      parse_grams_from_user_input(order = 5) %>%
+        as.data.table() %>%
+        fc$corpus[.,on=c('order','begins'),nomatch=0] %>%
+        .[order(-order,-ngram_count)]
+
+      r %>%
+        select(order,ends,ngram_count) %>%
+          as_tibble()
+      }
   )
 )
 

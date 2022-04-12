@@ -53,8 +53,8 @@ CAPSTONE_TAG = "capstone_split_"
 #' @examples
 clean_text <- function(data, colname = "text") {
   ret_as_tibble <- TRUE
-  if(is.character(data)){
-    data <- tibble(text=data)
+  if (is.character(data)) {
+    data <- tibble(text = data)
     ret_as_tibble <- FALSE
   }
   if (nrow(data) == 0) {
@@ -68,11 +68,11 @@ clean_text <- function(data, colname = "text") {
         "^[0-9\\W]+$|^rt$|^lol$|^_+$|^[0-9\\._]{2,}$|class=\\.*|style=\\.*"
       )
     )
-  if(ret_as_tibble){
+  if (ret_as_tibble) {
     r
   } else {
     r %>% pull('text')
-    }
+  }
   # %>%
   #   mutate({
   #     {
@@ -140,12 +140,12 @@ clean_files <- function(files,
   return(outs)
 }
 
-basic_clean_text <- function(x){
+basic_clean_text <- function(x) {
   x %>%
-  str_remove_all('([@#$%^&\\*\\(\\)-=_\\+,<>`\\[\\]\\{\\}"\'\\\\])') %>%
+    str_remove_all('([@#$%^&\\*\\(\\)-=_\\+,<>`\\[\\]\\{\\}"\'\\\\])') %>%
     str_remove_all(., fixed(''))
 
-  }
+}
 
 
 
@@ -162,24 +162,66 @@ basic_clean_text <- function(x){
 #'
 #' @examples
 get_clean_files <-
-  function(ddir = clean_files_dir, pattern = 'txt') {
+  function(ddir = clean_files_dir,
+           pattern = 'txt') {
     ret <- list.files(paste0(ddir)) %>%
       .[str_detect(., pattern)] %>%
       paste0(ddir, '/', .) %>%
-      future_map_dfr(function(x) {
+      future_map(function(x) {
         fread(
           x,
           sep = '\n',
           quote = "",
           header = FALSE,
           col.names = 'text'
-        ) %>% mutate(file = str_replace(x, '.*/([^/]+)$', '\\1')) %>%
+        ) %>%
+          mutate(file = str_replace(x, '.*/([^/]+)$', '\\1')) %>%
           as.data.table()
       },
-      .progress = TRUE)
+      .progress = TRUE) %>%
+  rbindlist()
     gc()
     return(ret)
   }
+
+#' clean_sentences
+#'
+#' Sentecifies the input text_data
+#'
+#' @param text_data
+#' A data.table  with file,text columns
+#'
+#' @return
+#' A data.table with same columns, but potentially more rows since sentences
+#' are expanded
+#'
+#' @export
+#'
+clean_sentences <- function(text_data=NULL){
+  text_data%>%
+    group_by(file) %>%
+    nest() %>%
+    as_tibble() %>%
+    pmap(
+      function(file,data,...)
+      {
+        sof <- data %>%
+          pull(.,text) %>%
+          annotate(with_eos = TRUE)
+        if(str_detect(file,'tweet')){
+          sof <- sof %>%
+            tokenize_tweets(lowercase = FALSE,
+                            strip_url = TRUE) %>%
+            map(~paste0(.x,collapse = ' ') )
+        }
+        tibble(
+          text=sof,
+          file=rep(file,length(sof))
+        ) %>% as.data.table()
+      }
+    ) %>% rbindlist()
+}
+
 #' get_clean_splits
 #'
 #' @return
@@ -190,6 +232,15 @@ get_clean_files <-
 gen_clean_splits <- function(seed) {
   set.seed(seed)
   get_clean_files() %>%
+  as.data.table() %>%
+    .[,chunk:=ceiling(.I %% .N/10)][] %>%
+    group_by(chunk) %>%
+    nest() %>%
+    as_tibble() %>%
+    furrr::pmap(
+      ~clean_sentences(..2)
+    ) %>%
+    rbindlist() %>%
     initial_split(strata = file)
 }
 
@@ -280,32 +331,33 @@ do_map_split_tokens <- function(all_text,
   return(fname)
 }
 
-sentenceify <- function(all_text,filename_tag){
-  fname <- paste0(inter_data_dir, '/', filename_tag,'_sent.csv')
+sentenceify <- function(all_text, filename_tag) {
+  fname <- paste0(inter_data_dir, '/', filename_tag, '_sent.csv')
   all_text %>%
     mutate(chunk = row_number() %/% (nrow(all_text) / 10)) %>%
     group_by(chunk) %>%
     nest()
-  }
-
-
-annotate_and_tokenize <- function(text, ngram_size,with_sentence_id=NULL) {
-  tokenizers::tokenize_sentences(text,lowercase = FALSE,strip_punct = FALSE) %>%
-    map_dfr(
-      ~ str_replace(.x, "^", TOKEN_BOS) %>%
-        str_replace("$", TOKEN_EOS) %>%
-        tokenizers::tokenize_ngrams(n = ngram_size) %>%
-        pluck(1) %>%
-        as.character(.) %>%
-        enframe(name = NULL, value = 'ngram'),
-      .id=with_sentence_id
-    )
-
 }
 
+
+annotate_and_tokenize <-
+  function(text, ngram_size, with_sentence_id = NULL) {
+    tokenizers::tokenize_sentences(text, lowercase = FALSE, strip_punct = FALSE) %>%
+      map_dfr(
+        ~ str_replace(.x, "^", TOKEN_BOS) %>%
+          str_replace("$", TOKEN_EOS) %>%
+          tokenizers::tokenize_ngrams(n = ngram_size) %>%
+          pluck(1) %>%
+          as.character(.) %>%
+          enframe(name = NULL, value = 'ngram'),
+        .id = with_sentence_id
+      )
+
+  }
+
 do_map_split_tokens_maxorder <- function(all_text,
-                                filename_tag,
-                                max_order = 3)
+                                         filename_tag,
+                                         max_order = 3)
 {
   files_sep <-
     paste0(filename_tag, '_upto_', max_order, '_gram.csv')
@@ -315,26 +367,30 @@ do_map_split_tokens_maxorder <- function(all_text,
     mutate(chunk = row_number() %/% (nrow(all_text) / 10)) %>%
     group_by(chunk) %>%
     nest()
-    p <- progressr::progressor(along = chunked)
-    mchunks <- chunked %>%
-      select(chunk) %>%
-      ungroup() %>%
-      slice_max(chunk,n=1) %>% pull(chunk)
-    file.remove(fname)
-    p(message=glue::glue('Chunking {mchunks} for parallel'),class='sticky',amount=0)
+  p <- progressr::progressor(along = chunked)
+  mchunks <- chunked %>%
+    select(chunk) %>%
+    ungroup() %>%
+    slice_max(chunk, n = 1) %>% pull(chunk)
+  file.remove(fname)
+  p(
+    message = glue::glue('Chunking {mchunks} for parallel'),
+    class = 'sticky',
+    amount = 0
+  )
   chunked %>%
     future_pwalk(function(chunk, data) {
       r <- data %>%
         pull(text) %>%
         annotate_and_tokenize_maxorder(., max_order = max_order) %>%
-        count(order,ngram, name = "ngram_count") %>%
+        count(order, ngram, name = "ngram_count") %>%
         filter(ngram != "") %>%
-        group_by( order=order,
-            begins = str_remove(ngram, " [^ ]+$"),
-            ends = str_extract(ngram, "[^ ]+$")) %>%
-        summarize(
-          ngram_count=sum(ngram_count)
-        )
+        group_by(
+          order = order,
+          begins = str_remove(ngram, " [^ ]+$"),
+          ends = str_extract(ngram, "[^ ]+$")
+        ) %>%
+        summarize(ngram_count = sum(ngram_count))
       fwrite(
         x = r,
         file = fname,
@@ -349,50 +405,58 @@ do_map_split_tokens_maxorder <- function(all_text,
     .progress = FALSE,
     .options = furrr_options(seed = TRUE))
   gc()
-  outfile <- paste0(out_data_dir,'/',files_sep)
+  outfile <- paste0(out_data_dir, '/', files_sep)
   do_model(file = fname) %>%
-  fwrite(x=.,file=outfile)
+    fwrite(x = ., file = outfile)
   return(outfile)
 }
 
-annotate_and_tokenize_maxorder <- function(the_text,max_order){
-
-    str_replace_all(the_text,'\\.,','. ') %>%
-    tokenizers::tokenize_sentences() %>%
+annotate_and_tokenize_maxorder <- function(the_text, max_order) {
+  annotate(the_text,with_eos = TRUE)%>%
+    map(.,
+        ~ tokenizers::tokenize_ptb(.x) %>% flatten() %>% paste0(., collapse = ' ')) %>%
+    map(.,
+        ~ tokenizers::tokenize_ngrams(.x, n = max_order, n_min = 1) %>% flatten()) %>%
     flatten() %>%
-    map(.,~paste0(TOKEN_BOS,.x,TOKEN_EOS)) %>% -->HERE<<=
-    map(.,~tokenizers::tokenize_ptb(.x) %>% flatten() %>% paste0(., collapse=' ')) %>%
-    map(.,~tokenizers::tokenize_ngrams(.x,n = max_order,n_min = 1) %>% flatten()) %>%
-    flatten() %>%
-    map_dfr(.,function(x){
-      tibble(
-        ngram=x,
-        order=str_count(x," ")+1
-      )
+    unique() %>%
+    map_dfr(., function(x) {
+      tibble(ngram = x,
+             order = str_count(x, " ") + 1)
     })
 }
 
-TODO:
-  1. rewrite annotate to produce a single column sentence dataset that takes
-into account twitter sources and produces straight sentences like in -->HERE<<=
-  2. Then rewrite the training/testing split so that it works with sentences
-as the sampled unit
-  3. Rewrite annotate_and_tokenize_maxorder and do_map_split_tokens_maxorder so
-  that it reads in sentences instead of full text
-  4. Then tokenize with your new thingie and build the model on 75% training
-  5. Then perplexity and back to coursera
+# TODO:
+#  [check]  1. rewrite annotate to produce a single column sentence dataset that takes
+# into account twitter sources and produces straight sentences like in -->HERE<<=
+#   2. Then rewrite the training/testing split so that it works with sentences
+# as the sampled unit
+#   3. Rewrite annotate_and_tokenize_maxorder and do_map_split_tokens_maxorder so
+#   that it reads in sentences instead of full text
+#   4. Then tokenize with your new thingie and build the model on 75% training
+#   5. Then perplexity and back to coursera
 
+#' Title
+#'
+#' @param text
+#' @param with_eos
+#'
+#' @return
+#' A character vector of sentences with begin and end tokens
+#'
+#' @export
+#'
+#' @examples
 annotate <- function(text, with_eos = FALSE) {
-  tokenizers::tokenize_sentences(text) %>%
-    map(function(x) {
-     sf <-  str_replace(x, "^", TOKEN_BOS)
-     if(with_eos){
-       sf <- sf %>%  str_replace("$", TOKEN_EOS)
-     }
-     return(sf)
-    }) %>%
-    unlist()
+  sf <- str_replace_all(text, '\\.,', '. ') %>%
+    tokenizers::tokenize_sentences() %>%
+    flatten() %>%
+    paste0(TOKEN_BOS,' ',.)
 
+  if (with_eos) {
+    sf <- sf %>%  paste0(' ', TOKEN_EOS)
+  }
+  sf <- sf %>% unlist()
+  return(sf)
 }
 
 
@@ -441,30 +505,32 @@ parse_gram_of_order <-
   }
 
 parse_grams_from_user_input <- function(texts,
-                        order,
-                        with_eos = FALSE) {
+                                        order,
+                                        with_eos = FALSE) {
   ord <- order
-  if(class(texts) %in% c('data.table','tibble','data.frame')){
+  if (class(texts) %in% c('data.table', 'tibble', 'data.frame')) {
     texts <- pull(text)
   }
 
   texts %>%
-  basic_clean_text() %>%
+    basic_clean_text() %>%
     annotate(with_eos = with_eos) %>%
-    map_dfr( ~ parse_gram_of_order(.x, max_order = ord), .id = "sentence_id")
+    map_dfr(~ parse_gram_of_order(.x, max_order = ord), .id = "sentence_id")
 }
 
-parse_grams_for_evaluation <- function(text,max_order){
+parse_grams_for_evaluation <- function(text, max_order) {
   text %>%
-  map2_dfr(c(1:max_order),.,
-           ~annotate_and_tokenize(text = .y,ngram_size = .x) %>%
-             mutate(
-               ends = str_extract(ngram, "[^ ]+$"),
-               begins = str_remove(ngram, " [^ ]+$"),
-               order = .x
-             )
-           )
-  }
+    map2_dfr(
+      c(1:max_order),
+      .,
+      ~ annotate_and_tokenize(text = .y, ngram_size = .x) %>%
+        mutate(
+          ends = str_extract(ngram, "[^ ]+$"),
+          begins = str_remove(ngram, " [^ ]+$"),
+          order = .x
+        )
+    )
+}
 
 #EXPERIMENTAL ==================================
 #
@@ -740,14 +806,13 @@ recode_single <- function(hash, a_table) {
 }
 
 
-whole_eval_kabang <- function(toyngc,ngramds){
-
+whole_eval_kabang <- function(toyngc, ngramds) {
   'waitress brought us our food the asked if she can get us anything else and I said one thing and her responseIll try if I have time LOL' %>%
     parse_grams_for_evaluation(max_order = 5) %>%
     as.data.table() %>%
-    toyngc$corpus[.,on=.(begins,order),nomatch=0] %>%
-    .[order(begins,order),.(order,begins,ngram_count)] %>%
-    .[,.(prefix_count=sum(ngram_count)),by=.(order,begins)] %>%
-    toyngc$corpus[.,on=.(order,begins),nomatch=0]
+    toyngc$corpus[., on = .(begins, order), nomatch = 0] %>%
+    .[order(begins, order), .(order, begins, ngram_count)] %>%
+    .[, .(prefix_count = sum(ngram_count)), by = .(order, begins)] %>%
+    toyngc$corpus[., on = .(order, begins), nomatch = 0]
 
-  }
+}
