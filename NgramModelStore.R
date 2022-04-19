@@ -309,15 +309,27 @@ NgramCorpus <- R6::R6Class(
       fullmatches
     },
     nextmatches=function(user_input){
-      r <- user_input %>%
-      parse_grams_from_user_input(order = 5) %>%
-        as.data.table() %>%
-        fc$corpus[.,on=c('order','begins'),nomatch=0] %>%
-        .[order(-order,-ngram_count)]
-
-      r %>%
+     user_input %>%
+        parse_grams_from_user_input(order = 5) %>%
+        mutate(ngram=paste0(begins, " ", ends),
+               matchorder=order+1) %>%
+        select(matchorder,ngram) %>%
+        as.data.table(.) %>%
+        fc$corpus[.,on = .(order==matchorder,begins==ngram),nomatch=0] %>%
+        .[order(-order,-ngram_count)] %>%
         select(order,ends,ngram_count) %>%
-          as_tibble()
+        as_tibble()
+      },
+#' trim
+#' Trims the prop percent words with the least count in the corpus and returns
+#' the resulting data table, with substitution of all of these words in subsequent
+#' orders ngrams by TOKEN_UNK
+#'
+#' @return
+#' The full corpus trimmed by prop percent
+#'
+    trim=function(prop=0.4){
+
       }
   )
 )
