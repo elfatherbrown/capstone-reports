@@ -1,5 +1,5 @@
 ## SETUP ========================
-
+options(tidyverse.quiet = TRUE)
 library(tidyverse)
 library(tidytext)
 library(dtplyr)
@@ -125,11 +125,11 @@ clean_files <- function(files,
                           stringi::stri_enc_toascii(.) %>%
                           str_replace_all(., "\032", "") %>%
                           stringi::stri_enc_toutf8() %>%
-                          str_remove_all('[0-9]')  %>%
+                          # str_remove_all('[0-9]')  %>%
                           str_remove_all('\u001') %>%
-                          str_remove_all(TOKEN_BOS) %>%
-                          str_remove_all(TOKEN_EOS) %>%
-                          str_remove_all(TOKEN_UNK) %>%
+                          str_remove_all(fixed(TOKEN_BOS)) %>%
+                          str_remove_all(fixed(TOKEN_EOS)) %>%
+                          str_remove_all(fixed(TOKEN_UNK)) %>%
                           str_remove_all(., fixed(''))
 
                         readr::write_file(x = r, file = y)
@@ -774,45 +774,5 @@ c_star <- function(ngrams, k = 5) {
 }
 
 
-## ScraTCH =========
-##
-##
+## KENLM =====================
 
-recode_ngrams <- function(hash, ngram_table) {
-  ngram_table <-
-    ngram_table %>%
-    mutate(ngram_id = row_number()) %>% as.data.table()
-  #begins
-  done_begin <- ngram_table %>%
-    select(ngram_id, ngram = begins) %>%
-    full_join(hash) %>%
-    drop_na() %>%
-    select(ngram_id, begins = wid) %>%
-    full_join(ngram_table %>% select(-begins)) %>%
-    as.data.table()
-}
-
-recode_single <- function(hash, a_table) {
-  a_table <-
-    a_table %>%
-    rename(ngram = 1) %>%
-    select(ngram_id, ngram = 1) %>%
-    as.data.table()
-  a_table %>%
-    full_join(hash) %>%
-    drop_na() %>%
-    select(ngram_id, ngram = wid) %>%
-    as.data.table()
-}
-
-
-whole_eval_kabang <- function(toyngc, ngramds) {
-  'waitress brought us our food the asked if she can get us anything else and I said one thing and her responseIll try if I have time LOL' %>%
-    parse_grams_for_evaluation(max_order = 5) %>%
-    as.data.table() %>%
-    toyngc$corpus[., on = .(begins, order), nomatch = 0] %>%
-    .[order(begins, order), .(order, begins, ngram_count)] %>%
-    .[, .(prefix_count = sum(ngram_count)), by = .(order, begins)] %>%
-    toyngc$corpus[., on = .(order, begins), nomatch = 0]
-
-}

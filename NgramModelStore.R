@@ -320,15 +320,8 @@ NgramCorpus <- R6::R6Class(
         select(order,ends,ngram_count) %>%
         as_tibble()
       },
-#' trim
-#' Trims the prop percent words with the least count in the corpus and returns
-#' the resulting data table, with substitution of all of these words in subsequent
-#' orders ngrams by TOKEN_UNK
-#'
-#' @return
-#' The full corpus trimmed by prop percent
-#'
-    trim=function(prop=0.4){
+    perplexity=function(corpus,test_data,maxorder=5) {
+
 
       }
   )
