@@ -136,7 +136,7 @@ clean_files <- function(files,
                         p(y)
                         rm(r)
                         return(0)
-                      }, .progress = TRUE)
+                      }, .progress = FALSE)
   return(outs)
 }
 

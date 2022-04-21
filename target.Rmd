@@ -1,0 +1,77 @@
+---
+title: "Targets pipeline"
+output:
+  html_document:
+    df_print: paged
+editor_options:
+  chunk_output_type: console
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+```
+
+### The Coursera Solution Pipeline[^1]
+
+[^1]: For reference the oficial manual is: <https://books.ropensci.org/targets/markdown.html#target-markdown>
+
+Full documentation for the rationale behind this implementation is in the ENDGAME.Rmd file.
+
+The diagram for the pipeline which will allow iteration from cleaning and onwards is [here](https://docs.google.com/drawings/d/1ulZlV0PZG9nbkvX4l6Qm6_dJ9GT1m37ahK7CU9PbaNE/edit?usp=sharing) :
+
+![](https://docs.google.com/drawings/d/e/2PACX-1vR1KnEzjXiu1x1VSh-ut4uzriZuXYqkQK8C65Xrrc5I_LmWQ4rb0k03-K4SJ2Wpr5hIcQDhvE5LLA0q/pub?w=960&h=721){style="padding: 10px;" width="1066"}
+
+### Implementing the pipeline
+
+#### Setup
+
+Basic startup setup
+
+```{r}
+library(targets) 
+tar_unscript()
+```
+
+```{targets t-globals, tar_globals=TRUE}
+options(tidyverse.quiet = TRUE)
+targets::tar_option_set(format = 'qs')
+targets::tar_option_set(packages = c( "dplyr", "ggplot2", "readr", "tidyr","data.table","progressr","R6","pins","rsample","tidytext","purrr","furrr","magrittr","stringr"))
+source("R/global_variables.R")
+```
+
+#### Raw data definition
+
+Preclean is automatic: it lists the files in the source directory and pipes it to clean_files, which outputs the three files into an output directory
+
+```{targets preclean-target}
+source("R/preclean_functions.R")
+list(tar_target(preclean, 
+    preclean_files(
+    list.files(en_data_dir,pattern = '*.txt')),
+    format="file"
+),
+tar_target(precleaned_text, 
+    load_clean_text(),
+    format="qs"
+))
+
+```
+
+```{r}
+tar_make()
+```
+
+So so far we now have the precleaned_text as a target output. AS we are in an targets Rmd file, to access that object we need to use tar_read. If we were just using target scripts, that gets loaded by itself.
+
+```{r}
+
+tar_visnetwork()
+```
+
+The interesting part comes to see if we change any of the functions, will it reload and recreate the precleaned_text? I went and changed stuff in the preclean_files function and sure enough, it works.
+
+As this script will run many times, ill show here how tar_make output looks when you modify an upstream function to a target, in this case , preclean_files:\
+
+```{r include=TRUE,eval=FALSE}
+tar_make()
+```

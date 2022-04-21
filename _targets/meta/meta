@@ -1,0 +1,18 @@
+name|type|data|command|depend|seed|path|time|size|bytes|format|repository|iteration|parent|children|seconds|warnings|error
+board|object|d47ddfb5a22ad6c7|||||||||||||||
+board_folder|object|5ff679b0af9533d9|||||||||||||||
+clean_files|function|8f7af84a2f11b63f|||||||||||||||
+clean_files_dir|object|f5fe4d788be2532e|||||||||||||||
+en_data_dir|object|4122834b20ba1b36|||||||||||||||
+fit|stem||adde9736c1e10981|d53f263ac8fffd5e|1780184594||t19103.7531771781s||0|rds|local|vector|||0.003||could not find function biglm
+inter_data_dir|object|1db342eece7b3a3f|||||||||||||||
+load_clean_text|function|0087239f6f00e4d1|||||||||||||||
+model_data_dir|object|35d07c0b2d619435|||||||||||||||
+out_data_dir|object|af9018f311a702ac|||||||||||||||
+preclean|stem|c28936d7315a99e2|187170be9d06e8b9|17a35f6ec72f1b79|-1062813491|/home/alex/Devel-nosync/OAS-projects/cursos/capstone reports/../capstone raw data/final/en_US/clean/en_US.blogs.txt*/home/alex/Devel-nosync/OAS-projects/cursos/capstone reports/../capstone raw data/final/en_US/clean/en_US.news.txt*/home/alex/Devel-nosync/OAS-projects/cursos/capstone reports/../capstone raw data/final/en_US/clean/en_US.twitter.txt|t19103.815766945s|80d3e951f29bf870|575201993|file|local|vector|||21.013||
+preclean_files|function|717d32c923334977|||||||||||||||
+precleaned_text|stem|6bf28887e42d4e4b|30a2564d276e19af|42ab06fb2f55e50e|219390892||t19103.7949668018s|b301d5e8ba011fee|253115934|qs|local|vector|||22.313||
+raw_data_dir|object|0c01dbddfc12b5d9|||||||||||||||
+TOKEN_BOS|object|a8eeb35f916309db|||||||||||||||
+TOKEN_EOS|object|7297f847661b02a4|||||||||||||||
+TOKEN_UNK|object|f356b55c098ded98|||||||||||||||

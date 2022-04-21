@@ -1,0 +1,145 @@
+---
+title: "Endgame"
+author: "Alejandro Borges Sanchez"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+### The Objective
+
+We are supposed to deliver a shiny app that predict text based on our thingie. And a presentation. These are the review criteria:
+
+**Data Product**
+
+-   Does the link lead to a Shiny app with a text input box that is running on shinyapps.io?
+
+-   Does the app load to the point where it can accept input?
+
+-   When you type a phrase in the input box do you get a prediction of a single word after pressing submit and/or a suitable delay for the model to compute the answer?
+
+-   Put five phrases drawn from Twitter or news articles in English leaving out the last word. Did it give a prediction for every one?
+
+**Slide Deck**
+
+-   Does the link lead to a 5 slide deck on R Pubs?
+
+-   Does the slide deck contain a description of the algorithm used to make the prediction?
+
+-   Does the slide deck describe the app, give instructions, and describe how it functions?
+
+-   How would you describe the experience of using this app?
+
+-   Does the app present a novel approach and/or is particularly well done?
+
+-   Would you hire this person for your own data science startup company?
+
+### (short) Discussion
+
+App must be snappy and algorythms impressive. After fiddling oh so much arround, ive come to the conclusion that NLP is really very hard. It is, however, very well documented and available through Standford's Dan Juravsky's class which is fully online, alongside with the draft of his whole book.
+
+This is a gift from the gods and I decided to not squander it:
+
+-   Full class:
+
+    -   <https://www.youtube.com/watch?v=oWsMIW-5xUc&list=PLLssT5z_DsK8HbD2sPcUIDfQ7zmBarMYv>
+
+-   Book:
+
+    -   <https://web.stanford.edu/~jurafsky/slp3/>
+
+### Architecture
+
+Through hey, some MONTHS experimenting with this thing, thinking I could just wing it (as even the course authors recommend in a way), Ive decided to go a little bit on a harsher route. But first, some definitions:
+
+#### Model
+
+-   A matrix that represents some aspect of reality
+
+-   Language Model
+
+    -   A matrix of words and their relationships representing some aspect of a larger body of text.
+
+        -   Ngram models
+
+            -   A matrix of sequences of word of at least one word alongside the counts for how many times does that sequence appears in the text.
+
+            -   Ngram Backoff model
+
+                -   In practice, an ngram model will fall back to the n-1gram model until it reaches the monogram list with the counts for each monogram.
+
+                -   In practice, we cant include every word in the world.
+
+                -   In practice we select the most probable words in a backoff model and discard the rest.
+
+                -   As the models are "backoff" we need to represent, on an ngram model, the UNK word. That is, if we find a 2gram with the words "Hi UNK", it means that whatever went after Hi in the 2gram, was deleted from the monogram list
+
+                -   In practice we distinguish words when they appear at the beginning or end of a sentence from the same word when it appears elsewhere. That is the Hi in "Hi there" is counted as a different word than the Hi in "Hello Hi how are you"
+
+So what we can really call a [trained]{.underline} "language model" here, is a matrix that has the ngram and the counts for the text in a training set, starting with an already cutoff list of monograms and substituting for UNK the words in n\>1 grams.
+
+#### Data
+
+We are given some dirty ass text that has embeded nulls, html text, twits and all sorts of horrid garbage.
+
+To even begin to train an ngram model, you need to think about the right way to sample this texts. It is not a good idea to just load every blog post, twit and news article as rows and sample of those. For starters, that doesnt take into account the actual size of each of the classes. As our task is predictive text completion, i proved it to be more intelligent to treat all classes of text as equal (with some caveats), extracting the sentences of each one of them and then sampling from that a 70%-30% split. From the 70% I will extract a devset to serve as a testing subset a try a couple of things.
+
+##### Data cleaning
+
+###### Text level (complete)
+
+By far the most important thing I learned here is this function:
+
+```{r}
+TOKEN_BOS = "__bos__ "
+TOKEN_EOS = " __eos__"
+TOKEN_UNK = "__unk__"
+
+preclean <- function(inputfile, outputfile) {
+                        r <- readr::read_file_raw(inputfile)
+                        r[r == as.raw(0)] = as.raw(0x20)
+                        r <- r %>%
+                          rawToChar(.) %>%
+                          stringi::stri_enc_toascii(.) %>%
+                          str_replace_all(., "\032", "") %>%
+                          stringi::stri_enc_toutf8() %>%
+                          # str_remove_all('[0-9]')  %>%
+                          str_remove_all('\u001') %>%
+                          str_remove_all(fixed(TOKEN_BOS)) %>%
+                          str_remove_all(fixed(TOKEN_EOS)) %>%
+                          str_remove_all(fixed(TOKEN_UNK)) %>%
+                          str_remove_all(., fixed(''))
+
+                        readr::write_file(x = r, file = outputfile)
+                        p(y)
+                        rm(r)
+                        return(0)
+                      }
+```
+
+This function solves the embedded null problems with some encodings (boy I now know that its okay to hate Windows and it always be okay), it ends with badly encoded utf8 and gives us actual english.
+
+It only "converts" the original files into clean files and its okay, that was the point.
+
+###### Feature choosing (will experiment)
+
+Now this is a bit more complex. I called this feature choosing because it has to do with what we do for example with numbers, punctuation, subsequent spaces, use of underscores, parenthesis...that kind of thing. All of that can affect the accuracy, precission and recall of this thing.
+
+At first I tried the very painful way of not giving a flying fuck and just removing anything weird. I kept going this way even training the full 70% corpus on a data.table (for which im gratefully somehow less of a newbie at now).
+
+But as I progressed through juravsky's class and read about GPT3, evaluation, accuracy, precission/recall and the F meassure, I realized Im wrong and I need to... gasp...start again. This very document is the beginning of that reboot.
+
+###### Experimentation Framework
+
+Ngrams are hard. Thats the base part of it. To reboot this whole idea, Im going to need clear functions that allow me to get into an experimentation loop.
+
+The diagram for the pipeline which will allow iteration from cleaning and onwards is [here](https://docs.google.com/drawings/d/1ulZlV0PZG9nbkvX4l6Qm6_dJ9GT1m37ahK7CU9PbaNE/edit?usp=sharing) :
+
+![](https://docs.google.com/drawings/d/e/2PACX-1vR1KnEzjXiu1x1VSh-ut4uzriZuXYqkQK8C65Xrrc5I_LmWQ4rb0k03-K4SJ2Wpr5hIcQDhvE5LLA0q/pub?w=960&h=720)
+
+So I think I can either be a very good boy ™ and build my pipeline with scripts or try and learn to use the {targets} package, which is what Im tempted to do.
+
+Im going to at least try it.
