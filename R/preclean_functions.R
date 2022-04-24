@@ -36,6 +36,7 @@ preclean_files <- function(files,
                           stringi::stri_enc_toutf8() %>%
                           # str_remove_all('[0-9]')  %>%
                           str_remove_all('\u001') %>%
+                          str_remove_all('\t') %>%
                           str_remove_all(fixed(TOKEN_BOS)) %>%
                           str_remove_all(fixed(TOKEN_EOS)) %>%
                           str_remove_all(fixed(TOKEN_UNK)) %>%

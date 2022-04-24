@@ -76,7 +76,11 @@ source("R/kenlm_functions.R")
   ),
    tar_target(kenlm_arpa_file,
              create_kenlm_arpa(tar_read(single_cleantext_file)),
-             format = 'file')
+             format = 'file'),
+  tar_target(ngram_model,
+             load_arpa_as_data_table(
+               tar_read(kenlm_arpa_file)
+             ))
   )
  
 
