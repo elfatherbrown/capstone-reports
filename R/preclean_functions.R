@@ -34,7 +34,7 @@ preclean_files <- function(files,
                           stringi::stri_enc_toascii(.) %>%
                           str_replace_all(., "\032", "") %>%
                           stringi::stri_enc_toutf8() %>%
-                           str_remove_all('[0-9]')  %>%
+                          # str_remove_all('[0-9]')  %>%
                           str_remove_all('\u001') %>%
                           str_remove_all(fixed(TOKEN_BOS)) %>%
                           str_remove_all(fixed(TOKEN_EOS)) %>%
@@ -75,7 +75,10 @@ load_clean_text <-
           header = FALSE,
           col.names = 'text'
         ) %>%
+          dtplyr::lazy_dt() %>%
           mutate(file = str_replace(x, '.*/([^/]+)$', '\\1')) %>%
+          mutate(text_id=seq_along(text)) %>%
+          select(text_id,file,text) %>%
           as.data.table()
       },
       .progress = TRUE) %>%

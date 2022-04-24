@@ -6946,10 +6946,39 @@ and onwards is <a href="https://docs.google.com/drawings/d/1ulZlV0PZG9nbkvX4l6Qm
 <h4>Setup</h4>
 <p>Basic startup setup</p>
 <pre class="r"><code>library(targets) 
-tar_unscript()</code></pre>
+tar_unscript()
+package_list &lt;- c( &quot;dplyr&quot;, &quot;ggplot2&quot;, &quot;readr&quot;, &quot;tidyr&quot;,&quot;data.table&quot;,&quot;progressr&quot;,&quot;R6&quot;,&quot;pins&quot;,&quot;rsample&quot;,&quot;tidytext&quot;,&quot;purrr&quot;,&quot;furrr&quot;,&quot;magrittr&quot;,&quot;stringr&quot;,&quot;dtplyr&quot;)
+xfun::pkg_attach(package_list)
+#&gt; 
+#&gt; Attaching package: &#39;dplyr&#39;
+#&gt; The following objects are masked from &#39;package:stats&#39;:
+#&gt; 
+#&gt;     filter, lag
+#&gt; The following objects are masked from &#39;package:base&#39;:
+#&gt; 
+#&gt;     intersect, setdiff, setequal, union
+#&gt; 
+#&gt; Attaching package: &#39;data.table&#39;
+#&gt; The following objects are masked from &#39;package:dplyr&#39;:
+#&gt; 
+#&gt;     between, first, last
+#&gt; 
+#&gt; Attaching package: &#39;purrr&#39;
+#&gt; The following object is masked from &#39;package:data.table&#39;:
+#&gt; 
+#&gt;     transpose
+#&gt; Loading required package: future
+#&gt; 
+#&gt; Attaching package: &#39;magrittr&#39;
+#&gt; The following object is masked from &#39;package:purrr&#39;:
+#&gt; 
+#&gt;     set_names
+#&gt; The following object is masked from &#39;package:tidyr&#39;:
+#&gt; 
+#&gt;     extract</code></pre>
 <pre class="r"><code>options(tidyverse.quiet = TRUE)
 targets::tar_option_set(format = &#39;qs&#39;)
-targets::tar_option_set(packages = c( &quot;dplyr&quot;, &quot;ggplot2&quot;, &quot;readr&quot;, &quot;tidyr&quot;,&quot;data.table&quot;,&quot;progressr&quot;,&quot;R6&quot;,&quot;pins&quot;,&quot;rsample&quot;,&quot;tidytext&quot;,&quot;purrr&quot;,&quot;furrr&quot;,&quot;magrittr&quot;,&quot;stringr&quot;))
+targets::tar_option_set(packages = c( &quot;dplyr&quot;, &quot;ggplot2&quot;, &quot;readr&quot;, &quot;tidyr&quot;,&quot;data.table&quot;,&quot;progressr&quot;,&quot;R6&quot;,&quot;pins&quot;,&quot;rsample&quot;,&quot;tidytext&quot;,&quot;purrr&quot;,&quot;furrr&quot;,&quot;magrittr&quot;,&quot;stringr&quot;,&quot;dtplyr&quot;))
 source(&quot;R/global_variables.R&quot;)
 #&gt; Establish _targets.R and _targets_r/globals/t-globals.R.</code></pre>
 </div>
@@ -6959,37 +6988,187 @@ source(&quot;R/global_variables.R&quot;)
 pipes it to clean_files, which outputs the three files into an output
 directory</p>
 <pre class="r"><code>source(&quot;R/preclean_functions.R&quot;)
-list(tar_target(preclean, 
-    preclean_files(
-    list.files(en_data_dir,pattern = &#39;*.txt&#39;)),
-    format=&quot;file&quot;
-),
-tar_target(precleaned_text, 
-    load_clean_text(),
-    format=&quot;qs&quot;
-))
+source(&quot;R/kenlm_functions.R&quot;)
+# If you want to actually load the text into R, youd do this.
+# list(tar_target(preclean, 
+#     preclean_files(
+#     list.files(en_data_dir,pattern = &#39;*.txt&#39;)),
+#     format=&quot;file&quot;
+# ),
+# tar_target(precleaned_text, 
+#     load_clean_text(),
+#     format=&quot;qs&quot;
+# ))
+# 
+# But we prefer generating the model with kenlm
+# 
+
+  list(tar_target(preclean,
+             preclean_files(
+               list.files(en_data_dir,pattern = &#39;*.txt&#39;)
+             ),
+             format=&quot;file&quot;
+  ),
+  tar_target(single_cleantext_file,
+             create_single_cleantext_file(
+               source_files = tar_read(preclean)
+             ),
+             format=&quot;file&quot;
+  ),
+   tar_target(kenlm_arpa_file,
+             create_kenlm_arpa(tar_read(single_cleantext_file)),
+             format = &#39;file&#39;)
+  )
+ 
 
 #&gt; Establish _targets.R and _targets_r/targets/preclean-target.R.</code></pre>
 <pre class="r"><code>tar_make()
-#&gt; ✓ skip target precleaned_text
+#&gt; 
+#&gt; Attaching package: ‘xfun’
+#&gt; 
+#&gt; The following objects are masked from ‘package:base’:
+#&gt; 
+#&gt;     attr, isFALSE
+#&gt; 
 #&gt; ✓ skip target preclean
-#&gt; ✓ skip pipeline: 0.058 seconds</code></pre>
+#&gt; ✓ skip target single_cleantext_file
+#&gt; • start target kenlm_arpa_file
+#&gt; === 1/5 Counting and sorting n-grams ===
+#&gt; Reading /mnt/BIGSEAGATE/DEVEL_NOSYNC/OAS_PROJECTS/capstone raw data/final/en_US/clean/clean_text_one_file.txt
+#&gt; ----5---10---15---20---25---30---35---40---45---50---55---60---65---70---75---80---85---90---95--100
+#&gt; ****************************************************************************************************
+#&gt; Unigram tokens 101923251 types 2396930
+#&gt; === 2/5 Calculating and sorting adjusted counts ===
+#&gt; Chain sizes: 1:28763160 2:3253200896 3:6099751936 4:9759602688 5:14232755200
+#&gt; Statistics:
+#&gt; 1 87332/2396930 D1=0.752185 D2=0.997627 D3+=1.24158
+#&gt; 2 228172/23364012 D1=0.809392 D2=1.06775 D3+=1.27699
+#&gt; 3 138336/58037039 D1=0.879556 D2=1.13405 D3+=1.29361
+#&gt; 4 35653/80868914 D1=0.937931 D2=1.2322 D3+=1.34996
+#&gt; 5 5923/87701584 D1=0.957542 D2=1.38824 D3+=1.48549
+#&gt; Memory estimate for binary LM:
+#&gt; type       kB
+#&gt; probing 11747 assuming -p 1.5
+#&gt; probing 14444 assuming -r models -p 1.5
+#&gt; trie     6837 without quantization
+#&gt; trie     4520 assuming -q 8 -b 8 quantization 
+#&gt; trie     6285 assuming -a 22 array pointer compression
+#&gt; trie     3968 assuming -a 22 -q 8 -b 8 array pointer compression and quantization
+#&gt; === 3/5 Calculating and sorting initial probabilities ===
+#&gt; Chain sizes: 1:1047984 2:3650752 3:2766720 4:855672 5:165844
+#&gt; === 4/5 Calculating and writing order-interpolated probabilities ===
+#&gt; Chain sizes: 1:1047984 2:3650752 3:2766720 4:855672 5:165844
+#&gt; === 5/5 Writing ARPA model ===
+#&gt; Name:lmplz   VmPeak:32764116 kB  VmRSS:55144 kB  RSSMax:8323936 kB   user:144.494    sys:28.8055 CPU:173.3   real:99.7019
+#&gt; • built target kenlm_arpa_file
+#&gt; • end pipeline: 1.684 minutes</code></pre>
 <p>So so far we now have the precleaned_text as a target output. AS we
 are in an targets Rmd file, to access that object we need to use
 tar_read. If we were just using target scripts, that gets loaded by
 itself.</p>
 <pre class="r"><code>
-tar_visnetwork()</code></pre>
-<div id="htmlwidget-68b3c99e441d9aeb231d" style="width:672px;height:480px;" class="visNetwork html-widget"></div>
-<script type="application/json" data-for="htmlwidget-68b3c99e441d9aeb231d">{"x":{"nodes":{"name":["preclean","precleaned_text","board_folder","TOKEN_BOS","model_data_dir","en_data_dir","clean_files_dir","raw_data_dir","inter_data_dir","TOKEN_UNK","out_data_dir","TOKEN_EOS","board","load_clean_text","preclean_files"],"type":["stem","stem","object","object","object","object","object","object","object","object","object","object","object","function","function"],"status":["uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate"],"seconds":[21.013,22.313,null,null,null,null,null,null,null,null,null,null,null,null,null],"bytes":[575201993,253115934,null,null,null,null,null,null,null,null,null,null,null,null,null],"branches":[null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],"label":["preclean","precleaned_text","board_folder","TOKEN_BOS","model_data_dir","en_data_dir","clean_files_dir","raw_data_dir","inter_data_dir","TOKEN_UNK","out_data_dir","TOKEN_EOS","board","load_clean_text","preclean_files"],"color":["#354823","#354823","#354823","#354823","#354823","#354823","#354823","#354823","#354823","#354823","#354823","#354823","#354823","#354823","#354823"],"id":["preclean","precleaned_text","board_folder","TOKEN_BOS","model_data_dir","en_data_dir","clean_files_dir","raw_data_dir","inter_data_dir","TOKEN_UNK","out_data_dir","TOKEN_EOS","board","load_clean_text","preclean_files"],"level":[3,3,0,1,0,1,1,0,0,1,0,1,0,2,2],"shape":["dot","dot","triangleDown","triangleDown","triangleDown","triangleDown","triangleDown","triangleDown","triangleDown","triangleDown","triangleDown","triangleDown","triangleDown","triangle","triangle"]},"edges":{"from":["TOKEN_BOS","en_data_dir","clean_files_dir","clean_files_dir","TOKEN_UNK","TOKEN_EOS","load_clean_text","en_data_dir","preclean_files"],"to":["preclean_files","preclean_files","preclean_files","load_clean_text","preclean_files","preclean_files","precleaned_text","preclean","preclean"],"arrows":["to","to","to","to","to","to","to","to","to"]},"nodesToDataframe":true,"edgesToDataframe":true,"options":{"width":"100%","height":"100%","nodes":{"shape":"dot","physics":false},"manipulation":{"enabled":false},"edges":{"smooth":{"type":"cubicBezier","forceDirection":"horizontal"}},"physics":{"stabilization":false},"interaction":{"zoomSpeed":1},"layout":{"hierarchical":{"enabled":true,"direction":"LR"}}},"groups":null,"width":null,"height":null,"idselection":{"enabled":false,"style":"width: 150px; height: 26px","useLabels":true,"main":"Select by id"},"byselection":{"enabled":false,"style":"width: 150px; height: 26px","multiple":false,"hideColor":"rgba(200,200,200,0.5)","highlight":false},"main":{"text":"","style":"font-family:Georgia, Times New Roman, Times, serif;font-weight:bold;font-size:20px;text-align:center;"},"submain":null,"footer":null,"background":"rgba(0, 0, 0, 0)","highlight":{"enabled":true,"hoverNearest":false,"degree":{"from":1,"to":1},"algorithm":"hierarchical","hideColor":"rgba(200,200,200,0.5)","labelOnly":true},"collapse":{"enabled":true,"fit":false,"resetHighlight":true,"clusterOptions":null,"keepCoord":true,"labelSuffix":"(cluster)"},"legend":{"width":0.2,"useGroups":false,"position":"right","ncol":1,"stepX":100,"stepY":100,"zoom":true,"nodes":{"label":["Up to date","Stem","Object","Function"],"color":["#354823","#899DA4","#899DA4","#899DA4"],"shape":["dot","dot","triangleDown","triangle"]},"nodesToDataframe":true},"tooltipStay":300,"tooltipStyle":"position: fixed;visibility:hidden;padding: 5px;white-space: nowrap;font-family: verdana;font-size:14px;font-color:#000000;background-color: #f5f4ed;-moz-border-radius: 3px;-webkit-border-radius: 3px;border-radius: 3px;border: 1px solid #808074;box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);"},"evals":[],"jsHooks":[]}</script>
+tar_visnetwork()
+#&gt; 
+#&gt; Attaching package: ‘xfun’
+#&gt; 
+#&gt; The following objects are masked from ‘package:base’:
+#&gt; 
+#&gt;     attr, isFALSE</code></pre>
+<div id="htmlwidget-3a8221ea9d45b0480b76" style="width:672px;height:480px;" class="visNetwork html-widget"></div>
+<script type="application/json" data-for="htmlwidget-3a8221ea9d45b0480b76">{"x":{"nodes":{"name":["kenlm_arpa_file","preclean","single_cleantext_file","board_folder","TOKEN_BOS","model_data_dir","en_data_dir","clean_files_dir","load_arpa_as_data_table","raw_data_dir","inter_data_dir","TOKEN_UNK","out_data_dir","TOKEN_EOS","create_kenlm_arpa","board","KENLM_EXEC","create_single_cleantext_file","load_clean_text","preclean_files"],"type":["stem","stem","stem","object","object","object","object","object","function","object","object","object","object","object","function","object","object","function","function","function"],"status":["uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate"],"seconds":[99.821,16.267,2.642,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],"bytes":[13322172,579462420,579462420,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],"branches":[null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],"label":["kenlm_arpa_file","preclean","single_cleantext_file","board_folder","TOKEN_BOS","model_data_dir","en_data_dir","clean_files_dir","load_arpa_as_data_table","raw_data_dir","inter_data_dir","TOKEN_UNK","out_data_dir","TOKEN_EOS","create_kenlm_arpa","board","KENLM_EXEC","create_single_cleantext_file","load_clean_text","preclean_files"],"color":["#354823","#354823","#354823","#354823","#354823","#354823","#354823","#354823","#354823","#354823","#354823","#354823","#354823","#354823","#354823","#354823","#354823","#354823","#354823","#354823"],"id":["kenlm_arpa_file","preclean","single_cleantext_file","board_folder","TOKEN_BOS","model_data_dir","en_data_dir","clean_files_dir","load_arpa_as_data_table","raw_data_dir","inter_data_dir","TOKEN_UNK","out_data_dir","TOKEN_EOS","create_kenlm_arpa","board","KENLM_EXEC","create_single_cleantext_file","load_clean_text","preclean_files"],"level":[5,3,4,0,1,0,1,1,0,0,0,1,0,1,1,0,0,2,2,2],"shape":["dot","dot","dot","triangleDown","triangleDown","triangleDown","triangleDown","triangleDown","triangle","triangleDown","triangleDown","triangleDown","triangleDown","triangleDown","triangle","triangleDown","triangleDown","triangle","triangle","triangle"]},"edges":{"from":["TOKEN_BOS","en_data_dir","clean_files_dir","clean_files_dir","clean_files_dir","TOKEN_UNK","TOKEN_EOS","create_kenlm_arpa","single_cleantext_file","create_single_cleantext_file","preclean","en_data_dir","preclean_files"],"to":["preclean_files","preclean_files","create_single_cleantext_file","preclean_files","load_clean_text","preclean_files","preclean_files","kenlm_arpa_file","kenlm_arpa_file","single_cleantext_file","single_cleantext_file","preclean","preclean"],"arrows":["to","to","to","to","to","to","to","to","to","to","to","to","to"]},"nodesToDataframe":true,"edgesToDataframe":true,"options":{"width":"100%","height":"100%","nodes":{"shape":"dot","physics":false},"manipulation":{"enabled":false},"edges":{"smooth":{"type":"cubicBezier","forceDirection":"horizontal"}},"physics":{"stabilization":false},"interaction":{"zoomSpeed":1},"layout":{"hierarchical":{"enabled":true,"direction":"LR"}}},"groups":null,"width":null,"height":null,"idselection":{"enabled":false,"style":"width: 150px; height: 26px","useLabels":true,"main":"Select by id"},"byselection":{"enabled":false,"style":"width: 150px; height: 26px","multiple":false,"hideColor":"rgba(200,200,200,0.5)","highlight":false},"main":{"text":"","style":"font-family:Georgia, Times New Roman, Times, serif;font-weight:bold;font-size:20px;text-align:center;"},"submain":null,"footer":null,"background":"rgba(0, 0, 0, 0)","highlight":{"enabled":true,"hoverNearest":false,"degree":{"from":1,"to":1},"algorithm":"hierarchical","hideColor":"rgba(200,200,200,0.5)","labelOnly":true},"collapse":{"enabled":true,"fit":false,"resetHighlight":true,"clusterOptions":null,"keepCoord":true,"labelSuffix":"(cluster)"},"legend":{"width":0.2,"useGroups":false,"position":"right","ncol":1,"stepX":100,"stepY":100,"zoom":true,"nodes":{"label":["Up to date","Stem","Object","Function"],"color":["#354823","#899DA4","#899DA4","#899DA4"],"shape":["dot","dot","triangleDown","triangle"]},"nodesToDataframe":true},"tooltipStay":300,"tooltipStyle":"position: fixed;visibility:hidden;padding: 5px;white-space: nowrap;font-family: verdana;font-size:14px;font-color:#000000;background-color: #f5f4ed;-moz-border-radius: 3px;-webkit-border-radius: 3px;border-radius: 3px;border: 1px solid #808074;box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);"},"evals":[],"jsHooks":[]}</script>
 <p>The interesting part comes to see if we change any of the functions,
 will it reload and recreate the precleaned_text? I went and changed
-stuff in the preclean_files function and sure enough, it works.</p>
-<p>As this script will run many times, ill show here how tar_make output
-looks when you modify an upstream function to a target, in this case ,
-preclean_files:<br />
+stuff in the preclean_files function and sure enough, it works.<br />
 </p>
-<pre class="r"><code>tar_make()</code></pre>
+<p>Many million rows…</p>
+<pre class="r"><code>library(tidyverse)
+library(dtplyr)
+tar_target(
+  preclean_summary,
+ tar_read(&quot;precleaned_text&quot;)  %&gt;%
+  dtplyr::lazy_dt() %&gt;% 
+  group_by(file=as_factor(file)) %&gt;% 
+  as_tibble() %&gt;% 
+  mutate(avlength=str_count(text)) %&gt;% 
+  summary() 
+)
+#&gt; Establish _targets.R and _targets_r/targets/summary-precleaned-text-target.R.</code></pre>
+<p>Lets see this summary as a part of the pipeline:</p>
+<pre class="r"><code>tar_make()
+#&gt; 
+#&gt; Attaching package: ‘xfun’
+#&gt; 
+#&gt; The following objects are masked from ‘package:base’:
+#&gt; 
+#&gt;     attr, isFALSE
+#&gt; 
+#&gt; ✓ skip target preclean_summary
+#&gt; ✓ skip target preclean
+#&gt; ✓ skip target single_cleantext_file
+#&gt; ✓ skip target kenlm_arpa_file
+#&gt; ✓ skip pipeline: 0.091 seconds</code></pre>
+<pre class="r"><code>
+tar_visnetwork()
+#&gt; 
+#&gt; Attaching package: ‘xfun’
+#&gt; 
+#&gt; The following objects are masked from ‘package:base’:
+#&gt; 
+#&gt;     attr, isFALSE</code></pre>
+<div id="htmlwidget-65572e2b94efa01c8f17" style="width:672px;height:480px;" class="visNetwork html-widget"></div>
+<script type="application/json" data-for="htmlwidget-65572e2b94efa01c8f17">{"x":{"nodes":{"name":["kenlm_arpa_file","preclean","preclean_summary","single_cleantext_file","board_folder","TOKEN_BOS","model_data_dir","en_data_dir","clean_files_dir","load_arpa_as_data_table","raw_data_dir","inter_data_dir","TOKEN_UNK","out_data_dir","TOKEN_EOS","create_kenlm_arpa","board","KENLM_EXEC","create_single_cleantext_file","load_clean_text","preclean_files"],"type":["stem","stem","stem","stem","object","object","object","object","object","function","object","object","object","object","object","function","object","object","function","function","function"],"status":["uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate"],"seconds":[99.821,16.267,37.626,2.642,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],"bytes":[13322172,579462420,315,579462420,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],"branches":[null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],"label":["kenlm_arpa_file","preclean","preclean_summary","single_cleantext_file","board_folder","TOKEN_BOS","model_data_dir","en_data_dir","clean_files_dir","load_arpa_as_data_table","raw_data_dir","inter_data_dir","TOKEN_UNK","out_data_dir","TOKEN_EOS","create_kenlm_arpa","board","KENLM_EXEC","create_single_cleantext_file","load_clean_text","preclean_files"],"color":["#354823","#354823","#354823","#354823","#354823","#354823","#354823","#354823","#354823","#354823","#354823","#354823","#354823","#354823","#354823","#354823","#354823","#354823","#354823","#354823","#354823"],"id":["kenlm_arpa_file","preclean","preclean_summary","single_cleantext_file","board_folder","TOKEN_BOS","model_data_dir","en_data_dir","clean_files_dir","load_arpa_as_data_table","raw_data_dir","inter_data_dir","TOKEN_UNK","out_data_dir","TOKEN_EOS","create_kenlm_arpa","board","KENLM_EXEC","create_single_cleantext_file","load_clean_text","preclean_files"],"level":[5,3,0,4,0,1,0,1,1,0,0,0,1,0,1,1,0,0,2,2,2],"shape":["dot","dot","dot","dot","triangleDown","triangleDown","triangleDown","triangleDown","triangleDown","triangle","triangleDown","triangleDown","triangleDown","triangleDown","triangleDown","triangle","triangleDown","triangleDown","triangle","triangle","triangle"]},"edges":{"from":["TOKEN_BOS","en_data_dir","clean_files_dir","clean_files_dir","clean_files_dir","TOKEN_UNK","TOKEN_EOS","create_kenlm_arpa","single_cleantext_file","create_single_cleantext_file","preclean","en_data_dir","preclean_files"],"to":["preclean_files","preclean_files","create_single_cleantext_file","preclean_files","load_clean_text","preclean_files","preclean_files","kenlm_arpa_file","kenlm_arpa_file","single_cleantext_file","single_cleantext_file","preclean","preclean"],"arrows":["to","to","to","to","to","to","to","to","to","to","to","to","to"]},"nodesToDataframe":true,"edgesToDataframe":true,"options":{"width":"100%","height":"100%","nodes":{"shape":"dot","physics":false},"manipulation":{"enabled":false},"edges":{"smooth":{"type":"cubicBezier","forceDirection":"horizontal"}},"physics":{"stabilization":false},"interaction":{"zoomSpeed":1},"layout":{"hierarchical":{"enabled":true,"direction":"LR"}}},"groups":null,"width":null,"height":null,"idselection":{"enabled":false,"style":"width: 150px; height: 26px","useLabels":true,"main":"Select by id"},"byselection":{"enabled":false,"style":"width: 150px; height: 26px","multiple":false,"hideColor":"rgba(200,200,200,0.5)","highlight":false},"main":{"text":"","style":"font-family:Georgia, Times New Roman, Times, serif;font-weight:bold;font-size:20px;text-align:center;"},"submain":null,"footer":null,"background":"rgba(0, 0, 0, 0)","highlight":{"enabled":true,"hoverNearest":false,"degree":{"from":1,"to":1},"algorithm":"hierarchical","hideColor":"rgba(200,200,200,0.5)","labelOnly":true},"collapse":{"enabled":true,"fit":false,"resetHighlight":true,"clusterOptions":null,"keepCoord":true,"labelSuffix":"(cluster)"},"legend":{"width":0.2,"useGroups":false,"position":"right","ncol":1,"stepX":100,"stepY":100,"zoom":true,"nodes":{"label":["Up to date","Stem","Object","Function"],"color":["#354823","#899DA4","#899DA4","#899DA4"],"shape":["dot","dot","triangleDown","triangle"]},"nodesToDataframe":true},"tooltipStay":300,"tooltipStyle":"position: fixed;visibility:hidden;padding: 5px;white-space: nowrap;font-family: verdana;font-size:14px;font-color:#000000;background-color: #f5f4ed;-moz-border-radius: 3px;-webkit-border-radius: 3px;border-radius: 3px;border: 1px solid #808074;box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);"},"evals":[],"jsHooks":[]}</script>
+<pre class="r"><code>tar_read(&quot;preclean_summary&quot;)
+#&gt;     text_id                       file             text          
+#&gt;  Min.   :      1   en_US.blogs.txt  : 899288   Length:4269678    
+#&gt;  1st Qu.: 355807   en_US.news.txt   :1010242   Class :character  
+#&gt;  Median : 711614   en_US.twitter.txt:2360148   Mode  :character  
+#&gt;  Mean   : 866530                                                 
+#&gt;  3rd Qu.:1292729                                                 
+#&gt;  Max.   :2360148                                                 
+#&gt;     avlength      
+#&gt;  Min.   :    0.0  
+#&gt;  1st Qu.:   44.0  
+#&gt;  Median :   88.0  
+#&gt;  Mean   :  133.7  
+#&gt;  3rd Qu.:  153.0  
+#&gt;  Max.   :40832.0</code></pre>
+</div>
+<div id="setencifying-the-text" class="section level4">
+<h4>Setencifying the text</h4>
+<p>The next target in the pipeline requires us to sentencify all the
+text. That is, to turn everything into sentences which will yield the
+actual corpus object we are interested in as is depicted in the
+diagram.</p>
+<pre class="r"><code>source(&quot;R/sentence_tokenizer_functions.R&quot;)
+# tar_target(
+#   corpus,
+#   tar_read(&quot;precleaned_text&quot;) %&gt;% sentencify()
+# )
+
+#&gt; Establish _targets.R and _targets_r/targets/sentecify-target.R.</code></pre>
+<pre class="r"><code>tar_make()
+#&gt; 
+#&gt; Attaching package: ‘xfun’
+#&gt; 
+#&gt; The following objects are masked from ‘package:base’:
+#&gt; 
+#&gt;     attr, isFALSE
+#&gt; 
+#&gt; ✓ skip target preclean_summary
+#&gt; ✓ skip target preclean
+#&gt; ✓ skip target single_cleantext_file
+#&gt; ✓ skip target kenlm_arpa_file
+#&gt; ✓ skip pipeline: 0.078 seconds</code></pre>
+<pre class="r"><code>
+tar_visnetwork()
+#&gt; 
+#&gt; Attaching package: ‘xfun’
+#&gt; 
+#&gt; The following objects are masked from ‘package:base’:
+#&gt; 
+#&gt;     attr, isFALSE</code></pre>
+<div id="htmlwidget-972a141bf1134372ee30" style="width:672px;height:480px;" class="visNetwork html-widget"></div>
+<script type="application/json" data-for="htmlwidget-972a141bf1134372ee30">{"x":{"nodes":{"name":["kenlm_arpa_file","preclean","preclean_summary","single_cleantext_file","board_folder","out_data_dir","TOKEN_BOS","model_data_dir","en_data_dir","clean_files_dir","load_arpa_as_data_table","raw_data_dir","inter_data_dir","TOKEN_UNK","TOKEN_EOS","create_kenlm_arpa","board","KENLM_EXEC","sentencify","create_single_cleantext_file","load_clean_text","preclean_files"],"type":["stem","stem","stem","stem","object","object","object","object","object","object","function","object","object","object","object","function","object","object","function","function","function","function"],"status":["uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate"],"seconds":[99.821,16.267,37.626,2.642,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],"bytes":[13322172,579462420,315,579462420,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],"branches":[null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],"label":["kenlm_arpa_file","preclean","preclean_summary","single_cleantext_file","board_folder","out_data_dir","TOKEN_BOS","model_data_dir","en_data_dir","clean_files_dir","load_arpa_as_data_table","raw_data_dir","inter_data_dir","TOKEN_UNK","TOKEN_EOS","create_kenlm_arpa","board","KENLM_EXEC","sentencify","create_single_cleantext_file","load_clean_text","preclean_files"],"color":["#354823","#354823","#354823","#354823","#354823","#354823","#354823","#354823","#354823","#354823","#354823","#354823","#354823","#354823","#354823","#354823","#354823","#354823","#354823","#354823","#354823","#354823"],"id":["kenlm_arpa_file","preclean","preclean_summary","single_cleantext_file","board_folder","out_data_dir","TOKEN_BOS","model_data_dir","en_data_dir","clean_files_dir","load_arpa_as_data_table","raw_data_dir","inter_data_dir","TOKEN_UNK","TOKEN_EOS","create_kenlm_arpa","board","KENLM_EXEC","sentencify","create_single_cleantext_file","load_clean_text","preclean_files"],"level":[5,3,0,4,0,1,1,0,1,1,0,0,0,1,1,1,0,0,2,2,2,2],"shape":["dot","dot","dot","dot","triangleDown","triangleDown","triangleDown","triangleDown","triangleDown","triangleDown","triangle","triangleDown","triangleDown","triangleDown","triangleDown","triangle","triangleDown","triangleDown","triangle","triangle","triangle","triangle"]},"edges":{"from":["out_data_dir","TOKEN_BOS","en_data_dir","clean_files_dir","clean_files_dir","clean_files_dir","TOKEN_UNK","TOKEN_EOS","create_kenlm_arpa","single_cleantext_file","create_single_cleantext_file","preclean","en_data_dir","preclean_files"],"to":["sentencify","preclean_files","preclean_files","create_single_cleantext_file","preclean_files","load_clean_text","preclean_files","preclean_files","kenlm_arpa_file","kenlm_arpa_file","single_cleantext_file","single_cleantext_file","preclean","preclean"],"arrows":["to","to","to","to","to","to","to","to","to","to","to","to","to","to"]},"nodesToDataframe":true,"edgesToDataframe":true,"options":{"width":"100%","height":"100%","nodes":{"shape":"dot","physics":false},"manipulation":{"enabled":false},"edges":{"smooth":{"type":"cubicBezier","forceDirection":"horizontal"}},"physics":{"stabilization":false},"interaction":{"zoomSpeed":1},"layout":{"hierarchical":{"enabled":true,"direction":"LR"}}},"groups":null,"width":null,"height":null,"idselection":{"enabled":false,"style":"width: 150px; height: 26px","useLabels":true,"main":"Select by id"},"byselection":{"enabled":false,"style":"width: 150px; height: 26px","multiple":false,"hideColor":"rgba(200,200,200,0.5)","highlight":false},"main":{"text":"","style":"font-family:Georgia, Times New Roman, Times, serif;font-weight:bold;font-size:20px;text-align:center;"},"submain":null,"footer":null,"background":"rgba(0, 0, 0, 0)","highlight":{"enabled":true,"hoverNearest":false,"degree":{"from":1,"to":1},"algorithm":"hierarchical","hideColor":"rgba(200,200,200,0.5)","labelOnly":true},"collapse":{"enabled":true,"fit":false,"resetHighlight":true,"clusterOptions":null,"keepCoord":true,"labelSuffix":"(cluster)"},"legend":{"width":0.2,"useGroups":false,"position":"right","ncol":1,"stepX":100,"stepY":100,"zoom":true,"nodes":{"label":["Up to date","Stem","Object","Function"],"color":["#354823","#899DA4","#899DA4","#899DA4"],"shape":["dot","dot","triangleDown","triangle"]},"nodesToDataframe":true},"tooltipStay":300,"tooltipStyle":"position: fixed;visibility:hidden;padding: 5px;white-space: nowrap;font-family: verdana;font-size:14px;font-color:#000000;background-color: #f5f4ed;-moz-border-radius: 3px;-webkit-border-radius: 3px;border-radius: 3px;border: 1px solid #808074;box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);"},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 <div class="footnotes footnotes-end-of-document">
