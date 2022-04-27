@@ -1,5 +1,7 @@
 
 
+
+
 KENLM_EXEC = '/home/alex/bin/kenlm/lmplz'
 
 create_single_cleantext_file <-
@@ -31,7 +33,8 @@ create_kenlm_arpa <-
       ),
       intern = TRUE
     )
-    if (length(res) != 0 && "status" == attributes(res) %>% names()) {
+    if (length(res) != 0 &&
+        "status" == attributes(res) %>% names()) {
       stop(
         glue::glue(
           "KenLM could not be generated, {res} status is integer == {attributes(res)$status}"
@@ -53,25 +56,39 @@ load_arpa_as_data_table <- function(source_file, max_order = 5) {
       )
     ) %>%
     filter(lines != 0) %>%
-    mutate(csum = cumsum(lines),
-           skip = if_else(is.na(lag(order)),
-                          max_order + 3,
-                          lag(cumsum(lines)) + max_order + (2 * order) + 1)) %>%
+    mutate(
+      skip = if_else(
+        is.na(lag(order)),
+        max_order + 3,
+        lag(cumsum(lines)) + max_order + (2 * order) + 1
+      )
+    ) %>%
     pmap(function(order, lines, csum, skip, ...) {
-
-      read_tsv(
+      ret <- readr::read_tsv(
         source_file,
         n_max = lines,
         skip = skip,
         col_names = c("prob", 'n_gram', 'backoff'),
-        num_threads = 4
+        num_threads = 4,
+        quote = ""
+
       ) %>%
-        mutate(order = order,
-               skip=skip,
-               lines=lines,
-               seq_id=seq_along(n_gram)) %>%
+        mutate(
+          order = order,
+          skip = skip,
+          lines = lines,
+          seq_id = seq_along(n_gram)
+        ) %>%
         relocate(order, .before = 1) %>%
         as.data.table()
-    } )%>%
-    rbindlist()
+      # If an ngram model has no backoff for any ngram,
+      # kenlm removes the column. We add it here
+      if ("backoff" %in% names(ret)) {
+        return(ret)
+      } else {
+        ret[,backoff:=0.0]
+        return(ret)
+      }
+
+    })
 }

@@ -19,7 +19,7 @@ Full documentation for the rationale behind this implementation is in the ENDGAM
 
 The diagram for the pipeline which will allow iteration from cleaning and onwards is [here](https://docs.google.com/drawings/d/1ulZlV0PZG9nbkvX4l6Qm6_dJ9GT1m37ahK7CU9PbaNE/edit?usp=sharing) :
 
-![](https://docs.google.com/drawings/d/e/2PACX-1vR1KnEzjXiu1x1VSh-ut4uzriZuXYqkQK8C65Xrrc5I_LmWQ4rb0k03-K4SJ2Wpr5hIcQDhvE5LLA0q/pub?w=960&h=721){style="padding: 10px;" width="1066"}
+![](https://docs.google.com/drawings/d/e/2PACX-1vR1KnEzjXiu1x1VSh-ut4uzriZuXYqkQK8C65Xrrc5I_LmWQ4rb0k03-K4SJ2Wpr5hIcQDhvE5LLA0q/pub?w=960&h=720){style="padding: 10px;" width="1066"}
 
 ### Implementing the pipeline
 
@@ -43,50 +43,43 @@ source("R/global_variables.R")
 
 #### Raw data definition
 
-Preclean is automatic: it lists the files in the source directory and pipes it to clean_files, which outputs the three files into an output directory
+Files come very dirty. They need to be cleaned as pure text and using raw vectors. This is implemented in the preclean target.
 
-```{targets preclean-target}
+However, further cleaning is necesary
+
+```{targets clean-target}
 source("R/preclean_functions.R")
 source("R/kenlm_functions.R")
-# If you want to actually load the text into R, youd do this.
-# list(tar_target(preclean, 
-#     preclean_files(
-#     list.files(en_data_dir,pattern = '*.txt')),
-#     format="file"
-# ),
-# tar_target(precleaned_text, 
-#     load_clean_text(),
-#     format="qs"
-# ))
-# 
-# But we prefer generating the model with kenlm
-# 
-
-  list(tar_target(preclean,
+source("R/sentencify.R")
+list(
+  tar_target(preclean,
              preclean_files(
-               list.files(en_data_dir,pattern = '*.txt')
+               list.files(en_data_dir, pattern = '*.txt')
              ),
-             format="file"
-  ),
-  tar_target(single_cleantext_file,
-             create_single_cleantext_file(
-               source_files = tar_read(preclean)
-             ),
-             format="file"
-  ),
-   tar_target(kenlm_arpa_file,
-             create_kenlm_arpa(tar_read(single_cleantext_file)),
-             format = 'file'),
-  tar_target(ngram_model,
-             load_arpa_as_data_table(
-               tar_read(kenlm_arpa_file)
-             ))
+             format = "file"),
+  tar_target(
+    sentenced_files,
+    sentencify(precleaned_files = preclean),
+    
+    format = "file"
+  )
+  # tar_target(single_cleantext_file,
+  #            create_single_cleantext_file(
+  #              source_files = tar_read(preclean)
+  #            ),
+  #            format="file"
+  # ),
+  #  tar_target(kenlm_arpa_file,
+  #            create_kenlm_arpa(tar_read(single_cleantext_file)),
+  #            format = 'file'),
+  # tar_target(ngram_model,
+  #            load_arpa_as_data_table(
+  #              tar_read(kenlm_arpa_file)
+  #            ))
   )
  
 
 ```
-
-
 
 ```{r}
 tar_make()
@@ -100,7 +93,6 @@ tar_visnetwork()
 ```
 
 The interesting part comes to see if we change any of the functions, will it reload and recreate the precleaned_text? I went and changed stuff in the preclean_files function and sure enough, it works.\
-
 
 Many million rows...
 
@@ -120,11 +112,9 @@ tar_target(
 
 Lets see this summary as a part of the pipeline:
 
-
 ```{r}
 tar_make()
 ```
-
 
 ```{r}
 
@@ -135,13 +125,12 @@ tar_visnetwork()
 tar_read("preclean_summary")
 ```
 
-
 #### Setencifying the text
 
-The next target in the pipeline requires us to sentencify all the text. That is, to turn everything into sentences which will yield the actual corpus object we are interested in as is depicted in the diagram. 
+The next target in the pipeline requires us to sentencify all the text. That is, to turn everything into sentences which will yield the actual corpus object we are interested in as is depicted in the diagram.
 
 ```{targets sentecify-target}
-source("R/sentence_tokenizer_functions.R")
+source("R/sentencify.R")
 # tar_target(
 #   corpus,
 #   tar_read("precleaned_text") %>% sentencify()
@@ -149,11 +138,9 @@ source("R/sentence_tokenizer_functions.R")
 
 ```
 
-
 ```{r}
 tar_make()
 ```
-
 
 ```{r}
 
