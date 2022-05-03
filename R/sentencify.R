@@ -1,7 +1,13 @@
+library(futile.logger)
+flog.appender(appender.file('targets.log'))
+
 sentencify <- function(precleaned_files,
                                  dir = clean_files_dir) {
+  flog.info("started sentencification of %s files",length(precleaned_files))
   ret <- precleaned_files %>%
     furrr::future_map(function(x) {
+      flog.appender(appender.file('targets.log'))
+      flog.info("Reading %s",x)
       ir <- fread(
         file = x,
         sep = '\n',
@@ -12,9 +18,11 @@ sentencify <- function(precleaned_files,
         mutate(fname = str_replace(x, '.*/([^/]+)$', '\\1'))
     }) %>%
     rbindlist()
-
-
-  ret[, chunk := ceiling(.I %% .N / 10000)]
+  flog.info("Colective corpus of %s lines",NROW(ret))
+  lines_per_chunk <-  3000
+  ret[, chunk := ceiling(.I %% .N / lines_per_chunk)]
+  flog.appender(appender.file('targets.log'))
+  flog.info("Resulting in %s chunks",ret[chunk==max(chunk)][1]$chunk)
   gc()
   allfiles <- ret %>%
     distinct(fname)%>%
@@ -23,40 +31,38 @@ sentencify <- function(precleaned_files,
 
   walk(allfiles,  function(x){
         if (fs::file_exists(x)) {
+          flog.appender(appender.file('targets.log'))
+          flog.info("Deleting existing file %s",x)
           fs::file_delete(path = x)
         }
       })
+  flog.info("Starting parallel chunk processing")
   out_fnames <- ret %>%
-    group_by(chunk, fname) %>%
+    group_by(chunk,fname) %>%
     nest() %>%
     as_tibble() %>%
-    pmap_chr(function(chunk, fname, data, ...) {
+    furrr::future_pmap_chr(function(chunk, fname, data, ...) {
+      flog.appender(appender.file('targets.log'))
+      flog.info("Starting chunk %s of %s lines for file %s",chunk,NROW(data),fname)
       ofname <- glue::glue("{dir}/sentences_{fname}")
-      sof <-
-        tokenizers::tokenize_sentences(data$text, simplify = TRUE) %>%
-        unlist()
-      sof %>%
+
+      sentencify_simple(data$text) %>%
+        unlist() %>%
         readr::write_lines(x = . ,
                            append = TRUE,
                            file = ofname)
-      rm(sof)
+        flog.info("Wrote chunk %s",chunk)
+
       return(ofname)
     })
+  flog.info("Ended paralell processing, collecting garbage")
   gc()
+  flog.info("Ended of sentencification process")
   return(unique(out_fnames))
 }
 
 
-clean_texts <- function(chunk_of_text) {
-  chunk_of_text %>% textclean::replace_white() %>%
-    textclean::replace_contraction() %>%
-    textclean::replace_word_elongation() %>%
-    textclean::replace_emoji_identifier() %>%
-    textclean::replace_html() %>%
-    textclean::replace_curly_quote() %>%
-    textclean::replace_non_ascii() %>%
-    textclean::replace_url() %>%
-    textclean::replace_symbol(at = FALSE) %>%
-    textclean::replace_ordinal() %>%
-    return()
-}
+sentencify_simple <- function(text){
+  text %>% textshape::split_sentence() %>% unlist()
+  }
+

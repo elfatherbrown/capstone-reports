@@ -11,10 +11,12 @@
 #' @export
 #'
 #' @examples
-simple_sample <- function(thefiles,pct,odir=clean_files_dir){
+simple_sample <- function(thefiles, pct, odir = clean_files_dir) {
+  options(readr.show_progress = FALSE)
   thetext <- load_text_as_data_table(thefiles)
-  ofile <- glue::glue("sample_for_testing_{pct}_pct.txt")
-  otext <- thetext[sample(seq.int(1:.N),size = .N*pct),]
-  fwrite(x = otext$text,file = ofile)
+  ofile <- glue::glue("{odir}/sample_for_testing_{pct}_pct.txt")
+
+  otext <- thetext[sample(.N, size = .N * pct), ]
+  write_lines(x = otext$text, file = ofile)
   return(ofile)
 }

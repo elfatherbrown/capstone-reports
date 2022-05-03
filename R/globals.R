@@ -31,7 +31,7 @@ parquet_dir <- paste0(clean_files_dir, '/', 'as_parquet')
 
 ## Token tags for unknown, begin of sentence, end of sentence
 TOKEN_BOS = "__bos__ "
-TOKEN_EOS = " __eos__"
+TOKEN_EOS = "__eos__"
 TOKEN_UNK = "__unk__"
 
 ## Generic name tag for searching and commiting pins

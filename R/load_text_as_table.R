@@ -19,7 +19,8 @@ load_text_as_data_table <-
           sep = '\n',
           quote = "",
           header = FALSE,
-          col.names = 'text'
+          col.names = 'text',
+          showProgress = FALSE
         ) %>%
           dtplyr::lazy_dt() %>%
           mutate(file = str_replace(x, '.*/([^/]+)$', '\\1')) %>%
@@ -27,7 +28,7 @@ load_text_as_data_table <-
           select(text_id,file,text) %>%
           as.data.table()
       },
-      .progress = TRUE) %>%
+      .progress = FALSE) %>%
       rbindlist()
     gc()
     return(ret)

@@ -119,7 +119,7 @@ list(
 
 Ok, now we are cleaning the text by sentence so we can later down the line finally build models and then evaluate them.
 
-We will try to do this in parallel as per https://books.ropensci.org/targets/hpc.html#future-locally, so first we run all those above sequentially:
+We will try to do this in parallel as per <https://books.ropensci.org/targets/hpc.html#future-locally>, so first we run all those above sequentially:
 
 ```{r first-make}
 tar_make()
@@ -194,6 +194,13 @@ list(
 And then make those...
 
 ```{r kenlm-make}
-# tar_make()
+ tar_make()
 ```
 
+And this is what this pretty pipeline, from precleaning to generating a model, looks like:
+
+```{r show-off-network}
+tar_visnetwork()
+```
+
+#### Model evaluation

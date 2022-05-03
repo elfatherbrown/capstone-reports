@@ -2,7 +2,18 @@
 
 
 
+
+
 KENLM_EXEC = '/home/alex/bin/kenlm/lmplz'
+
+create_file_from_data_table_set <- function(dt_set,
+                                            outfilename,
+                                            outdir = clean_files_dir) {
+  ofile <- fs::path(outdir, outfilename)
+  dt_set$text %>%
+    readr::write_lines(x = ., file = ofile)
+  return(ofile)
+}
 
 create_single_cleantext_file <-
   function(source_files,
@@ -14,9 +25,11 @@ create_single_cleantext_file <-
     }
     source_files %>%
       walk(~ readr::read_file(.x) %>%
-             readr::write_file(x = ., file = rfn, append = TRUE))
+             readr::write_file(x = ., file = rfn,
+                               append = TRUE))
     return(rfn)
   }
+
 create_kenlm_arpa <-
   function(source_file,
            outfile = "kenlm_after_prune.arpa",
@@ -44,9 +57,12 @@ create_kenlm_arpa <-
     return(outfile)
   }
 
+
 load_arpa_as_data_table <- function(source_file, max_order = 5) {
+  options(readr.progress = FALSE,
+          readr.show_col_types = FALSE)
   order_by_chunk <- source_file %>%
-    read_lines(skip = 1, n_max = max_order) %>%
+    readr::read_lines(skip = 1, n_max = max_order) %>%
     map_dfr(
       .,
       ~ tibble::tibble_row(
@@ -56,21 +72,19 @@ load_arpa_as_data_table <- function(source_file, max_order = 5) {
       )
     ) %>%
     filter(lines != 0) %>%
-    mutate(
-      skip = if_else(
-        is.na(lag(order)),
-        max_order + 3,
-        lag(cumsum(lines)) + max_order + (2 * order) + 1
-      )
-    ) %>%
+    mutate(skip = if_else(
+      is.na(lag(order)),
+      max_order + 3,
+      lag(cumsum(lines)) + max_order + (2 * order) + 1
+    )) %>%
     pmap(function(order, lines, csum, skip, ...) {
       ret <- readr::read_tsv(
         source_file,
         n_max = lines,
         skip = skip,
         col_names = c("prob", 'n_gram', 'backoff'),
-        num_threads = 4,
-        quote = ""
+        quote = "",
+        show_col_types = FALSE
 
       ) %>%
         mutate(
@@ -80,15 +94,21 @@ load_arpa_as_data_table <- function(source_file, max_order = 5) {
           seq_id = seq_along(n_gram)
         ) %>%
         relocate(order, .before = 1) %>%
+        mutate(
+          n_gram = str_replace_all(n_gram, '<unk>', TOKEN_UNK),
+          n_gram = str_replace_all(n_gram, '<s>', TOKEN_BOS),
+          n_gram = str_replace_all(n_gram, '</s>', TOKEN_EOS)
+        ) %>%
         as.data.table()
       # If an ngram model has no backoff for any ngram,
       # kenlm removes the column. We add it here
       if ("backoff" %in% names(ret)) {
         return(ret)
       } else {
-        ret[,backoff:=0.0]
+        ret[, backoff := 0.0]
         return(ret)
       }
 
-    })
+    }) %>%
+    data.table::rbindlist()
 }
