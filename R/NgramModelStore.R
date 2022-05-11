@@ -138,7 +138,7 @@ oneGramHash <- R6::R6Class(
     ogm = NULL,
     N = NULL,
     initialize = function(fname) {
-      self$ogm <- fread(fname) %>%
+      self$ogm <- fread(file=fname) %>%
         select(ngram = ends, ngram_count) %>%
         as.data.table() %>%
         data.table::setindex(ngram)
@@ -243,7 +243,7 @@ NgramCorpus <- R6::R6Class(
         {
           p(x)
           if (is.null(lines_maximum)) {
-            ngram_set <- fread(x)
+            ngram_set <- fread(file=x)
           } else {
             ngram_set <-
               fread(x, nrows = lines_maximum)

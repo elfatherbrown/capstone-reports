@@ -30,15 +30,55 @@ Basic startup setup
 ```{r setting-up}
 library(targets) 
 tar_unscript()
-package_list <- c( "dplyr", "ggplot2", "readr", "tidyr","data.table","progressr","R6","pins","rsample","tidytext","purrr","furrr","magrittr","stringr","dtplyr")
-xfun::pkg_attach(package_list)
+package_list <-
+  c(
+    "dplyr",
+    "ggplot2",
+    "readr",
+    "tidyr",
+    "data.table",
+    "progressr",
+    "R6",
+    "pins",
+    "rsample",
+    "tidytext",
+    "purrr",
+    "furrr",
+    "magrittr",
+    "stringr",
+    "dtplyr"
+  )
+xfun::pkg_attach2(package_list)
 ```
 
 ```{targets t-globals, tar_globals=TRUE}
-options(tidyverse.quiet = TRUE)
+package_list <-
+  c(
+    "dplyr",
+    "ggplot2",
+    "readr",
+    "tidyr",
+    "data.table",
+    "progressr",
+    "R6",
+    "pins",
+    "rsample",
+    "tidytext",
+    "purrr",
+    "furrr",
+    "magrittr",
+    "stringr",
+    "dtplyr",
+    "futile.logger"
+  )
+# options(tidyverse.quiet = TRUE)
 targets::tar_option_set(format = 'qs')
-targets::tar_option_set(packages = c( "dplyr", "ggplot2", "readr", "tidyr","data.table","progressr","R6","pins","rsample","tidytext","purrr","furrr","magrittr","stringr","dtplyr"))
-source("R/global_vars_and_libs.R")
+targets::tar_option_set(packages = package_list)
+library(targets)
+xfun::pkg_attach(package_list)
+source("R/global_variables.R")
+options(datatable.verbose = FALSE)
+
 ```
 
 #### Building an iteration friendly environment
@@ -178,12 +218,6 @@ source("R/kenlm_functions.R")
              
 ```
 
-
-```{r kenlm-training-as-file-onepct-make}
-tar_make()
-```
-
-
 ```{targets kenlm-arpafile-onepct-target}
 
 tar_target(kenlm_arpafile_onepct,
@@ -194,10 +228,6 @@ tar_target(kenlm_arpafile_onepct,
                                
              format='file')
 
-```
-
-```{r kenlm-arpafile-onepct-make}
-tar_make()
 ```
 
 ```{targets kenlm-model-onepct-target}
@@ -212,28 +242,52 @@ tar_make()
 
 And then make those...
 
-```{r kenlm-model-onepct-make}
+```{r kenlm-make}
  tar_make()
+```
+
+Now, modeling actually has a cutoff value, that is, a lot of monograms are not even allowed to be in the model. Additionally, it is just plain normal that the test and devtest sets have words that are unks.
+
+Unks are not only hard to search for but also have to be replaced throughout all texts. This means its better to preprocess them.
+
+```{targets ngramified-devtest-onepct-target}
+source('./R/model_functions.R')
+tar_target(ngramified_devtest_onepct,
+tar_read(clean_devtest_onepct) %>% 
+    n_gramify_all(text_dt = .,
+                        model_dt = tar_read(kenlm_model_onepct))
+
+)
+
+```
+
+```{r ngramified-devtest-onepct-make}
+tar_make()
+```
+
+Unkified:
+```{targets unkified-devtest-onepct-target}
+source('./R/model_functions.R')
+tar_target(
+  unkified_devtest_onepct,
+  tar_read(ngramified_devtest_onepct) %>%
+    unkify_all(
+      unked_text_dt = .,
+      model_dt = tar_read(kenlm_model_onepct)
+    )
+  
+)
+
+```
+
+```{r unkified-devtest-onepct-make}
+tar_make()
 ```
 
 And this is what this pretty pipeline, from precleaning to generating a model, looks like:
 
 ```{r show-off-network}
 tar_visnetwork()
-```
-
-Now, modeling actually has a cutoff value, that is, a lot of monograms are not even allowed to be in the model. Aditionally, it is just plain normal that the test and devtest sets have words that are unks.
-
-Unks are not only hard to search for but also have to be replaced throughout all texts. This means its better to preprocess them.
-
-```{targets unkify-devtest-target}
-tar_target(unkified_devtest,
-tar_read(clean_devtest_onepct) %>% 
-    n_gramify_unked_all(text_dt = .,
-                        model_dt = tar_read(kenlm_model_onepct))
-
-)
-
 ```
 
 #### Model evaluation

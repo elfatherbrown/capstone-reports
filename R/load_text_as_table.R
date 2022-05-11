@@ -15,7 +15,7 @@ load_text_as_data_table <-
    ret <- thefiles %>%
       future_map(function(x) {
         fread(
-          x,
+          file = x,
           sep = '\n',
           quote = "",
           header = FALSE,

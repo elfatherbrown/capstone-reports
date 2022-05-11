@@ -12,8 +12,3 @@ inter_data_dir <- paste0(raw_data_dir, "final/en_US/intermediate")
 model_data_dir <- paste0(en_data_dir, "/models/")
 future::plan(future::multisession(workers = 6))
 
-
-library(targets)
-tar_unscript()
-package_list <- c( "dplyr", "ggplot2", "readr", "tidyr","data.table","progressr","R6","pins","rsample","tidytext","purrr","furrr","magrittr","stringr","dtplyr")
-xfun::pkg_attach(package_list)

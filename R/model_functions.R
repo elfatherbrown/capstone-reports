@@ -50,7 +50,8 @@ unkify <- function(model_dt, parsed_text) {
 
 parse_to_ngram_table <- function(intext,
                                  with_bos = TRUE,
-                                 with_eos = TRUE) {
+                                 with_eos = TRUE,
+                                 order=5) {
   intext <- intext %>%
     tibble(text = .)
   if (with_bos)
@@ -63,9 +64,10 @@ parse_to_ngram_table <- function(intext,
     intext <-
       intext %>% mutate(text = str_replace_all(text, "$", paste0(" ",TOKEN_EOS)))
   }
+  rng <- 1:order
   intext %>%
     pmap_dfr(function(text, ...) {
-      1:5 %>%
+      rng %>%
         map_dfr(function(order) {
           tibble(
             order = order,
@@ -75,33 +77,52 @@ parse_to_ngram_table <- function(intext,
           )
         })
     }, .id = "sentence_id") %>%
+    drop_na() %>%
     as.data.table()
 }
 
-#' n-gramify all
+#' unkify a data.table as ngrams
 #' Explodes a large data table into its corresponding ngrams and unks it acording
 #' to the unigrams available as compared to the inputed model
 #'
-#' @param text_dt
+#' @param unked_text_dt
 #' A one row per text data.table
 #' @return
 #' @export
 #'
 #' @examples
-n_gramify_unked_all <- function(text_dt,model_dt){
-   tdt <- text_dt
+unkify_all <- function(unked_text_dt,model_dt,order=5){
+   tdt <- unked_text_dt
    tdt[,chunk := ceiling(.I %% .N / 1000) ] %>%
      group_by(chunk) %>%
        nest() %>%
          as_tibble() %>%
-     filter(chunk %in% c(1,2,6)) %>%
            furrr::future_pmap(function(chunk,data,...){
-             data$text %>%
-               parse_to_ngram_table(.) %>%
-                 unkify(model_dt = model_dt,parsed_text = .)
+             data %>%
+               unkify(parsed_text = .,
+                             model_dt = model_dt)
              }) %>%
-               rbindlist(s)
+               rbindlist()
 }
+
+n_gramify_all <- function(text_dt,model_dt,order=5){
+  tdt <- text_dt
+  tdt[,chunk := ceiling(.I %% .N / 500) ] %>%
+    group_by(chunk) %>%
+    nest() %>%
+    as_tibble() %>%
+    future_pmap_dfr(function(chunk,data,...){
+     r <-  data$text %>%
+        parse_to_ngram_table(.,order = order) %>%
+          mutate(sentence_id=as.numeric(sentence_id)+((chunk-1)*500)) %>%
+            as.data.table()
+     r
+    },.id='sentence_id_2',.options = furrr_options(seed=TRUE)) %>%
+    as.data.table()
+}
+
+
+
 
 scratch <- function(){
   devtest <- tar_read(devtest_onepct)
@@ -117,6 +138,7 @@ scratch <- function(){
           mutate(
             text_id
           )
-      }
+      },
+      .options = furrr_options(seed=TRUE)
     )
 }

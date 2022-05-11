@@ -6823,6 +6823,7 @@ if (window.hljs) {
 
 
 
+
 <style type="text/css">
 .main-container {
   max-width: 940px;
@@ -6843,6 +6844,9 @@ button.code-folding-btn:focus {
 }
 summary {
   display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
 }
 pre code {
   padding: 0;
@@ -6947,8 +6951,25 @@ and onwards is <a href="https://docs.google.com/drawings/d/1ulZlV0PZG9nbkvX4l6Qm
 <p>Basic startup setup</p>
 <pre class="r"><code>library(targets) 
 tar_unscript()
-package_list &lt;- c( &quot;dplyr&quot;, &quot;ggplot2&quot;, &quot;readr&quot;, &quot;tidyr&quot;,&quot;data.table&quot;,&quot;progressr&quot;,&quot;R6&quot;,&quot;pins&quot;,&quot;rsample&quot;,&quot;tidytext&quot;,&quot;purrr&quot;,&quot;furrr&quot;,&quot;magrittr&quot;,&quot;stringr&quot;,&quot;dtplyr&quot;)
-xfun::pkg_attach(package_list)
+package_list &lt;-
+  c(
+    &quot;dplyr&quot;,
+    &quot;ggplot2&quot;,
+    &quot;readr&quot;,
+    &quot;tidyr&quot;,
+    &quot;data.table&quot;,
+    &quot;progressr&quot;,
+    &quot;R6&quot;,
+    &quot;pins&quot;,
+    &quot;rsample&quot;,
+    &quot;tidytext&quot;,
+    &quot;purrr&quot;,
+    &quot;furrr&quot;,
+    &quot;magrittr&quot;,
+    &quot;stringr&quot;,
+    &quot;dtplyr&quot;
+  )
+xfun::pkg_attach2(package_list)
 #&gt; 
 #&gt; Attaching package: &#39;dplyr&#39;
 #&gt; The following objects are masked from &#39;package:stats&#39;:
@@ -6976,10 +6997,33 @@ xfun::pkg_attach(package_list)
 #&gt; The following object is masked from &#39;package:tidyr&#39;:
 #&gt; 
 #&gt;     extract</code></pre>
-<pre class="r"><code>options(tidyverse.quiet = TRUE)
+<pre class="r"><code>package_list &lt;-
+  c(
+    &quot;dplyr&quot;,
+    &quot;ggplot2&quot;,
+    &quot;readr&quot;,
+    &quot;tidyr&quot;,
+    &quot;data.table&quot;,
+    &quot;progressr&quot;,
+    &quot;R6&quot;,
+    &quot;pins&quot;,
+    &quot;rsample&quot;,
+    &quot;tidytext&quot;,
+    &quot;purrr&quot;,
+    &quot;furrr&quot;,
+    &quot;magrittr&quot;,
+    &quot;stringr&quot;,
+    &quot;dtplyr&quot;,
+    &quot;futile.logger&quot;
+  )
+# options(tidyverse.quiet = TRUE)
 targets::tar_option_set(format = &#39;qs&#39;)
-targets::tar_option_set(packages = c( &quot;dplyr&quot;, &quot;ggplot2&quot;, &quot;readr&quot;, &quot;tidyr&quot;,&quot;data.table&quot;,&quot;progressr&quot;,&quot;R6&quot;,&quot;pins&quot;,&quot;rsample&quot;,&quot;tidytext&quot;,&quot;purrr&quot;,&quot;furrr&quot;,&quot;magrittr&quot;,&quot;stringr&quot;,&quot;dtplyr&quot;))
+targets::tar_option_set(packages = package_list)
+library(targets)
+xfun::pkg_attach(package_list)
 source(&quot;R/global_variables.R&quot;)
+options(datatable.verbose = FALSE)
+
 #&gt; Establish _targets.R and _targets_r/globals/t-globals.R.</code></pre>
 </div>
 <div id="building-an-iteration-friendly-environment" class="section level4">
@@ -7053,16 +7097,53 @@ line finally build models and then evaluate them.</p>
 <p>We will try to do this in parallel as per <a href="https://books.ropensci.org/targets/hpc.html#future-locally" class="uri">https://books.ropensci.org/targets/hpc.html#future-locally</a>,
 so first we run all those above sequentially:</p>
 <pre class="r"><code>tar_make()
-#&gt; ✓ skip target preclean
-#&gt; ✓ skip target sentenced_files
-#&gt; ✓ skip target sample_one_pct
-#&gt; ✓ skip target splits_of_onepct
-#&gt; ✓ skip target pre_training_onepct
-#&gt; ✓ skip target testing_onepct
-#&gt; ✓ skip target training_devtest_split_onepct
-#&gt; ✓ skip target devtest_onepct
-#&gt; ✓ skip target training_onepct
-#&gt; ✓ skip pipeline: 0.099 seconds</code></pre>
+#&gt; 
+#&gt; Attaching package: ‘dplyr’
+#&gt; 
+#&gt; The following objects are masked from ‘package:stats’:
+#&gt; 
+#&gt;     filter, lag
+#&gt; 
+#&gt; The following objects are masked from ‘package:base’:
+#&gt; 
+#&gt;     intersect, setdiff, setequal, union
+#&gt; 
+#&gt; 
+#&gt; Attaching package: ‘data.table’
+#&gt; 
+#&gt; The following objects are masked from ‘package:dplyr’:
+#&gt; 
+#&gt;     between, first, last
+#&gt; 
+#&gt; 
+#&gt; Attaching package: ‘purrr’
+#&gt; 
+#&gt; The following object is masked from ‘package:data.table’:
+#&gt; 
+#&gt;     transpose
+#&gt; 
+#&gt; Loading required package: future
+#&gt; 
+#&gt; Attaching package: ‘magrittr’
+#&gt; 
+#&gt; The following object is masked from ‘package:purrr’:
+#&gt; 
+#&gt;     set_names
+#&gt; 
+#&gt; The following object is masked from ‘package:tidyr’:
+#&gt; 
+#&gt;     extract
+#&gt; 
+#&gt; ✔ skip target preclean
+#&gt; ✔ skip target sentenced_files
+#&gt; ✔ skip target sample_one_pct
+#&gt; ✔ skip target splits_of_onepct
+#&gt; ✔ skip target pre_training_onepct
+#&gt; ✔ skip target testing_onepct
+#&gt; ✔ skip target training_devtest_split_onepct
+#&gt; ✔ skip target devtest_onepct
+#&gt; ✔ skip target training_onepct
+#&gt; ✔ skip pipeline: 0.12 seconds</code></pre>
 <p>And now we build the parallel cleaning targets:</p>
 <pre class="r"><code>
 source(&quot;R/clean_texts.R&quot;)
@@ -7088,19 +7169,56 @@ list(
 library(future.callr)
 plan(callr)
 tar_make_future(workers = 6)
-#&gt; ✓ skip target preclean
-#&gt; ✓ skip target sentenced_files
-#&gt; ✓ skip target sample_one_pct
-#&gt; ✓ skip target splits_of_onepct
-#&gt; ✓ skip target testing_onepct
-#&gt; ✓ skip target clean_testing_onepct
-#&gt; ✓ skip target pre_training_onepct
-#&gt; ✓ skip target training_devtest_split_onepct
-#&gt; ✓ skip target training_onepct
-#&gt; ✓ skip target clean_training_onepct
-#&gt; ✓ skip target devtest_onepct
-#&gt; ✓ skip target clean_devtest_onepct
-#&gt; ✓ skip pipeline: 0.176 seconds</code></pre>
+#&gt; 
+#&gt; Attaching package: ‘dplyr’
+#&gt; 
+#&gt; The following objects are masked from ‘package:stats’:
+#&gt; 
+#&gt;     filter, lag
+#&gt; 
+#&gt; The following objects are masked from ‘package:base’:
+#&gt; 
+#&gt;     intersect, setdiff, setequal, union
+#&gt; 
+#&gt; 
+#&gt; Attaching package: ‘data.table’
+#&gt; 
+#&gt; The following objects are masked from ‘package:dplyr’:
+#&gt; 
+#&gt;     between, first, last
+#&gt; 
+#&gt; 
+#&gt; Attaching package: ‘purrr’
+#&gt; 
+#&gt; The following object is masked from ‘package:data.table’:
+#&gt; 
+#&gt;     transpose
+#&gt; 
+#&gt; Loading required package: future
+#&gt; 
+#&gt; Attaching package: ‘magrittr’
+#&gt; 
+#&gt; The following object is masked from ‘package:purrr’:
+#&gt; 
+#&gt;     set_names
+#&gt; 
+#&gt; The following object is masked from ‘package:tidyr’:
+#&gt; 
+#&gt;     extract
+#&gt; 
+#&gt; ✔ skip target preclean
+#&gt; ✔ skip target sentenced_files
+#&gt; ✔ skip target sample_one_pct
+#&gt; ✔ skip target splits_of_onepct
+#&gt; ✔ skip target testing_onepct
+#&gt; ✔ skip target clean_testing_onepct
+#&gt; ✔ skip target pre_training_onepct
+#&gt; ✔ skip target training_devtest_split_onepct
+#&gt; ✔ skip target training_onepct
+#&gt; ✔ skip target clean_training_onepct
+#&gt; ✔ skip target devtest_onepct
+#&gt; ✔ skip target clean_devtest_onepct
+#&gt; ✔ skip pipeline: 0.143 seconds</code></pre>
 <p>Now we have all we need toooo….</p>
 </div>
 <div id="building-models" class="section level4">
@@ -7120,7 +7238,7 @@ that:</p>
              format=&quot;file&quot;)
              
 #&gt; Establish _targets.R and _targets_r/targets/training-file-as-onepct-target.R.</code></pre>
-<pre class="target"><code>
+<pre class="r"><code>
 tar_target(kenlm_arpafile_onepct,
              create_kenlm_arpa(
                source_file = training_as_file_onepct,
@@ -7128,48 +7246,252 @@ tar_target(kenlm_arpafile_onepct,
                                ),
                                
              format=&#39;file&#39;)
-</code></pre>
-<pre class="target"><code>
+
+#&gt; Establish _targets.R and _targets_r/targets/kenlm-arpafile-onepct-target.R.</code></pre>
+<pre class="r"><code>
   tar_target(kenlm_model_onepct,
           load_arpa_as_data_table(
             source_file = kenlm_arpafile_onepct
               ))
-</code></pre>
+
+#&gt; Establish _targets.R and _targets_r/targets/kenlm-model-onepct-target.R.</code></pre>
 <p>And then make those…</p>
 <pre class="r"><code> tar_make()
-#&gt; ✓ skip target preclean
-#&gt; ✓ skip target sentenced_files
-#&gt; ✓ skip target sample_one_pct
-#&gt; ✓ skip target splits_of_onepct
-#&gt; ✓ skip target testing_onepct
-#&gt; ✓ skip target pre_training_onepct
-#&gt; ✓ skip target clean_testing_onepct
-#&gt; ✓ skip target training_devtest_split_onepct
-#&gt; ✓ skip target training_onepct
-#&gt; ✓ skip target devtest_onepct
-#&gt; ✓ skip target clean_training_onepct
-#&gt; ✓ skip target clean_devtest_onepct
-#&gt; ✓ skip target training_as_file_onepct
-#&gt; ✓ skip pipeline: 0.137 seconds</code></pre>
-<p>And this is what this pretty pipeline, from precleaning to generating
-a model, looks like:</p>
-<pre class="r"><code>tar_visnetwork()</code></pre>
-<div id="htmlwidget-eb7f2152fe57b8f77a93" style="width:672px;height:480px;" class="visNetwork html-widget"></div>
-<script type="application/json" data-for="htmlwidget-eb7f2152fe57b8f77a93">{"x":{"nodes":{"name":["clean_devtest_onepct","clean_testing_onepct","clean_training_onepct","devtest_onepct","pre_training_onepct","preclean","sample_one_pct","sentenced_files","splits_of_onepct","testing_onepct","training_as_file_onepct","training_devtest_split_onepct","training_onepct","create_training_and_devset","board","sentencify_simple","clean_files_dir","TOKEN_BOS","TOKEN_EOS","TOKEN_UNK","en_data_dir","clean_texts","inter_data_dir","model_data_dir","create_kenlm_arpa","load_text_as_data_table","board_folder","out_data_dir","raw_data_dir","KENLM_EXEC","sentencify","create_single_cleantext_file","create_file_from_data_table_set","load_arpa_as_data_table","preclean_files","clean_texts_dt","simple_sample","create_our_splits"],"type":["stem","stem","stem","stem","stem","stem","stem","stem","stem","stem","stem","stem","stem","function","object","function","object","object","object","object","object","function","object","object","function","function","object","object","object","object","function","function","function","function","function","function","function","function"],"status":["uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate"],"seconds":[11.929,28.445,62.32,0,0.014,19.414,20.52,909.266,1.675,0.013,0.482,0.01,0.001,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],"bytes":[220849,683689,1912766,221767,2276246,156,5766046,575277171,2796253,708661,3910587,2142841,1921398,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],"branches":[null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],"label":["clean_devtest_onepct","clean_testing_onepct","clean_training_onepct","devtest_onepct","pre_training_onepct","preclean","sample_one_pct","sentenced_files","splits_of_onepct","testing_onepct","training_as_file_onepct","training_devtest_split_onepct","training_onepct","create_training_and_devset","board","sentencify_simple","clean_files_dir","TOKEN_BOS","TOKEN_EOS","TOKEN_UNK","en_data_dir","clean_texts","inter_data_dir","model_data_dir","create_kenlm_arpa","load_text_as_data_table","board_folder","out_data_dir","raw_data_dir","KENLM_EXEC","sentencify","create_single_cleantext_file","create_file_from_data_table_set","load_arpa_as_data_table","preclean_files","clean_texts_dt","simple_sample","create_our_splits"],"color":["#354823","#354823","#354823","#354823","#354823","#354823","#354823","#354823","#354823","#354823","#354823","#354823","#354823","#354823","#354823","#354823","#354823","#354823","#354823","#354823","#354823","#354823","#354823","#354823","#354823","#354823","#354823","#354823","#354823","#354823","#354823","#354823","#354823","#354823","#354823","#354823","#354823","#354823"],"id":["clean_devtest_onepct","clean_testing_onepct","clean_training_onepct","devtest_onepct","pre_training_onepct","preclean","sample_one_pct","sentenced_files","splits_of_onepct","testing_onepct","training_as_file_onepct","training_devtest_split_onepct","training_onepct","create_training_and_devset","board","sentencify_simple","clean_files_dir","TOKEN_BOS","TOKEN_EOS","TOKEN_UNK","en_data_dir","clean_texts","inter_data_dir","model_data_dir","create_kenlm_arpa","load_text_as_data_table","board_folder","out_data_dir","raw_data_dir","KENLM_EXEC","sentencify","create_single_cleantext_file","create_file_from_data_table_set","load_arpa_as_data_table","preclean_files","clean_texts_dt","simple_sample","create_our_splits"],"level":[10,8,10,9,7,3,5,4,6,7,11,8,9,1,0,1,1,1,1,1,1,1,0,0,0,1,0,0,0,0,2,2,2,2,2,2,2,2],"shape":["dot","dot","dot","dot","dot","dot","dot","dot","dot","dot","dot","dot","dot","triangle","triangleDown","triangle","triangleDown","triangleDown","triangleDown","triangleDown","triangleDown","triangle","triangleDown","triangleDown","triangle","triangle","triangleDown","triangleDown","triangleDown","triangleDown","triangle","triangle","triangle","triangle","triangle","triangle","triangle","triangle"]},"edges":{"from":["sentencify_simple","clean_files_dir","clean_files_dir","clean_files_dir","clean_files_dir","clean_files_dir","TOKEN_BOS","TOKEN_BOS","TOKEN_EOS","TOKEN_EOS","TOKEN_UNK","TOKEN_UNK","en_data_dir","clean_texts","load_text_as_data_table","load_text_as_data_table","clean_texts_dt","training_onepct","clean_texts_dt","testing_onepct","clean_texts_dt","devtest_onepct","training_devtest_split_onepct","sentenced_files","simple_sample","create_our_splits","sample_one_pct","clean_training_onepct","create_file_from_data_table_set","training_devtest_split_onepct","splits_of_onepct","en_data_dir","preclean_files","preclean","sentencify","splits_of_onepct","create_training_and_devset","pre_training_onepct"],"to":["sentencify","sentencify","create_single_cleantext_file","preclean_files","simple_sample","create_file_from_data_table_set","load_arpa_as_data_table","preclean_files","load_arpa_as_data_table","preclean_files","load_arpa_as_data_table","preclean_files","preclean_files","clean_texts_dt","simple_sample","create_our_splits","clean_training_onepct","clean_training_onepct","clean_testing_onepct","clean_testing_onepct","clean_devtest_onepct","clean_devtest_onepct","devtest_onepct","sample_one_pct","sample_one_pct","splits_of_onepct","splits_of_onepct","training_as_file_onepct","training_as_file_onepct","training_onepct","pre_training_onepct","preclean","preclean","sentenced_files","sentenced_files","testing_onepct","training_devtest_split_onepct","training_devtest_split_onepct"],"arrows":["to","to","to","to","to","to","to","to","to","to","to","to","to","to","to","to","to","to","to","to","to","to","to","to","to","to","to","to","to","to","to","to","to","to","to","to","to","to"]},"nodesToDataframe":true,"edgesToDataframe":true,"options":{"width":"100%","height":"100%","nodes":{"shape":"dot","physics":false},"manipulation":{"enabled":false},"edges":{"smooth":{"type":"cubicBezier","forceDirection":"horizontal"}},"physics":{"stabilization":false},"interaction":{"zoomSpeed":1},"layout":{"hierarchical":{"enabled":true,"direction":"LR"}}},"groups":null,"width":null,"height":null,"idselection":{"enabled":false,"style":"width: 150px; height: 26px","useLabels":true,"main":"Select by id"},"byselection":{"enabled":false,"style":"width: 150px; height: 26px","multiple":false,"hideColor":"rgba(200,200,200,0.5)","highlight":false},"main":{"text":"","style":"font-family:Georgia, Times New Roman, Times, serif;font-weight:bold;font-size:20px;text-align:center;"},"submain":null,"footer":null,"background":"rgba(0, 0, 0, 0)","highlight":{"enabled":true,"hoverNearest":false,"degree":{"from":1,"to":1},"algorithm":"hierarchical","hideColor":"rgba(200,200,200,0.5)","labelOnly":true},"collapse":{"enabled":true,"fit":false,"resetHighlight":true,"clusterOptions":null,"keepCoord":true,"labelSuffix":"(cluster)"},"legend":{"width":0.2,"useGroups":false,"position":"right","ncol":1,"stepX":100,"stepY":100,"zoom":true,"nodes":{"label":["Up to date","Stem","Function","Object"],"color":["#354823","#899DA4","#899DA4","#899DA4"],"shape":["dot","dot","triangle","triangleDown"]},"nodesToDataframe":true},"tooltipStay":300,"tooltipStyle":"position: fixed;visibility:hidden;padding: 5px;white-space: nowrap;font-family: verdana;font-size:14px;font-color:#000000;background-color: #f5f4ed;-moz-border-radius: 3px;-webkit-border-radius: 3px;border-radius: 3px;border: 1px solid #808074;box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);"},"evals":[],"jsHooks":[]}</script>
+#&gt; 
+#&gt; Attaching package: ‘dplyr’
+#&gt; 
+#&gt; The following objects are masked from ‘package:stats’:
+#&gt; 
+#&gt;     filter, lag
+#&gt; 
+#&gt; The following objects are masked from ‘package:base’:
+#&gt; 
+#&gt;     intersect, setdiff, setequal, union
+#&gt; 
+#&gt; 
+#&gt; Attaching package: ‘data.table’
+#&gt; 
+#&gt; The following objects are masked from ‘package:dplyr’:
+#&gt; 
+#&gt;     between, first, last
+#&gt; 
+#&gt; 
+#&gt; Attaching package: ‘purrr’
+#&gt; 
+#&gt; The following object is masked from ‘package:data.table’:
+#&gt; 
+#&gt;     transpose
+#&gt; 
+#&gt; Loading required package: future
+#&gt; 
+#&gt; Attaching package: ‘magrittr’
+#&gt; 
+#&gt; The following object is masked from ‘package:purrr’:
+#&gt; 
+#&gt;     set_names
+#&gt; 
+#&gt; The following object is masked from ‘package:tidyr’:
+#&gt; 
+#&gt;     extract
+#&gt; 
+#&gt; ✔ skip target preclean
+#&gt; ✔ skip target sentenced_files
+#&gt; ✔ skip target sample_one_pct
+#&gt; ✔ skip target splits_of_onepct
+#&gt; ✔ skip target testing_onepct
+#&gt; ✔ skip target pre_training_onepct
+#&gt; ✔ skip target clean_testing_onepct
+#&gt; ✔ skip target training_devtest_split_onepct
+#&gt; ✔ skip target training_onepct
+#&gt; ✔ skip target devtest_onepct
+#&gt; ✔ skip target clean_training_onepct
+#&gt; ✔ skip target clean_devtest_onepct
+#&gt; ✔ skip target training_as_file_onepct
+#&gt; ✔ skip target kenlm_arpafile_onepct
+#&gt; ✔ skip target kenlm_model_onepct
+#&gt; ✔ skip pipeline: 0.144 seconds</code></pre>
 <p>Now, modeling actually has a cutoff value, that is, a lot of
-monograms are not even allowed to be in the model. Aditionally, it is
+monograms are not even allowed to be in the model. Additionally, it is
 just plain normal that the test and devtest sets have words that are
 unks.</p>
 <p>Unks are not only hard to search for but also have to be replaced
 throughout all texts. This means its better to preprocess them.</p>
-<pre class="r"><code>tar_target(unkified_devtest,
+<pre class="r"><code>source(&#39;./R/model_functions.R&#39;)
+tar_target(ngramified_devtest_onepct,
 tar_read(clean_devtest_onepct) %&gt;% 
-    n_gramify_unked_all(text_dt = .,
+    n_gramify_all(text_dt = .,
                         model_dt = tar_read(kenlm_model_onepct))
 
 )
 
-#&gt; Establish _targets.R and _targets_r/targets/unkify-devtest-target.R.</code></pre>
+#&gt; Establish _targets.R and _targets_r/targets/ngramified-devtest-onepct-target.R.</code></pre>
+<pre class="r"><code>tar_make()
+#&gt; 
+#&gt; Attaching package: ‘dplyr’
+#&gt; 
+#&gt; The following objects are masked from ‘package:stats’:
+#&gt; 
+#&gt;     filter, lag
+#&gt; 
+#&gt; The following objects are masked from ‘package:base’:
+#&gt; 
+#&gt;     intersect, setdiff, setequal, union
+#&gt; 
+#&gt; 
+#&gt; Attaching package: ‘data.table’
+#&gt; 
+#&gt; The following objects are masked from ‘package:dplyr’:
+#&gt; 
+#&gt;     between, first, last
+#&gt; 
+#&gt; 
+#&gt; Attaching package: ‘purrr’
+#&gt; 
+#&gt; The following object is masked from ‘package:data.table’:
+#&gt; 
+#&gt;     transpose
+#&gt; 
+#&gt; Loading required package: future
+#&gt; 
+#&gt; Attaching package: ‘magrittr’
+#&gt; 
+#&gt; The following object is masked from ‘package:purrr’:
+#&gt; 
+#&gt;     set_names
+#&gt; 
+#&gt; The following object is masked from ‘package:tidyr’:
+#&gt; 
+#&gt;     extract
+#&gt; 
+#&gt; ✔ skip target preclean
+#&gt; ✔ skip target sentenced_files
+#&gt; ✔ skip target sample_one_pct
+#&gt; ✔ skip target splits_of_onepct
+#&gt; ✔ skip target testing_onepct
+#&gt; ✔ skip target pre_training_onepct
+#&gt; ✔ skip target clean_testing_onepct
+#&gt; ✔ skip target training_devtest_split_onepct
+#&gt; ✔ skip target training_onepct
+#&gt; ✔ skip target devtest_onepct
+#&gt; ✔ skip target clean_training_onepct
+#&gt; ✔ skip target clean_devtest_onepct
+#&gt; ✔ skip target training_as_file_onepct
+#&gt; ✔ skip target kenlm_arpafile_onepct
+#&gt; ✔ skip target kenlm_model_onepct
+#&gt; • start target ngramified_devtest_onepct
+#&gt; • built target ngramified_devtest_onepct
+#&gt; • end pipeline: 20.868 seconds</code></pre>
+<p>Unkified:</p>
+<pre class="r"><code>source(&#39;./R/model_functions.R&#39;)
+tar_target(
+  unkified_devtest_onepct,
+  tar_read(ngramified_devtest_onepct) %&gt;%
+    unkify_all(
+      unked_text_dt = .,
+      model_dt = tar_read(kenlm_model_onepct)
+    )
+  
+)
+
+#&gt; Establish _targets.R and _targets_r/targets/unkified-devtest-onepct-target.R.</code></pre>
+<pre class="r"><code>tar_make()
+#&gt; 
+#&gt; Attaching package: ‘dplyr’
+#&gt; 
+#&gt; The following objects are masked from ‘package:stats’:
+#&gt; 
+#&gt;     filter, lag
+#&gt; 
+#&gt; The following objects are masked from ‘package:base’:
+#&gt; 
+#&gt;     intersect, setdiff, setequal, union
+#&gt; 
+#&gt; 
+#&gt; Attaching package: ‘data.table’
+#&gt; 
+#&gt; The following objects are masked from ‘package:dplyr’:
+#&gt; 
+#&gt;     between, first, last
+#&gt; 
+#&gt; 
+#&gt; Attaching package: ‘purrr’
+#&gt; 
+#&gt; The following object is masked from ‘package:data.table’:
+#&gt; 
+#&gt;     transpose
+#&gt; 
+#&gt; Loading required package: future
+#&gt; 
+#&gt; Attaching package: ‘magrittr’
+#&gt; 
+#&gt; The following object is masked from ‘package:purrr’:
+#&gt; 
+#&gt;     set_names
+#&gt; 
+#&gt; The following object is masked from ‘package:tidyr’:
+#&gt; 
+#&gt;     extract
+#&gt; 
+#&gt; ✔ skip target preclean
+#&gt; ✔ skip target sentenced_files
+#&gt; ✔ skip target sample_one_pct
+#&gt; ✔ skip target splits_of_onepct
+#&gt; ✔ skip target testing_onepct
+#&gt; ✔ skip target pre_training_onepct
+#&gt; ✔ skip target clean_testing_onepct
+#&gt; ✔ skip target training_devtest_split_onepct
+#&gt; ✔ skip target training_onepct
+#&gt; ✔ skip target devtest_onepct
+#&gt; ✔ skip target clean_training_onepct
+#&gt; ✔ skip target clean_devtest_onepct
+#&gt; ✔ skip target training_as_file_onepct
+#&gt; ✔ skip target kenlm_arpafile_onepct
+#&gt; ✔ skip target kenlm_model_onepct
+#&gt; ✔ skip target ngramified_devtest_onepct
+#&gt; • start target unkified_devtest_onepct
+#&gt; • built target unkified_devtest_onepct
+#&gt; • end pipeline: 16.552 seconds</code></pre>
+<p>And this is what this pretty pipeline, from precleaning to generating
+a model, looks like:</p>
+<pre class="r"><code>tar_visnetwork()
+#&gt; 
+#&gt; Attaching package: ‘dplyr’
+#&gt; 
+#&gt; The following objects are masked from ‘package:stats’:
+#&gt; 
+#&gt;     filter, lag
+#&gt; 
+#&gt; The following objects are masked from ‘package:base’:
+#&gt; 
+#&gt;     intersect, setdiff, setequal, union
+#&gt; 
+#&gt; 
+#&gt; Attaching package: ‘data.table’
+#&gt; 
+#&gt; The following objects are masked from ‘package:dplyr’:
+#&gt; 
+#&gt;     between, first, last
+#&gt; 
+#&gt; 
+#&gt; Attaching package: ‘purrr’
+#&gt; 
+#&gt; The following object is masked from ‘package:data.table’:
+#&gt; 
+#&gt;     transpose
+#&gt; 
+#&gt; Loading required package: future
+#&gt; 
+#&gt; Attaching package: ‘magrittr’
+#&gt; 
+#&gt; The following object is masked from ‘package:purrr’:
+#&gt; 
+#&gt;     set_names
+#&gt; 
+#&gt; The following object is masked from ‘package:tidyr’:
+#&gt; 
+#&gt;     extract</code></pre>
+<div id="htmlwidget-d0e2c667800d590481af" style="width:672px;height:480px;" class="visNetwork html-widget"></div>
+<script type="application/json" data-for="htmlwidget-d0e2c667800d590481af">{"x":{"nodes":{"name":["clean_devtest_onepct","clean_testing_onepct","clean_training_onepct","devtest_onepct","kenlm_arpafile_onepct","kenlm_model_onepct","ngramified_devtest_onepct","pre_training_onepct","preclean","sample_one_pct","sentenced_files","splits_of_onepct","testing_onepct","training_as_file_onepct","training_devtest_split_onepct","training_onepct","unkified_devtest_onepct","create_training_and_devset","package_list","board","sentencify_simple","clean_files_dir","max_order","TOKEN_BOS","TOKEN_EOS","TOKEN_UNK","en_data_dir","clean_texts","inter_data_dir","model_data_dir","create_kenlm_arpa","load_text_as_data_table","board_folder","ngrams_of_order","out_data_dir","raw_data_dir","KENLM_EXEC","sentencify","create_single_cleantext_file","create_file_from_data_table_set","parse_to_ngram_table","load_arpa_as_data_table","unkify","preclean_files","clean_texts_dt","simple_sample","create_our_splits","n_gramify_all","text_prob_one","unkify_all","scratch"],"type":["stem","stem","stem","stem","stem","stem","stem","stem","stem","stem","stem","stem","stem","stem","stem","stem","stem","function","object","object","function","object","function","object","object","object","object","function","object","object","function","function","object","function","object","object","object","function","function","function","function","function","function","function","function","function","function","function","function","function","function"],"status":["uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate","uptodate"],"seconds":[12.369,30.97,67.908,0,10.898,0.244,20.555,0.015,17.483,62.869,652.63,1.125,0.016,0.584,0.018,0,16.108,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],"bytes":[220326,685905,1899257,221723,64006,48985,1834543,2266560,157,5759714,575277171,2786109,711255,3892820,2131439,1909634,1638398,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],"branches":[null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],"label":["clean_devtest_onepct","clean_testing_onepct","clean_training_onepct","devtest_onepct","kenlm_arpafile_onepct","kenlm_model_onepct","ngramified_devtest_onepct","pre_training_onepct","preclean","sample_one_pct","sentenced_files","splits_of_onepct","testing_onepct","training_as_file_onepct","training_devtest_split_onepct","training_onepct","unkified_devtest_onepct","create_training_and_devset","package_list","board","sentencify_simple","clean_files_dir","max_order","TOKEN_BOS","TOKEN_EOS","TOKEN_UNK","en_data_dir","clean_texts","inter_data_dir","model_data_dir","create_kenlm_arpa","load_text_as_data_table","board_folder","ngrams_of_order","out_data_dir","raw_data_dir","KENLM_EXEC","sentencify","create_single_cleantext_file","create_file_from_data_table_set","parse_to_ngram_table","load_arpa_as_data_table","unkify","preclean_files","clean_texts_dt","simple_sample","create_our_splits","n_gramify_all","text_prob_one","unkify_all","scratch"],"color":["#354823","#354823","#354823","#354823","#354823","#354823","#354823","#354823","#354823","#354823","#354823","#354823","#354823","#354823","#354823","#354823","#354823","#354823","#354823","#354823","#354823","#354823","#354823","#354823","#354823","#354823","#354823","#354823","#354823","#354823","#354823","#354823","#354823","#354823","#354823","#354823","#354823","#354823","#354823","#354823","#354823","#354823","#354823","#354823","#354823","#354823","#354823","#354823","#354823","#354823","#354823"],"id":["clean_devtest_onepct","clean_testing_onepct","clean_training_onepct","devtest_onepct","kenlm_arpafile_onepct","kenlm_model_onepct","ngramified_devtest_onepct","pre_training_onepct","preclean","sample_one_pct","sentenced_files","splits_of_onepct","testing_onepct","training_as_file_onepct","training_devtest_split_onepct","training_onepct","unkified_devtest_onepct","create_training_and_devset","package_list","board","sentencify_simple","clean_files_dir","max_order","TOKEN_BOS","TOKEN_EOS","TOKEN_UNK","en_data_dir","clean_texts","inter_data_dir","model_data_dir","create_kenlm_arpa","load_text_as_data_table","board_folder","ngrams_of_order","out_data_dir","raw_data_dir","KENLM_EXEC","sentencify","create_single_cleantext_file","create_file_from_data_table_set","parse_to_ngram_table","load_arpa_as_data_table","unkify","preclean_files","clean_texts_dt","simple_sample","create_our_splits","n_gramify_all","text_prob_one","unkify_all","scratch"],"level":[10,8,10,9,12,13,14,7,3,5,4,6,7,11,8,9,15,1,0,0,1,1,0,1,1,1,1,1,0,0,1,1,0,0,0,0,0,2,2,2,2,2,2,2,2,2,2,3,3,3,4],"shape":["dot","dot","dot","dot","dot","dot","dot","dot","dot","dot","dot","dot","dot","dot","dot","dot","dot","triangle","triangleDown","triangleDown","triangle","triangleDown","triangle","triangleDown","triangleDown","triangleDown","triangleDown","triangle","triangleDown","triangleDown","triangle","triangle","triangleDown","triangle","triangleDown","triangleDown","triangleDown","triangle","triangle","triangle","triangle","triangle","triangle","triangle","triangle","triangle","triangle","triangle","triangle","triangle","triangle"]},"edges":{"from":["sentencify_simple","clean_files_dir","clean_files_dir","clean_files_dir","clean_files_dir","clean_files_dir","TOKEN_BOS","TOKEN_BOS","TOKEN_BOS","TOKEN_EOS","TOKEN_EOS","TOKEN_EOS","TOKEN_UNK","TOKEN_UNK","TOKEN_UNK","parse_to_ngram_table","parse_to_ngram_table","unkify","unkify","text_prob_one","en_data_dir","clean_texts","load_text_as_data_table","load_text_as_data_table","clean_texts_dt","training_onepct","clean_texts_dt","testing_onepct","clean_texts_dt","devtest_onepct","training_devtest_split_onepct","sentenced_files","simple_sample","create_kenlm_arpa","training_as_file_onepct","create_our_splits","sample_one_pct","clean_training_onepct","create_file_from_data_table_set","kenlm_model_onepct","ngramified_devtest_onepct","unkify_all","training_devtest_split_onepct","splits_of_onepct","clean_devtest_onepct","kenlm_model_onepct","n_gramify_all","en_data_dir","preclean_files","preclean","sentencify","kenlm_arpafile_onepct","load_arpa_as_data_table","splits_of_onepct","create_training_and_devset","pre_training_onepct"],"to":["sentencify","sentencify","create_single_cleantext_file","preclean_files","simple_sample","create_file_from_data_table_set","load_arpa_as_data_table","parse_to_ngram_table","preclean_files","load_arpa_as_data_table","parse_to_ngram_table","preclean_files","load_arpa_as_data_table","unkify","preclean_files","text_prob_one","n_gramify_all","text_prob_one","unkify_all","scratch","preclean_files","clean_texts_dt","simple_sample","create_our_splits","clean_training_onepct","clean_training_onepct","clean_testing_onepct","clean_testing_onepct","clean_devtest_onepct","clean_devtest_onepct","devtest_onepct","sample_one_pct","sample_one_pct","kenlm_arpafile_onepct","kenlm_arpafile_onepct","splits_of_onepct","splits_of_onepct","training_as_file_onepct","training_as_file_onepct","unkified_devtest_onepct","unkified_devtest_onepct","unkified_devtest_onepct","training_onepct","pre_training_onepct","ngramified_devtest_onepct","ngramified_devtest_onepct","ngramified_devtest_onepct","preclean","preclean","sentenced_files","sentenced_files","kenlm_model_onepct","kenlm_model_onepct","testing_onepct","training_devtest_split_onepct","training_devtest_split_onepct"],"arrows":["to","to","to","to","to","to","to","to","to","to","to","to","to","to","to","to","to","to","to","to","to","to","to","to","to","to","to","to","to","to","to","to","to","to","to","to","to","to","to","to","to","to","to","to","to","to","to","to","to","to","to","to","to","to","to","to"]},"nodesToDataframe":true,"edgesToDataframe":true,"options":{"width":"100%","height":"100%","nodes":{"shape":"dot","physics":false},"manipulation":{"enabled":false},"edges":{"smooth":{"type":"cubicBezier","forceDirection":"horizontal"}},"physics":{"stabilization":false},"interaction":{"zoomSpeed":1},"layout":{"hierarchical":{"enabled":true,"direction":"LR"}}},"groups":null,"width":null,"height":null,"idselection":{"enabled":false,"style":"width: 150px; height: 26px","useLabels":true,"main":"Select by id"},"byselection":{"enabled":false,"style":"width: 150px; height: 26px","multiple":false,"hideColor":"rgba(200,200,200,0.5)","highlight":false},"main":{"text":"","style":"font-family:Georgia, Times New Roman, Times, serif;font-weight:bold;font-size:20px;text-align:center;"},"submain":null,"footer":null,"background":"rgba(0, 0, 0, 0)","highlight":{"enabled":true,"hoverNearest":false,"degree":{"from":1,"to":1},"algorithm":"hierarchical","hideColor":"rgba(200,200,200,0.5)","labelOnly":true},"collapse":{"enabled":true,"fit":false,"resetHighlight":true,"clusterOptions":null,"keepCoord":true,"labelSuffix":"(cluster)"},"legend":{"width":0.2,"useGroups":false,"position":"right","ncol":1,"stepX":100,"stepY":100,"zoom":true,"nodes":{"label":["Up to date","Stem","Function","Object"],"color":["#354823","#899DA4","#899DA4","#899DA4"],"shape":["dot","dot","triangle","triangleDown"]},"nodesToDataframe":true},"tooltipStay":300,"tooltipStyle":"position: fixed;visibility:hidden;padding: 5px;white-space: nowrap;font-family: verdana;font-size:14px;font-color:#000000;background-color: #f5f4ed;-moz-border-radius: 3px;-webkit-border-radius: 3px;border-radius: 3px;border: 1px solid #808074;box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);"},"evals":[],"jsHooks":[]}</script>
 </div>
 <div id="model-evaluation" class="section level4">
 <h4>Model evaluation</h4>
