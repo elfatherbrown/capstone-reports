@@ -6307,3 +6307,2869 @@ INFO [2022-04-28 18:53:57] Starting chunk 237 of 3000 lines for file en_US.blogs
 INFO [2022-04-28 18:53:59] Wrote chunk 237
 INFO [2022-04-28 18:53:59] Ended paralell processing, collecting garbage
 INFO [2022-04-28 18:54:00] Ended of sentencification process
+INFO [2022-05-04 12:33:16] started sentencification of 3 files
+INFO [2022-05-04 12:33:17] Reading /home/alex/Devel-nosync/OAS-projects/cursos/capstone reports/../capstone raw data/final/en_US/clean/en_US.blogs.txt
+INFO [2022-05-04 12:33:18] Reading /home/alex/Devel-nosync/OAS-projects/cursos/capstone reports/../capstone raw data/final/en_US/clean/en_US.news.txt
+INFO [2022-05-04 12:33:18] Reading /home/alex/Devel-nosync/OAS-projects/cursos/capstone reports/../capstone raw data/final/en_US/clean/en_US.twitter.txt
+INFO [2022-05-04 12:33:53] Colective corpus of 4269678 lines
+INFO [2022-05-04 12:33:53] Resulting in 1424 chunks
+INFO [2022-05-04 12:33:55] Deleting existing file /home/alex/Devel-nosync/OAS-projects/cursos/capstone reports/../capstone raw data/final/en_US/clean/sentences_en_US.blogs.txt
+INFO [2022-05-04 12:33:55] Deleting existing file /home/alex/Devel-nosync/OAS-projects/cursos/capstone reports/../capstone raw data/final/en_US/clean/sentences_en_US.news.txt
+INFO [2022-05-04 12:33:55] Deleting existing file /home/alex/Devel-nosync/OAS-projects/cursos/capstone reports/../capstone raw data/final/en_US/clean/sentences_en_US.twitter.txt
+INFO [2022-05-04 12:33:55] Starting parallel chunk processing
+INFO [2022-05-04 12:34:24] Starting chunk 1 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:34:26] Wrote chunk 1
+INFO [2022-05-04 12:34:26] Starting chunk 2 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:34:29] Wrote chunk 2
+INFO [2022-05-04 12:34:29] Starting chunk 3 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:34:32] Wrote chunk 3
+INFO [2022-05-04 12:34:32] Starting chunk 4 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:34:34] Wrote chunk 4
+INFO [2022-05-04 12:34:34] Starting chunk 5 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:34:37] Wrote chunk 5
+INFO [2022-05-04 12:34:37] Starting chunk 6 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:34:40] Wrote chunk 6
+INFO [2022-05-04 12:34:40] Starting chunk 7 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:34:42] Wrote chunk 7
+INFO [2022-05-04 12:34:42] Starting chunk 8 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:34:45] Wrote chunk 8
+INFO [2022-05-04 12:34:45] Starting chunk 9 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:34:47] Wrote chunk 9
+INFO [2022-05-04 12:34:47] Starting chunk 10 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:34:50] Wrote chunk 10
+INFO [2022-05-04 12:34:50] Starting chunk 11 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:34:53] Wrote chunk 11
+INFO [2022-05-04 12:34:53] Starting chunk 12 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:34:55] Starting chunk 238 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:34:56] Wrote chunk 12
+INFO [2022-05-04 12:34:56] Starting chunk 13 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:34:59] Wrote chunk 238
+INFO [2022-05-04 12:34:59] Starting chunk 239 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:34:59] Wrote chunk 13
+INFO [2022-05-04 12:34:59] Starting chunk 14 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:35:02] Wrote chunk 239
+INFO [2022-05-04 12:35:02] Starting chunk 240 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:35:02] Wrote chunk 14
+INFO [2022-05-04 12:35:02] Starting chunk 15 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:35:05] Wrote chunk 240
+INFO [2022-05-04 12:35:05] Starting chunk 241 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:35:05] Wrote chunk 15
+INFO [2022-05-04 12:35:06] Starting chunk 16 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:35:08] Wrote chunk 241
+INFO [2022-05-04 12:35:08] Starting chunk 242 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:35:09] Wrote chunk 16
+INFO [2022-05-04 12:35:09] Starting chunk 17 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:35:11] Wrote chunk 242
+INFO [2022-05-04 12:35:11] Starting chunk 243 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:35:12] Wrote chunk 17
+INFO [2022-05-04 12:35:12] Starting chunk 18 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:35:14] Wrote chunk 243
+INFO [2022-05-04 12:35:14] Starting chunk 244 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:35:15] Wrote chunk 18
+INFO [2022-05-04 12:35:15] Starting chunk 19 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:35:17] Wrote chunk 244
+INFO [2022-05-04 12:35:17] Starting chunk 245 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:35:18] Wrote chunk 19
+INFO [2022-05-04 12:35:18] Starting chunk 20 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:35:20] Wrote chunk 245
+INFO [2022-05-04 12:35:20] Starting chunk 246 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:35:21] Wrote chunk 20
+INFO [2022-05-04 12:35:21] Starting chunk 21 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:35:24] Wrote chunk 246
+INFO [2022-05-04 12:35:24] Starting chunk 247 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:35:24] Wrote chunk 21
+INFO [2022-05-04 12:35:24] Starting chunk 22 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:35:27] Wrote chunk 247
+INFO [2022-05-04 12:35:27] Starting chunk 248 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:35:28] Wrote chunk 22
+INFO [2022-05-04 12:35:28] Starting chunk 23 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:35:29] Starting chunk 475 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:35:30] Wrote chunk 248
+INFO [2022-05-04 12:35:31] Starting chunk 249 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:35:32] Wrote chunk 23
+INFO [2022-05-04 12:35:32] Starting chunk 24 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:35:33] Wrote chunk 475
+INFO [2022-05-04 12:35:33] Starting chunk 476 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:35:34] Wrote chunk 249
+INFO [2022-05-04 12:35:34] Starting chunk 250 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:35:35] Wrote chunk 24
+INFO [2022-05-04 12:35:35] Starting chunk 25 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:35:36] Wrote chunk 476
+INFO [2022-05-04 12:35:36] Starting chunk 477 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:35:38] Wrote chunk 250
+INFO [2022-05-04 12:35:38] Starting chunk 251 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:35:39] Wrote chunk 25
+INFO [2022-05-04 12:35:39] Starting chunk 26 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:35:39] Wrote chunk 477
+INFO [2022-05-04 12:35:39] Starting chunk 478 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:35:42] Wrote chunk 478
+INFO [2022-05-04 12:35:42] Starting chunk 479 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:35:42] Wrote chunk 26
+INFO [2022-05-04 12:35:42] Starting chunk 27 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:35:42] Wrote chunk 251
+INFO [2022-05-04 12:35:42] Starting chunk 252 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:35:45] Wrote chunk 479
+INFO [2022-05-04 12:35:45] Starting chunk 480 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:35:46] Wrote chunk 252
+INFO [2022-05-04 12:35:46] Starting chunk 253 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:35:46] Wrote chunk 27
+INFO [2022-05-04 12:35:46] Starting chunk 28 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:35:48] Wrote chunk 480
+INFO [2022-05-04 12:35:48] Starting chunk 481 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:35:49] Wrote chunk 253
+INFO [2022-05-04 12:35:49] Starting chunk 254 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:35:49] Wrote chunk 28
+INFO [2022-05-04 12:35:49] Starting chunk 29 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:35:51] Wrote chunk 481
+INFO [2022-05-04 12:35:51] Starting chunk 482 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:35:52] Wrote chunk 29
+INFO [2022-05-04 12:35:52] Starting chunk 30 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:35:52] Wrote chunk 254
+INFO [2022-05-04 12:35:52] Starting chunk 255 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:35:54] Wrote chunk 482
+INFO [2022-05-04 12:35:54] Starting chunk 483 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:35:56] Wrote chunk 255
+INFO [2022-05-04 12:35:56] Starting chunk 256 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:35:56] Wrote chunk 30
+INFO [2022-05-04 12:35:56] Starting chunk 31 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:35:57] Wrote chunk 483
+INFO [2022-05-04 12:35:57] Starting chunk 484 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:35:59] Wrote chunk 256
+INFO [2022-05-04 12:35:59] Starting chunk 257 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:36:00] Wrote chunk 31
+INFO [2022-05-04 12:36:00] Starting chunk 32 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:36:00] Wrote chunk 484
+INFO [2022-05-04 12:36:00] Starting chunk 485 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:36:03] Wrote chunk 257
+INFO [2022-05-04 12:36:03] Starting chunk 258 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:36:03] Wrote chunk 32
+INFO [2022-05-04 12:36:03] Starting chunk 33 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:36:04] Wrote chunk 485
+INFO [2022-05-04 12:36:04] Starting chunk 486 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:36:06] Wrote chunk 258
+INFO [2022-05-04 12:36:06] Starting chunk 259 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:36:07] Wrote chunk 33
+INFO [2022-05-04 12:36:07] Starting chunk 34 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:36:07] Wrote chunk 486
+INFO [2022-05-04 12:36:07] Starting chunk 487 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:36:10] Wrote chunk 259
+INFO [2022-05-04 12:36:10] Starting chunk 260 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:36:10] Wrote chunk 487
+INFO [2022-05-04 12:36:10] Starting chunk 488 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:36:10] Wrote chunk 34
+INFO [2022-05-04 12:36:10] Starting chunk 35 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:36:11] Starting chunk 712 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:36:13] Wrote chunk 488
+INFO [2022-05-04 12:36:13] Starting chunk 489 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:36:14] Wrote chunk 260
+INFO [2022-05-04 12:36:14] Starting chunk 261 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:36:14] Wrote chunk 712
+INFO [2022-05-04 12:36:14] Starting chunk 713 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:36:14] Wrote chunk 35
+INFO [2022-05-04 12:36:14] Starting chunk 36 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:36:15] Wrote chunk 713
+INFO [2022-05-04 12:36:15] Starting chunk 714 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:36:17] Wrote chunk 489
+INFO [2022-05-04 12:36:17] Starting chunk 490 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:36:17] Wrote chunk 714
+INFO [2022-05-04 12:36:17] Starting chunk 715 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:36:18] Wrote chunk 36
+INFO [2022-05-04 12:36:18] Starting chunk 37 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:36:18] Wrote chunk 261
+INFO [2022-05-04 12:36:18] Starting chunk 262 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:36:18] Wrote chunk 715
+INFO [2022-05-04 12:36:18] Starting chunk 716 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:36:20] Wrote chunk 716
+INFO [2022-05-04 12:36:20] Starting chunk 717 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:36:20] Wrote chunk 490
+INFO [2022-05-04 12:36:20] Starting chunk 491 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:36:21] Wrote chunk 717
+INFO [2022-05-04 12:36:21] Starting chunk 718 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:36:22] Wrote chunk 262
+INFO [2022-05-04 12:36:22] Starting chunk 263 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:36:22] Wrote chunk 37
+INFO [2022-05-04 12:36:22] Starting chunk 38 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:36:23] Wrote chunk 718
+INFO [2022-05-04 12:36:23] Starting chunk 719 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:36:24] Wrote chunk 491
+INFO [2022-05-04 12:36:24] Starting chunk 492 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:36:25] Wrote chunk 719
+INFO [2022-05-04 12:36:25] Starting chunk 720 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:36:26] Wrote chunk 720
+INFO [2022-05-04 12:36:26] Starting chunk 721 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:36:27] Wrote chunk 263
+INFO [2022-05-04 12:36:27] Starting chunk 264 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:36:27] Wrote chunk 38
+INFO [2022-05-04 12:36:27] Starting chunk 39 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:36:28] Wrote chunk 492
+INFO [2022-05-04 12:36:28] Starting chunk 493 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:36:28] Wrote chunk 721
+INFO [2022-05-04 12:36:28] Starting chunk 722 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:36:31] Wrote chunk 722
+INFO [2022-05-04 12:36:31] Starting chunk 723 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:36:31] Wrote chunk 39
+INFO [2022-05-04 12:36:31] Starting chunk 40 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:36:32] Wrote chunk 264
+INFO [2022-05-04 12:36:32] Starting chunk 265 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:36:32] Wrote chunk 493
+INFO [2022-05-04 12:36:32] Starting chunk 494 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:36:32] Wrote chunk 723
+INFO [2022-05-04 12:36:32] Starting chunk 724 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:36:34] Wrote chunk 724
+INFO [2022-05-04 12:36:34] Starting chunk 725 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:36:35] Wrote chunk 40
+INFO [2022-05-04 12:36:35] Starting chunk 41 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:36:36] Wrote chunk 725
+INFO [2022-05-04 12:36:36] Starting chunk 726 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:36:36] Wrote chunk 494
+INFO [2022-05-04 12:36:36] Starting chunk 495 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:36:36] Wrote chunk 265
+INFO [2022-05-04 12:36:36] Starting chunk 266 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:36:37] Wrote chunk 726
+INFO [2022-05-04 12:36:37] Starting chunk 727 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:36:39] Wrote chunk 727
+INFO [2022-05-04 12:36:39] Starting chunk 728 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:36:40] Wrote chunk 495
+INFO [2022-05-04 12:36:40] Starting chunk 496 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:36:40] Wrote chunk 41
+INFO [2022-05-04 12:36:40] Starting chunk 42 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:36:40] Wrote chunk 266
+INFO [2022-05-04 12:36:40] Starting chunk 267 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:36:40] Wrote chunk 728
+INFO [2022-05-04 12:36:40] Starting chunk 729 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:36:42] Wrote chunk 729
+INFO [2022-05-04 12:36:42] Starting chunk 730 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:36:43] Wrote chunk 496
+INFO [2022-05-04 12:36:43] Starting chunk 497 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:36:44] Wrote chunk 730
+INFO [2022-05-04 12:36:44] Starting chunk 731 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:36:45] Wrote chunk 267
+INFO [2022-05-04 12:36:45] Starting chunk 268 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:36:45] Wrote chunk 42
+INFO [2022-05-04 12:36:45] Starting chunk 43 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:36:45] Wrote chunk 731
+INFO [2022-05-04 12:36:45] Starting chunk 732 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:36:47] Wrote chunk 732
+INFO [2022-05-04 12:36:47] Starting chunk 733 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:36:47] Wrote chunk 497
+INFO [2022-05-04 12:36:47] Starting chunk 498 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:36:48] Wrote chunk 733
+INFO [2022-05-04 12:36:48] Starting chunk 734 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:36:49] Wrote chunk 268
+INFO [2022-05-04 12:36:49] Wrote chunk 43
+INFO [2022-05-04 12:36:49] Starting chunk 44 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:36:49] Starting chunk 269 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:36:50] Wrote chunk 734
+INFO [2022-05-04 12:36:50] Starting chunk 735 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:36:51] Wrote chunk 498
+INFO [2022-05-04 12:36:51] Starting chunk 499 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:36:52] Wrote chunk 735
+INFO [2022-05-04 12:36:52] Starting chunk 736 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:36:53] Wrote chunk 44
+INFO [2022-05-04 12:36:53] Starting chunk 45 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:36:53] Wrote chunk 736
+INFO [2022-05-04 12:36:53] Starting chunk 737 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:36:54] Wrote chunk 269
+INFO [2022-05-04 12:36:54] Starting chunk 270 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:36:56] Wrote chunk 499
+INFO [2022-05-04 12:36:56] Starting chunk 500 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:36:57] Wrote chunk 737
+INFO [2022-05-04 12:36:57] Starting chunk 738 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:36:57] Wrote chunk 45
+INFO [2022-05-04 12:36:57] Starting chunk 46 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:36:58] Wrote chunk 270
+INFO [2022-05-04 12:36:58] Starting chunk 271 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:36:59] Wrote chunk 738
+INFO [2022-05-04 12:36:59] Starting chunk 739 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:36:59] Starting chunk 951 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:37:00] Wrote chunk 500
+INFO [2022-05-04 12:37:00] Starting chunk 501 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:37:00] Wrote chunk 739
+INFO [2022-05-04 12:37:00] Starting chunk 740 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:37:02] Wrote chunk 46
+INFO [2022-05-04 12:37:02] Starting chunk 47 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:37:02] Wrote chunk 740
+INFO [2022-05-04 12:37:02] Starting chunk 741 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:37:02] Wrote chunk 951
+INFO [2022-05-04 12:37:02] Starting chunk 952 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:37:03] Wrote chunk 271
+INFO [2022-05-04 12:37:03] Starting chunk 272 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:37:04] Wrote chunk 741
+INFO [2022-05-04 12:37:04] Starting chunk 742 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:37:04] Wrote chunk 952
+INFO [2022-05-04 12:37:04] Starting chunk 953 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:37:05] Wrote chunk 501
+INFO [2022-05-04 12:37:05] Starting chunk 502 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:37:06] Wrote chunk 953
+INFO [2022-05-04 12:37:06] Starting chunk 954 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:37:06] Wrote chunk 742
+INFO [2022-05-04 12:37:06] Starting chunk 743 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:37:07] Wrote chunk 954
+INFO [2022-05-04 12:37:07] Starting chunk 955 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:37:07] Wrote chunk 272
+INFO [2022-05-04 12:37:07] Starting chunk 273 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:37:08] Wrote chunk 743
+INFO [2022-05-04 12:37:08] Starting chunk 744 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:37:09] Wrote chunk 955
+INFO [2022-05-04 12:37:09] Starting chunk 956 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:37:09] Wrote chunk 502
+INFO [2022-05-04 12:37:09] Starting chunk 503 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:37:09] Wrote chunk 744
+INFO [2022-05-04 12:37:09] Starting chunk 745 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:37:10] Wrote chunk 47
+INFO [2022-05-04 12:37:10] Starting chunk 48 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:37:11] Wrote chunk 956
+INFO [2022-05-04 12:37:11] Starting chunk 957 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:37:11] Wrote chunk 745
+INFO [2022-05-04 12:37:11] Starting chunk 746 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:37:12] Wrote chunk 957
+INFO [2022-05-04 12:37:12] Starting chunk 958 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:37:13] Wrote chunk 273
+INFO [2022-05-04 12:37:13] Starting chunk 274 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:37:13] Wrote chunk 746
+INFO [2022-05-04 12:37:13] Starting chunk 747 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:37:13] Wrote chunk 503
+INFO [2022-05-04 12:37:13] Starting chunk 504 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:37:14] Wrote chunk 958
+INFO [2022-05-04 12:37:14] Starting chunk 959 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:37:15] Wrote chunk 48
+INFO [2022-05-04 12:37:15] Starting chunk 49 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:37:15] Wrote chunk 747
+INFO [2022-05-04 12:37:15] Starting chunk 748 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:37:16] Wrote chunk 959
+INFO [2022-05-04 12:37:16] Starting chunk 960 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:37:17] Wrote chunk 748
+INFO [2022-05-04 12:37:17] Starting chunk 749 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:37:17] Wrote chunk 504
+INFO [2022-05-04 12:37:17] Starting chunk 505 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:37:17] Wrote chunk 960
+INFO [2022-05-04 12:37:17] Wrote chunk 274
+INFO [2022-05-04 12:37:17] Starting chunk 961 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:37:17] Starting chunk 275 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:37:19] Wrote chunk 749
+INFO [2022-05-04 12:37:19] Starting chunk 750 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:37:20] Wrote chunk 49
+INFO [2022-05-04 12:37:20] Starting chunk 50 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:37:20] Wrote chunk 961
+INFO [2022-05-04 12:37:20] Starting chunk 962 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:37:20] Wrote chunk 750
+INFO [2022-05-04 12:37:20] Starting chunk 751 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:37:21] Wrote chunk 505
+INFO [2022-05-04 12:37:21] Starting chunk 506 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:37:22] Wrote chunk 962
+INFO [2022-05-04 12:37:22] Starting chunk 963 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:37:22] Wrote chunk 275
+INFO [2022-05-04 12:37:22] Starting chunk 276 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:37:22] Wrote chunk 751
+INFO [2022-05-04 12:37:22] Starting chunk 752 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:37:23] Wrote chunk 963
+INFO [2022-05-04 12:37:23] Starting chunk 964 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:37:24] Wrote chunk 50
+INFO [2022-05-04 12:37:25] Starting chunk 51 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:37:25] Wrote chunk 752
+INFO [2022-05-04 12:37:25] Starting chunk 753 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:37:25] Wrote chunk 964
+INFO [2022-05-04 12:37:25] Starting chunk 965 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:37:26] Wrote chunk 506
+INFO [2022-05-04 12:37:26] Starting chunk 507 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:37:26] Wrote chunk 965
+INFO [2022-05-04 12:37:26] Wrote chunk 276
+INFO [2022-05-04 12:37:26] Starting chunk 966 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:37:26] Starting chunk 277 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:37:27] Wrote chunk 753
+INFO [2022-05-04 12:37:27] Starting chunk 754 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:37:28] Wrote chunk 966
+INFO [2022-05-04 12:37:28] Starting chunk 967 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:37:29] Wrote chunk 754
+INFO [2022-05-04 12:37:29] Starting chunk 755 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:37:30] Wrote chunk 51
+INFO [2022-05-04 12:37:30] Starting chunk 52 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:37:30] Wrote chunk 967
+INFO [2022-05-04 12:37:30] Starting chunk 968 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:37:30] Wrote chunk 507
+INFO [2022-05-04 12:37:30] Starting chunk 508 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:37:30] Wrote chunk 755
+INFO [2022-05-04 12:37:30] Starting chunk 756 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:37:31] Wrote chunk 277
+INFO [2022-05-04 12:37:31] Starting chunk 278 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:37:32] Wrote chunk 968
+INFO [2022-05-04 12:37:32] Starting chunk 969 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:37:32] Wrote chunk 756
+INFO [2022-05-04 12:37:32] Starting chunk 757 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:37:33] Wrote chunk 969
+INFO [2022-05-04 12:37:33] Starting chunk 970 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:37:34] Wrote chunk 508
+INFO [2022-05-04 12:37:34] Starting chunk 509 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:37:34] Wrote chunk 757
+INFO [2022-05-04 12:37:34] Starting chunk 758 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:37:34] Wrote chunk 52
+INFO [2022-05-04 12:37:34] Starting chunk 53 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:37:35] Wrote chunk 970
+INFO [2022-05-04 12:37:35] Starting chunk 971 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:37:36] Wrote chunk 758
+INFO [2022-05-04 12:37:36] Starting chunk 759 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:37:36] Wrote chunk 278
+INFO [2022-05-04 12:37:36] Starting chunk 279 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:37:36] Wrote chunk 971
+INFO [2022-05-04 12:37:36] Starting chunk 972 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:37:37] Wrote chunk 759
+INFO [2022-05-04 12:37:37] Starting chunk 760 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:37:38] Wrote chunk 509
+INFO [2022-05-04 12:37:38] Starting chunk 510 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:37:38] Wrote chunk 972
+INFO [2022-05-04 12:37:38] Starting chunk 973 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:37:39] Wrote chunk 760
+INFO [2022-05-04 12:37:39] Starting chunk 761 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:37:39] Wrote chunk 53
+INFO [2022-05-04 12:37:39] Starting chunk 54 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:37:40] Wrote chunk 973
+INFO [2022-05-04 12:37:40] Starting chunk 974 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:37:41] Wrote chunk 761
+INFO [2022-05-04 12:37:41] Starting chunk 762 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:37:41] Wrote chunk 279
+INFO [2022-05-04 12:37:41] Starting chunk 280 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:37:42] Wrote chunk 974
+INFO [2022-05-04 12:37:42] Starting chunk 975 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:37:42] Wrote chunk 510
+INFO [2022-05-04 12:37:42] Starting chunk 511 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:37:43] Wrote chunk 762
+INFO [2022-05-04 12:37:43] Starting chunk 763 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:37:44] Wrote chunk 975
+INFO [2022-05-04 12:37:44] Starting chunk 976 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:37:44] Wrote chunk 54
+INFO [2022-05-04 12:37:44] Starting chunk 55 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:37:44] Wrote chunk 763
+INFO [2022-05-04 12:37:44] Starting chunk 764 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:37:46] Wrote chunk 280
+INFO [2022-05-04 12:37:46] Starting chunk 281 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:37:46] Wrote chunk 764
+INFO [2022-05-04 12:37:46] Starting chunk 765 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:37:47] Wrote chunk 511
+INFO [2022-05-04 12:37:47] Starting chunk 512 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:37:47] Wrote chunk 976
+INFO [2022-05-04 12:37:47] Starting chunk 977 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:37:48] Wrote chunk 765
+INFO [2022-05-04 12:37:48] Starting chunk 766 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:37:48] Wrote chunk 55
+INFO [2022-05-04 12:37:48] Starting chunk 56 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:37:49] Wrote chunk 977
+INFO [2022-05-04 12:37:49] Starting chunk 978 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:37:50] Wrote chunk 766
+INFO [2022-05-04 12:37:50] Starting chunk 767 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:37:50] Starting chunk 1189 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:37:51] Wrote chunk 281
+INFO [2022-05-04 12:37:51] Starting chunk 282 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:37:51] Wrote chunk 512
+INFO [2022-05-04 12:37:51] Starting chunk 513 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:37:51] Wrote chunk 978
+INFO [2022-05-04 12:37:51] Starting chunk 979 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:37:53] Wrote chunk 767
+INFO [2022-05-04 12:37:53] Starting chunk 768 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:37:53] Wrote chunk 979
+INFO [2022-05-04 12:37:53] Starting chunk 980 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:37:53] Wrote chunk 56
+INFO [2022-05-04 12:37:53] Starting chunk 57 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:37:54] Wrote chunk 1189
+INFO [2022-05-04 12:37:54] Starting chunk 1190 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:37:54] Wrote chunk 768
+INFO [2022-05-04 12:37:54] Starting chunk 769 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:37:55] Wrote chunk 980
+INFO [2022-05-04 12:37:55] Starting chunk 981 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:37:55] Wrote chunk 1190
+INFO [2022-05-04 12:37:55] Starting chunk 1191 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:37:55] Wrote chunk 282
+INFO [2022-05-04 12:37:55] Starting chunk 283 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:37:56] Wrote chunk 769
+INFO [2022-05-04 12:37:56] Starting chunk 770 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:37:57] Wrote chunk 981
+INFO [2022-05-04 12:37:57] Starting chunk 982 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:37:57] Wrote chunk 1191
+INFO [2022-05-04 12:37:57] Starting chunk 1192 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:37:58] Wrote chunk 513
+INFO [2022-05-04 12:37:58] Starting chunk 514 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:37:58] Wrote chunk 770
+INFO [2022-05-04 12:37:58] Starting chunk 771 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:37:58] Wrote chunk 982
+INFO [2022-05-04 12:37:59] Starting chunk 983 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:37:59] Wrote chunk 57
+INFO [2022-05-04 12:37:59] Starting chunk 58 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:37:59] Wrote chunk 1192
+INFO [2022-05-04 12:37:59] Starting chunk 1193 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:38:00] Wrote chunk 771
+INFO [2022-05-04 12:38:00] Starting chunk 772 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:38:00] Wrote chunk 283
+INFO [2022-05-04 12:38:00] Wrote chunk 983
+INFO [2022-05-04 12:38:00] Starting chunk 984 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:38:00] Starting chunk 284 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:38:01] Wrote chunk 1193
+INFO [2022-05-04 12:38:01] Starting chunk 1194 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:38:01] Wrote chunk 772
+INFO [2022-05-04 12:38:02] Starting chunk 773 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:38:02] Wrote chunk 984
+INFO [2022-05-04 12:38:02] Starting chunk 985 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:38:02] Wrote chunk 514
+INFO [2022-05-04 12:38:02] Starting chunk 515 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:38:03] Wrote chunk 1194
+INFO [2022-05-04 12:38:03] Starting chunk 1195 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:38:03] Wrote chunk 773
+INFO [2022-05-04 12:38:03] Starting chunk 774 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:38:03] Wrote chunk 58
+INFO [2022-05-04 12:38:03] Starting chunk 59 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:38:04] Wrote chunk 985
+INFO [2022-05-04 12:38:04] Starting chunk 986 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:38:05] Wrote chunk 1195
+INFO [2022-05-04 12:38:05] Starting chunk 1196 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:38:05] Wrote chunk 284
+INFO [2022-05-04 12:38:05] Starting chunk 285 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:38:05] Wrote chunk 774
+INFO [2022-05-04 12:38:05] Starting chunk 775 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:38:06] Wrote chunk 986
+INFO [2022-05-04 12:38:06] Starting chunk 987 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:38:06] Wrote chunk 515
+INFO [2022-05-04 12:38:06] Starting chunk 516 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:38:07] Wrote chunk 1196
+INFO [2022-05-04 12:38:07] Starting chunk 1197 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:38:07] Wrote chunk 775
+INFO [2022-05-04 12:38:07] Starting chunk 776 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:38:08] Wrote chunk 987
+INFO [2022-05-04 12:38:08] Starting chunk 988 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:38:08] Wrote chunk 59
+INFO [2022-05-04 12:38:08] Starting chunk 60 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:38:09] Wrote chunk 1197
+INFO [2022-05-04 12:38:09] Starting chunk 1198 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:38:09] Wrote chunk 776
+INFO [2022-05-04 12:38:09] Starting chunk 777 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:38:10] Wrote chunk 988
+INFO [2022-05-04 12:38:10] Starting chunk 989 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:38:11] Wrote chunk 777
+INFO [2022-05-04 12:38:11] Starting chunk 778 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:38:11] Wrote chunk 516
+INFO [2022-05-04 12:38:11] Starting chunk 517 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:38:11] Wrote chunk 989
+INFO [2022-05-04 12:38:11] Starting chunk 990 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:38:12] Wrote chunk 1198
+INFO [2022-05-04 12:38:12] Starting chunk 1199 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:38:12] Wrote chunk 285
+INFO [2022-05-04 12:38:12] Starting chunk 286 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:38:13] Wrote chunk 778
+INFO [2022-05-04 12:38:13] Starting chunk 779 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:38:13] Wrote chunk 990
+INFO [2022-05-04 12:38:13] Starting chunk 991 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:38:13] Wrote chunk 60
+INFO [2022-05-04 12:38:14] Starting chunk 61 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:38:14] Wrote chunk 1199
+INFO [2022-05-04 12:38:14] Starting chunk 1200 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:38:14] Wrote chunk 779
+INFO [2022-05-04 12:38:14] Starting chunk 780 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:38:15] Wrote chunk 1200
+INFO [2022-05-04 12:38:15] Starting chunk 1201 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:38:15] Wrote chunk 517
+INFO [2022-05-04 12:38:15] Starting chunk 518 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:38:15] Wrote chunk 991
+INFO [2022-05-04 12:38:15] Starting chunk 992 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:38:16] Wrote chunk 780
+INFO [2022-05-04 12:38:16] Starting chunk 781 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:38:16] Wrote chunk 1201
+INFO [2022-05-04 12:38:16] Starting chunk 1202 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:38:17] Wrote chunk 286
+INFO [2022-05-04 12:38:17] Starting chunk 287 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:38:17] Wrote chunk 992
+INFO [2022-05-04 12:38:17] Starting chunk 993 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:38:18] Wrote chunk 781
+INFO [2022-05-04 12:38:18] Starting chunk 782 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:38:18] Wrote chunk 61
+INFO [2022-05-04 12:38:18] Starting chunk 62 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:38:18] Wrote chunk 1202
+INFO [2022-05-04 12:38:18] Starting chunk 1203 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:38:19] Wrote chunk 993
+INFO [2022-05-04 12:38:19] Starting chunk 994 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:38:20] Wrote chunk 518
+INFO [2022-05-04 12:38:20] Starting chunk 519 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:38:20] Wrote chunk 1203
+INFO [2022-05-04 12:38:20] Starting chunk 1204 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:38:21] Wrote chunk 782
+INFO [2022-05-04 12:38:21] Starting chunk 783 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:38:21] Wrote chunk 994
+INFO [2022-05-04 12:38:21] Starting chunk 995 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:38:21] Wrote chunk 287
+INFO [2022-05-04 12:38:21] Starting chunk 288 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:38:22] Wrote chunk 1204
+INFO [2022-05-04 12:38:22] Starting chunk 1205 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:38:22] Wrote chunk 783
+INFO [2022-05-04 12:38:22] Starting chunk 784 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:38:23] Wrote chunk 995
+INFO [2022-05-04 12:38:23] Starting chunk 996 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:38:23] Wrote chunk 62
+INFO [2022-05-04 12:38:23] Starting chunk 63 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:38:23] Wrote chunk 1205
+INFO [2022-05-04 12:38:23] Starting chunk 1206 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:38:24] Wrote chunk 519
+INFO [2022-05-04 12:38:24] Starting chunk 520 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:38:24] Wrote chunk 784
+INFO [2022-05-04 12:38:24] Starting chunk 785 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:38:25] Wrote chunk 996
+INFO [2022-05-04 12:38:25] Starting chunk 997 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:38:25] Wrote chunk 1206
+INFO [2022-05-04 12:38:25] Starting chunk 1207 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:38:26] Wrote chunk 785
+INFO [2022-05-04 12:38:26] Starting chunk 786 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:38:26] Wrote chunk 1207
+INFO [2022-05-04 12:38:26] Starting chunk 1208 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:38:26] Wrote chunk 288
+INFO [2022-05-04 12:38:26] Starting chunk 289 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:38:26] Wrote chunk 997
+INFO [2022-05-04 12:38:26] Starting chunk 998 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:38:28] Wrote chunk 63
+INFO [2022-05-04 12:38:28] Starting chunk 64 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:38:28] Wrote chunk 520
+INFO [2022-05-04 12:38:28] Starting chunk 521 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:38:28] Wrote chunk 998
+INFO [2022-05-04 12:38:28] Starting chunk 999 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:38:28] Wrote chunk 786
+INFO [2022-05-04 12:38:28] Starting chunk 787 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:38:28] Wrote chunk 1208
+INFO [2022-05-04 12:38:28] Starting chunk 1209 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:38:29] Wrote chunk 787
+INFO [2022-05-04 12:38:29] Starting chunk 788 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:38:30] Wrote chunk 999
+INFO [2022-05-04 12:38:30] Starting chunk 1000 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:38:30] Wrote chunk 1209
+INFO [2022-05-04 12:38:30] Starting chunk 1210 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:38:31] Wrote chunk 289
+INFO [2022-05-04 12:38:31] Starting chunk 290 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:38:31] Wrote chunk 788
+INFO [2022-05-04 12:38:31] Starting chunk 789 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:38:31] Wrote chunk 1000
+INFO [2022-05-04 12:38:31] Starting chunk 1001 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:38:32] Wrote chunk 1210
+INFO [2022-05-04 12:38:32] Starting chunk 1211 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:38:32] Wrote chunk 521
+INFO [2022-05-04 12:38:32] Starting chunk 522 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:38:32] Wrote chunk 64
+INFO [2022-05-04 12:38:32] Starting chunk 65 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:38:33] Wrote chunk 789
+INFO [2022-05-04 12:38:33] Starting chunk 790 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:38:33] Wrote chunk 1001
+INFO [2022-05-04 12:38:33] Starting chunk 1002 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:38:33] Wrote chunk 1211
+INFO [2022-05-04 12:38:33] Starting chunk 1212 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:38:34] Wrote chunk 790
+INFO [2022-05-04 12:38:34] Starting chunk 791 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:38:35] Wrote chunk 1002
+INFO [2022-05-04 12:38:35] Starting chunk 1003 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:38:35] Wrote chunk 290
+INFO [2022-05-04 12:38:35] Starting chunk 291 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:38:36] Wrote chunk 791
+INFO [2022-05-04 12:38:36] Starting chunk 792 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:38:36] Wrote chunk 522
+INFO [2022-05-04 12:38:36] Starting chunk 523 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:38:36] Wrote chunk 1003
+INFO [2022-05-04 12:38:36] Starting chunk 1004 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:38:37] Wrote chunk 1212
+INFO [2022-05-04 12:38:37] Starting chunk 1213 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:38:38] Wrote chunk 792
+INFO [2022-05-04 12:38:38] Starting chunk 793 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:38:38] Wrote chunk 65
+INFO [2022-05-04 12:38:38] Starting chunk 66 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:38:38] Wrote chunk 1004
+INFO [2022-05-04 12:38:38] Starting chunk 1005 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:38:39] Wrote chunk 1213
+INFO [2022-05-04 12:38:39] Starting chunk 1214 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:38:39] Wrote chunk 793
+INFO [2022-05-04 12:38:39] Starting chunk 794 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:38:40] Wrote chunk 1005
+INFO [2022-05-04 12:38:40] Starting chunk 1006 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:38:40] Wrote chunk 291
+INFO [2022-05-04 12:38:40] Starting chunk 292 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:38:40] Wrote chunk 523
+INFO [2022-05-04 12:38:40] Starting chunk 524 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:38:41] Wrote chunk 1214
+INFO [2022-05-04 12:38:41] Starting chunk 1215 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:38:41] Wrote chunk 794
+INFO [2022-05-04 12:38:41] Starting chunk 795 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:38:42] Wrote chunk 1006
+INFO [2022-05-04 12:38:42] Starting chunk 1007 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:38:43] Wrote chunk 1215
+INFO [2022-05-04 12:38:43] Starting chunk 1216 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:38:43] Wrote chunk 66
+INFO [2022-05-04 12:38:43] Starting chunk 67 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:38:43] Wrote chunk 795
+INFO [2022-05-04 12:38:43] Starting chunk 796 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:38:44] Wrote chunk 1007
+INFO [2022-05-04 12:38:44] Starting chunk 1008 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:38:45] Wrote chunk 524
+INFO [2022-05-04 12:38:45] Starting chunk 525 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:38:45] Wrote chunk 1216
+INFO [2022-05-04 12:38:45] Starting chunk 1217 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:38:45] Wrote chunk 292
+INFO [2022-05-04 12:38:46] Starting chunk 293 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:38:46] Wrote chunk 1008
+INFO [2022-05-04 12:38:46] Starting chunk 1009 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:38:46] Wrote chunk 796
+INFO [2022-05-04 12:38:46] Starting chunk 797 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:38:46] Wrote chunk 1217
+INFO [2022-05-04 12:38:46] Starting chunk 1218 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:38:48] Wrote chunk 67
+INFO [2022-05-04 12:38:48] Wrote chunk 1009
+INFO [2022-05-04 12:38:48] Starting chunk 68 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:38:48] Starting chunk 1010 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:38:48] Wrote chunk 797
+INFO [2022-05-04 12:38:48] Starting chunk 798 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:38:48] Wrote chunk 1218
+INFO [2022-05-04 12:38:48] Starting chunk 1219 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:38:49] Wrote chunk 525
+INFO [2022-05-04 12:38:49] Starting chunk 526 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:38:50] Wrote chunk 1010
+INFO [2022-05-04 12:38:50] Starting chunk 1011 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:38:50] Wrote chunk 1219
+INFO [2022-05-04 12:38:50] Starting chunk 1220 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:38:50] Wrote chunk 798
+INFO [2022-05-04 12:38:50] Starting chunk 799 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:38:51] Wrote chunk 293
+INFO [2022-05-04 12:38:51] Starting chunk 294 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:38:51] Wrote chunk 1011
+INFO [2022-05-04 12:38:51] Starting chunk 1012 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:38:52] Wrote chunk 1220
+INFO [2022-05-04 12:38:52] Starting chunk 1221 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:38:52] Wrote chunk 799
+INFO [2022-05-04 12:38:52] Starting chunk 800 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:38:53] Wrote chunk 1012
+INFO [2022-05-04 12:38:53] Starting chunk 1013 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:38:53] Wrote chunk 68
+INFO [2022-05-04 12:38:53] Starting chunk 69 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:38:53] Wrote chunk 526
+INFO [2022-05-04 12:38:53] Starting chunk 527 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:38:54] Wrote chunk 1221
+INFO [2022-05-04 12:38:54] Starting chunk 1222 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:38:54] Wrote chunk 800
+INFO [2022-05-04 12:38:54] Starting chunk 801 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:38:55] Wrote chunk 1013
+INFO [2022-05-04 12:38:55] Starting chunk 1014 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:38:55] Wrote chunk 1222
+INFO [2022-05-04 12:38:55] Starting chunk 1223 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:38:56] Wrote chunk 801
+INFO [2022-05-04 12:38:56] Starting chunk 802 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:38:56] Wrote chunk 294
+INFO [2022-05-04 12:38:56] Starting chunk 295 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:38:56] Wrote chunk 1014
+INFO [2022-05-04 12:38:56] Starting chunk 1015 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:38:57] Wrote chunk 1223
+INFO [2022-05-04 12:38:57] Starting chunk 1224 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:38:57] Wrote chunk 802
+INFO [2022-05-04 12:38:57] Starting chunk 803 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:38:58] Wrote chunk 527
+INFO [2022-05-04 12:38:58] Starting chunk 528 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:38:58] Wrote chunk 1015
+INFO [2022-05-04 12:38:58] Starting chunk 1016 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:38:58] Wrote chunk 69
+INFO [2022-05-04 12:38:58] Starting chunk 70 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:38:59] Wrote chunk 1224
+INFO [2022-05-04 12:38:59] Starting chunk 1225 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:38:59] Wrote chunk 803
+INFO [2022-05-04 12:38:59] Starting chunk 804 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:39:00] Wrote chunk 1016
+INFO [2022-05-04 12:39:00] Starting chunk 1017 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:39:00] Wrote chunk 1225
+INFO [2022-05-04 12:39:00] Starting chunk 1226 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:39:01] Wrote chunk 804
+INFO [2022-05-04 12:39:01] Starting chunk 805 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:39:01] Wrote chunk 295
+INFO [2022-05-04 12:39:01] Starting chunk 296 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:39:02] Wrote chunk 1017
+INFO [2022-05-04 12:39:02] Starting chunk 1018 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:39:02] Wrote chunk 1226
+INFO [2022-05-04 12:39:02] Wrote chunk 528
+INFO [2022-05-04 12:39:02] Starting chunk 1227 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:39:02] Starting chunk 529 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:39:03] Wrote chunk 805
+INFO [2022-05-04 12:39:03] Starting chunk 806 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:39:03] Wrote chunk 1018
+INFO [2022-05-04 12:39:03] Starting chunk 1019 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:39:04] Wrote chunk 70
+INFO [2022-05-04 12:39:04] Starting chunk 71 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:39:04] Wrote chunk 806
+INFO [2022-05-04 12:39:04] Starting chunk 807 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:39:05] Wrote chunk 1227
+INFO [2022-05-04 12:39:05] Starting chunk 1228 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:39:05] Wrote chunk 1019
+INFO [2022-05-04 12:39:05] Starting chunk 1020 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:39:06] Wrote chunk 807
+INFO [2022-05-04 12:39:06] Starting chunk 808 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:39:06] Wrote chunk 296
+INFO [2022-05-04 12:39:06] Wrote chunk 1228
+INFO [2022-05-04 12:39:06] Starting chunk 297 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:39:06] Starting chunk 1229 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:39:06] Wrote chunk 529
+INFO [2022-05-04 12:39:06] Starting chunk 530 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:39:07] Wrote chunk 1020
+INFO [2022-05-04 12:39:07] Starting chunk 1021 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:39:08] Wrote chunk 1229
+INFO [2022-05-04 12:39:08] Starting chunk 1230 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:39:08] Wrote chunk 808
+INFO [2022-05-04 12:39:08] Starting chunk 809 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:39:08] Wrote chunk 71
+INFO [2022-05-04 12:39:09] Starting chunk 72 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:39:09] Wrote chunk 1021
+INFO [2022-05-04 12:39:09] Starting chunk 1022 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:39:09] Wrote chunk 1230
+INFO [2022-05-04 12:39:09] Starting chunk 1231 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:39:10] Wrote chunk 530
+INFO [2022-05-04 12:39:10] Starting chunk 531 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:39:10] Wrote chunk 809
+INFO [2022-05-04 12:39:10] Starting chunk 810 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:39:11] Wrote chunk 1022
+INFO [2022-05-04 12:39:11] Starting chunk 1023 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:39:11] Wrote chunk 1231
+INFO [2022-05-04 12:39:11] Starting chunk 1232 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:39:11] Wrote chunk 297
+INFO [2022-05-04 12:39:11] Starting chunk 298 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:39:12] Wrote chunk 810
+INFO [2022-05-04 12:39:12] Starting chunk 811 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:39:12] Wrote chunk 1232
+INFO [2022-05-04 12:39:12] Starting chunk 1233 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:39:13] Wrote chunk 1023
+INFO [2022-05-04 12:39:13] Starting chunk 1024 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:39:13] Wrote chunk 72
+INFO [2022-05-04 12:39:13] Starting chunk 73 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:39:14] Wrote chunk 811
+INFO [2022-05-04 12:39:14] Starting chunk 812 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:39:14] Wrote chunk 1233
+INFO [2022-05-04 12:39:14] Starting chunk 1234 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:39:14] Wrote chunk 531
+INFO [2022-05-04 12:39:14] Starting chunk 532 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:39:14] Wrote chunk 1024
+INFO [2022-05-04 12:39:14] Starting chunk 1025 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:39:15] Wrote chunk 812
+INFO [2022-05-04 12:39:15] Starting chunk 813 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:39:16] Wrote chunk 1025
+INFO [2022-05-04 12:39:16] Starting chunk 1026 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:39:16] Wrote chunk 1234
+INFO [2022-05-04 12:39:16] Starting chunk 1235 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:39:16] Wrote chunk 298
+INFO [2022-05-04 12:39:16] Starting chunk 299 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:39:17] Wrote chunk 813
+INFO [2022-05-04 12:39:17] Starting chunk 814 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:39:18] Wrote chunk 1026
+INFO [2022-05-04 12:39:18] Starting chunk 1027 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:39:18] Wrote chunk 1235
+INFO [2022-05-04 12:39:18] Starting chunk 1236 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:39:18] Wrote chunk 73
+INFO [2022-05-04 12:39:18] Starting chunk 74 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:39:19] Wrote chunk 532
+INFO [2022-05-04 12:39:19] Starting chunk 533 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:39:19] Wrote chunk 814
+INFO [2022-05-04 12:39:19] Starting chunk 815 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:39:19] Wrote chunk 1027
+INFO [2022-05-04 12:39:19] Starting chunk 1028 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:39:20] Wrote chunk 1236
+INFO [2022-05-04 12:39:20] Starting chunk 1237 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:39:21] Wrote chunk 299
+INFO [2022-05-04 12:39:21] Starting chunk 300 of 2288 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:39:21] Wrote chunk 815
+INFO [2022-05-04 12:39:21] Starting chunk 816 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:39:21] Wrote chunk 1028
+INFO [2022-05-04 12:39:21] Starting chunk 1029 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:39:21] Wrote chunk 1237
+INFO [2022-05-04 12:39:21] Starting chunk 1238 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:39:22] Wrote chunk 816
+INFO [2022-05-04 12:39:22] Starting chunk 817 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:39:23] Wrote chunk 1029
+INFO [2022-05-04 12:39:23] Starting chunk 1030 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:39:23] Wrote chunk 533
+INFO [2022-05-04 12:39:23] Starting chunk 534 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:39:23] Wrote chunk 1238
+INFO [2022-05-04 12:39:23] Starting chunk 1239 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:39:23] Wrote chunk 74
+INFO [2022-05-04 12:39:23] Starting chunk 75 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:39:24] Wrote chunk 817
+INFO [2022-05-04 12:39:24] Starting chunk 818 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:39:24] Wrote chunk 1030
+INFO [2022-05-04 12:39:24] Starting chunk 1031 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:39:25] Wrote chunk 300
+INFO [2022-05-04 12:39:25] Starting chunk 300 of 712 lines for file en_US.news.txt
+INFO [2022-05-04 12:39:25] Wrote chunk 1239
+INFO [2022-05-04 12:39:25] Starting chunk 1240 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:39:26] Wrote chunk 818
+INFO [2022-05-04 12:39:26] Starting chunk 819 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:39:26] Wrote chunk 300
+INFO [2022-05-04 12:39:26] Starting chunk 301 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:39:26] Wrote chunk 1031
+INFO [2022-05-04 12:39:26] Starting chunk 1032 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:39:26] Wrote chunk 1240
+INFO [2022-05-04 12:39:26] Starting chunk 1241 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:39:27] Wrote chunk 534
+INFO [2022-05-04 12:39:27] Starting chunk 535 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:39:27] Wrote chunk 819
+INFO [2022-05-04 12:39:27] Starting chunk 820 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:39:28] Wrote chunk 1032
+INFO [2022-05-04 12:39:28] Starting chunk 1033 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:39:28] Wrote chunk 75
+INFO [2022-05-04 12:39:28] Starting chunk 76 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:39:29] Wrote chunk 820
+INFO [2022-05-04 12:39:29] Starting chunk 821 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:39:29] Wrote chunk 1241
+INFO [2022-05-04 12:39:29] Starting chunk 1242 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:39:30] Wrote chunk 1033
+INFO [2022-05-04 12:39:30] Starting chunk 1034 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:39:30] Wrote chunk 301
+INFO [2022-05-04 12:39:30] Starting chunk 302 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:39:30] Wrote chunk 821
+INFO [2022-05-04 12:39:30] Starting chunk 822 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:39:31] Wrote chunk 1242
+INFO [2022-05-04 12:39:31] Wrote chunk 535
+INFO [2022-05-04 12:39:31] Starting chunk 1243 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:39:31] Starting chunk 536 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:39:32] Wrote chunk 822
+INFO [2022-05-04 12:39:32] Starting chunk 823 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:39:32] Wrote chunk 1034
+INFO [2022-05-04 12:39:32] Starting chunk 1035 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:39:33] Wrote chunk 1243
+INFO [2022-05-04 12:39:33] Starting chunk 1244 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:39:33] Wrote chunk 76
+INFO [2022-05-04 12:39:33] Starting chunk 77 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:39:34] Wrote chunk 1035
+INFO [2022-05-04 12:39:34] Starting chunk 1036 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:39:34] Wrote chunk 302
+INFO [2022-05-04 12:39:34] Wrote chunk 823
+INFO [2022-05-04 12:39:34] Starting chunk 303 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:39:34] Starting chunk 824 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:39:34] Wrote chunk 1244
+INFO [2022-05-04 12:39:34] Starting chunk 1245 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:39:35] Wrote chunk 1036
+INFO [2022-05-04 12:39:35] Starting chunk 1037 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:39:36] Wrote chunk 536
+INFO [2022-05-04 12:39:36] Starting chunk 537 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:39:36] Wrote chunk 824
+INFO [2022-05-04 12:39:36] Starting chunk 825 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:39:36] Wrote chunk 1245
+INFO [2022-05-04 12:39:36] Starting chunk 1246 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:39:37] Wrote chunk 1037
+INFO [2022-05-04 12:39:37] Starting chunk 1038 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:39:37] Wrote chunk 77
+INFO [2022-05-04 12:39:37] Starting chunk 78 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:39:38] Wrote chunk 1246
+INFO [2022-05-04 12:39:38] Starting chunk 1247 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:39:38] Wrote chunk 825
+INFO [2022-05-04 12:39:38] Starting chunk 826 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:39:39] Wrote chunk 1038
+INFO [2022-05-04 12:39:39] Starting chunk 1039 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:39:39] Wrote chunk 303
+INFO [2022-05-04 12:39:39] Starting chunk 304 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:39:39] Wrote chunk 1247
+INFO [2022-05-04 12:39:39] Starting chunk 1248 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:39:40] Wrote chunk 826
+INFO [2022-05-04 12:39:40] Starting chunk 827 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:39:40] Wrote chunk 537
+INFO [2022-05-04 12:39:40] Starting chunk 538 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:39:40] Wrote chunk 1039
+INFO [2022-05-04 12:39:40] Starting chunk 1040 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:39:41] Wrote chunk 1248
+INFO [2022-05-04 12:39:41] Starting chunk 1249 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:39:41] Wrote chunk 78
+INFO [2022-05-04 12:39:41] Starting chunk 79 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:39:42] Wrote chunk 827
+INFO [2022-05-04 12:39:42] Starting chunk 828 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:39:42] Wrote chunk 1040
+INFO [2022-05-04 12:39:42] Starting chunk 1041 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:39:43] Wrote chunk 1249
+INFO [2022-05-04 12:39:43] Starting chunk 1250 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:39:43] Wrote chunk 828
+INFO [2022-05-04 12:39:43] Starting chunk 829 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:39:44] Wrote chunk 304
+INFO [2022-05-04 12:39:44] Starting chunk 305 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:39:44] Wrote chunk 1041
+INFO [2022-05-04 12:39:44] Starting chunk 1042 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:39:44] Wrote chunk 1250
+INFO [2022-05-04 12:39:44] Starting chunk 1251 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:39:45] Wrote chunk 538
+INFO [2022-05-04 12:39:45] Starting chunk 539 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:39:45] Wrote chunk 829
+INFO [2022-05-04 12:39:45] Starting chunk 830 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:39:46] Wrote chunk 1042
+INFO [2022-05-04 12:39:46] Starting chunk 1043 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:39:46] Wrote chunk 79
+INFO [2022-05-04 12:39:46] Starting chunk 80 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:39:46] Wrote chunk 1251
+INFO [2022-05-04 12:39:46] Starting chunk 1252 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:39:47] Wrote chunk 830
+INFO [2022-05-04 12:39:47] Starting chunk 831 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:39:48] Wrote chunk 305
+INFO [2022-05-04 12:39:48] Starting chunk 306 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:39:48] Wrote chunk 1252
+INFO [2022-05-04 12:39:48] Starting chunk 1253 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:39:48] Wrote chunk 1043
+INFO [2022-05-04 12:39:48] Starting chunk 1044 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:39:48] Wrote chunk 831
+INFO [2022-05-04 12:39:48] Starting chunk 832 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:39:48] Wrote chunk 539
+INFO [2022-05-04 12:39:49] Starting chunk 540 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:39:50] Wrote chunk 1253
+INFO [2022-05-04 12:39:50] Starting chunk 1254 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:39:50] Wrote chunk 1044
+INFO [2022-05-04 12:39:50] Starting chunk 1045 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:39:50] Wrote chunk 832
+INFO [2022-05-04 12:39:50] Starting chunk 833 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:39:51] Wrote chunk 1254
+INFO [2022-05-04 12:39:51] Starting chunk 1255 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:39:51] Wrote chunk 80
+INFO [2022-05-04 12:39:51] Starting chunk 81 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:39:51] Wrote chunk 1045
+INFO [2022-05-04 12:39:51] Starting chunk 1046 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:39:52] Wrote chunk 833
+INFO [2022-05-04 12:39:52] Starting chunk 834 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:39:52] Wrote chunk 540
+INFO [2022-05-04 12:39:52] Starting chunk 541 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:39:52] Wrote chunk 306
+INFO [2022-05-04 12:39:52] Starting chunk 307 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:39:53] Wrote chunk 1046
+INFO [2022-05-04 12:39:53] Starting chunk 1047 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:39:53] Wrote chunk 1255
+INFO [2022-05-04 12:39:53] Starting chunk 1256 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:39:53] Wrote chunk 834
+INFO [2022-05-04 12:39:53] Starting chunk 835 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:39:54] Wrote chunk 1047
+INFO [2022-05-04 12:39:54] Starting chunk 1048 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:39:55] Wrote chunk 1256
+INFO [2022-05-04 12:39:55] Starting chunk 1257 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:39:55] Wrote chunk 835
+INFO [2022-05-04 12:39:55] Starting chunk 836 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:39:56] Wrote chunk 307
+INFO [2022-05-04 12:39:56] Starting chunk 308 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:39:56] Wrote chunk 81
+INFO [2022-05-04 12:39:56] Starting chunk 82 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:39:57] Wrote chunk 1257
+INFO [2022-05-04 12:39:57] Starting chunk 1258 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:39:57] Wrote chunk 1048
+INFO [2022-05-04 12:39:57] Starting chunk 1049 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:39:57] Wrote chunk 541
+INFO [2022-05-04 12:39:57] Starting chunk 542 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:39:58] Wrote chunk 836
+INFO [2022-05-04 12:39:58] Starting chunk 837 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:39:58] Wrote chunk 1258
+INFO [2022-05-04 12:39:58] Starting chunk 1259 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:39:59] Wrote chunk 1049
+INFO [2022-05-04 12:39:59] Starting chunk 1050 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:40:00] Wrote chunk 837
+INFO [2022-05-04 12:40:00] Starting chunk 838 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:40:00] Wrote chunk 1259
+INFO [2022-05-04 12:40:00] Starting chunk 1260 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:40:01] Wrote chunk 1050
+INFO [2022-05-04 12:40:01] Starting chunk 1051 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:40:01] Wrote chunk 308
+INFO [2022-05-04 12:40:01] Starting chunk 309 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:40:01] Wrote chunk 838
+INFO [2022-05-04 12:40:01] Starting chunk 839 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:40:02] Wrote chunk 542
+INFO [2022-05-04 12:40:02] Starting chunk 543 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:40:02] Wrote chunk 82
+INFO [2022-05-04 12:40:02] Starting chunk 83 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:40:02] Wrote chunk 1260
+INFO [2022-05-04 12:40:02] Starting chunk 1261 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:40:03] Wrote chunk 1051
+INFO [2022-05-04 12:40:03] Starting chunk 1052 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:40:03] Wrote chunk 839
+INFO [2022-05-04 12:40:03] Starting chunk 840 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:40:04] Wrote chunk 1261
+INFO [2022-05-04 12:40:04] Starting chunk 1262 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:40:05] Wrote chunk 1052
+INFO [2022-05-04 12:40:05] Starting chunk 1053 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:40:06] Wrote chunk 840
+INFO [2022-05-04 12:40:06] Starting chunk 841 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:40:06] Wrote chunk 309
+INFO [2022-05-04 12:40:06] Starting chunk 310 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:40:06] Wrote chunk 1262
+INFO [2022-05-04 12:40:06] Starting chunk 1263 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:40:07] Wrote chunk 543
+INFO [2022-05-04 12:40:07] Starting chunk 544 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:40:07] Wrote chunk 1053
+INFO [2022-05-04 12:40:07] Starting chunk 1054 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:40:07] Wrote chunk 841
+INFO [2022-05-04 12:40:07] Starting chunk 842 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:40:07] Wrote chunk 83
+INFO [2022-05-04 12:40:07] Starting chunk 84 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:40:08] Wrote chunk 1263
+INFO [2022-05-04 12:40:08] Starting chunk 1264 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:40:09] Wrote chunk 1054
+INFO [2022-05-04 12:40:09] Starting chunk 1055 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:40:09] Wrote chunk 842
+INFO [2022-05-04 12:40:09] Starting chunk 843 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:40:10] Wrote chunk 1264
+INFO [2022-05-04 12:40:10] Starting chunk 1265 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:40:10] Wrote chunk 310
+INFO [2022-05-04 12:40:10] Starting chunk 311 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:40:11] Wrote chunk 1055
+INFO [2022-05-04 12:40:11] Starting chunk 1056 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:40:11] Wrote chunk 544
+INFO [2022-05-04 12:40:11] Starting chunk 545 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:40:11] Wrote chunk 843
+INFO [2022-05-04 12:40:11] Starting chunk 844 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:40:12] Wrote chunk 1265
+INFO [2022-05-04 12:40:12] Starting chunk 1266 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:40:12] Wrote chunk 84
+INFO [2022-05-04 12:40:12] Starting chunk 85 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:40:13] Wrote chunk 1056
+INFO [2022-05-04 12:40:13] Starting chunk 1057 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:40:13] Wrote chunk 844
+INFO [2022-05-04 12:40:13] Starting chunk 845 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:40:13] Wrote chunk 1266
+INFO [2022-05-04 12:40:13] Starting chunk 1267 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:40:14] Wrote chunk 1057
+INFO [2022-05-04 12:40:14] Starting chunk 1058 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:40:15] Wrote chunk 311
+INFO [2022-05-04 12:40:15] Starting chunk 312 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:40:15] Wrote chunk 845
+INFO [2022-05-04 12:40:15] Starting chunk 846 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:40:15] Wrote chunk 1267
+INFO [2022-05-04 12:40:15] Starting chunk 1268 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:40:15] Wrote chunk 545
+INFO [2022-05-04 12:40:15] Starting chunk 546 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:40:16] Wrote chunk 1058
+INFO [2022-05-04 12:40:16] Starting chunk 1059 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:40:16] Wrote chunk 846
+INFO [2022-05-04 12:40:16] Starting chunk 847 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:40:17] Wrote chunk 1268
+INFO [2022-05-04 12:40:17] Starting chunk 1269 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:40:17] Wrote chunk 85
+INFO [2022-05-04 12:40:17] Starting chunk 86 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:40:17] Wrote chunk 1059
+INFO [2022-05-04 12:40:18] Starting chunk 1060 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:40:18] Wrote chunk 847
+INFO [2022-05-04 12:40:18] Starting chunk 848 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:40:19] Wrote chunk 1269
+INFO [2022-05-04 12:40:19] Starting chunk 1270 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:40:19] Wrote chunk 1060
+INFO [2022-05-04 12:40:19] Starting chunk 1061 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:40:19] Wrote chunk 312
+INFO [2022-05-04 12:40:19] Starting chunk 313 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:40:20] Wrote chunk 848
+INFO [2022-05-04 12:40:20] Starting chunk 849 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:40:20] Wrote chunk 546
+INFO [2022-05-04 12:40:20] Starting chunk 547 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:40:21] Wrote chunk 1270
+INFO [2022-05-04 12:40:21] Starting chunk 1271 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:40:21] Wrote chunk 86
+INFO [2022-05-04 12:40:21] Starting chunk 87 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:40:21] Wrote chunk 1061
+INFO [2022-05-04 12:40:21] Starting chunk 1062 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:40:22] Wrote chunk 849
+INFO [2022-05-04 12:40:22] Starting chunk 850 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:40:23] Wrote chunk 1271
+INFO [2022-05-04 12:40:23] Starting chunk 1272 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:40:23] Wrote chunk 1062
+INFO [2022-05-04 12:40:23] Starting chunk 1063 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:40:23] Wrote chunk 313
+INFO [2022-05-04 12:40:23] Starting chunk 314 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:40:24] Wrote chunk 850
+INFO [2022-05-04 12:40:24] Starting chunk 851 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:40:24] Wrote chunk 547
+INFO [2022-05-04 12:40:24] Starting chunk 548 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:40:24] Wrote chunk 1272
+INFO [2022-05-04 12:40:24] Starting chunk 1273 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:40:25] Wrote chunk 1063
+INFO [2022-05-04 12:40:25] Starting chunk 1064 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:40:26] Wrote chunk 851
+INFO [2022-05-04 12:40:26] Starting chunk 852 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:40:26] Wrote chunk 1273
+INFO [2022-05-04 12:40:26] Starting chunk 1274 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:40:27] Wrote chunk 1064
+INFO [2022-05-04 12:40:27] Starting chunk 1065 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:40:27] Wrote chunk 87
+INFO [2022-05-04 12:40:27] Starting chunk 88 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:40:28] Wrote chunk 852
+INFO [2022-05-04 12:40:28] Starting chunk 853 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:40:28] Wrote chunk 314
+INFO [2022-05-04 12:40:28] Starting chunk 315 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:40:28] Wrote chunk 1274
+INFO [2022-05-04 12:40:28] Starting chunk 1275 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:40:28] Wrote chunk 1065
+INFO [2022-05-04 12:40:28] Starting chunk 1066 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:40:29] Wrote chunk 548
+INFO [2022-05-04 12:40:29] Starting chunk 549 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:40:30] Wrote chunk 853
+INFO [2022-05-04 12:40:30] Starting chunk 854 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:40:30] Wrote chunk 1275
+INFO [2022-05-04 12:40:30] Starting chunk 1276 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:40:30] Wrote chunk 1066
+INFO [2022-05-04 12:40:30] Starting chunk 1067 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:40:31] Wrote chunk 1276
+INFO [2022-05-04 12:40:31] Starting chunk 1277 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:40:31] Wrote chunk 854
+INFO [2022-05-04 12:40:31] Starting chunk 855 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:40:32] Wrote chunk 88
+INFO [2022-05-04 12:40:32] Starting chunk 89 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:40:32] Wrote chunk 1067
+INFO [2022-05-04 12:40:32] Starting chunk 1068 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:40:32] Wrote chunk 315
+INFO [2022-05-04 12:40:32] Starting chunk 316 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:40:33] Wrote chunk 549
+INFO [2022-05-04 12:40:33] Starting chunk 550 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:40:33] Wrote chunk 1277
+INFO [2022-05-04 12:40:33] Starting chunk 1278 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:40:33] Wrote chunk 855
+INFO [2022-05-04 12:40:33] Starting chunk 856 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:40:34] Wrote chunk 1068
+INFO [2022-05-04 12:40:34] Starting chunk 1069 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:40:35] Wrote chunk 1278
+INFO [2022-05-04 12:40:35] Starting chunk 1279 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:40:35] Wrote chunk 1069
+INFO [2022-05-04 12:40:35] Starting chunk 1070 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:40:35] Wrote chunk 856
+INFO [2022-05-04 12:40:35] Starting chunk 857 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:40:36] Wrote chunk 1279
+INFO [2022-05-04 12:40:36] Starting chunk 1280 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:40:37] Wrote chunk 89
+INFO [2022-05-04 12:40:37] Starting chunk 90 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:40:37] Wrote chunk 1070
+INFO [2022-05-04 12:40:37] Starting chunk 1071 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:40:37] Wrote chunk 857
+INFO [2022-05-04 12:40:37] Starting chunk 858 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:40:37] Wrote chunk 316
+INFO [2022-05-04 12:40:37] Starting chunk 317 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:40:37] Wrote chunk 550
+INFO [2022-05-04 12:40:37] Starting chunk 551 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:40:38] Wrote chunk 1280
+INFO [2022-05-04 12:40:38] Starting chunk 1281 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:40:39] Wrote chunk 1071
+INFO [2022-05-04 12:40:39] Starting chunk 1072 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:40:39] Wrote chunk 858
+INFO [2022-05-04 12:40:39] Starting chunk 859 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:40:40] Wrote chunk 1281
+INFO [2022-05-04 12:40:40] Starting chunk 1282 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:40:40] Wrote chunk 1072
+INFO [2022-05-04 12:40:40] Starting chunk 1073 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:40:41] Wrote chunk 859
+INFO [2022-05-04 12:40:41] Starting chunk 860 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:40:42] Wrote chunk 317
+INFO [2022-05-04 12:40:42] Starting chunk 318 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:40:42] Wrote chunk 90
+INFO [2022-05-04 12:40:42] Starting chunk 91 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:40:42] Wrote chunk 1282
+INFO [2022-05-04 12:40:42] Starting chunk 1283 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:40:42] Wrote chunk 551
+INFO [2022-05-04 12:40:42] Starting chunk 552 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:40:42] Wrote chunk 1073
+INFO [2022-05-04 12:40:42] Starting chunk 1074 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:40:43] Wrote chunk 860
+INFO [2022-05-04 12:40:43] Starting chunk 861 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:40:44] Wrote chunk 1283
+INFO [2022-05-04 12:40:44] Starting chunk 1284 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:40:45] Wrote chunk 1074
+INFO [2022-05-04 12:40:45] Starting chunk 1075 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:40:45] Wrote chunk 861
+INFO [2022-05-04 12:40:45] Starting chunk 862 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:40:46] Wrote chunk 318
+INFO [2022-05-04 12:40:46] Starting chunk 319 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:40:46] Wrote chunk 91
+INFO [2022-05-04 12:40:46] Starting chunk 92 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:40:46] Wrote chunk 552
+INFO [2022-05-04 12:40:46] Starting chunk 553 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:40:46] Wrote chunk 1284
+INFO [2022-05-04 12:40:46] Starting chunk 1285 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:40:47] Wrote chunk 1075
+INFO [2022-05-04 12:40:47] Starting chunk 1076 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:40:47] Wrote chunk 862
+INFO [2022-05-04 12:40:47] Starting chunk 863 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:40:48] Wrote chunk 1285
+INFO [2022-05-04 12:40:48] Starting chunk 1286 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:40:48] Wrote chunk 1076
+INFO [2022-05-04 12:40:48] Starting chunk 1077 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:40:49] Wrote chunk 863
+INFO [2022-05-04 12:40:49] Starting chunk 864 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:40:50] Wrote chunk 1286
+INFO [2022-05-04 12:40:50] Starting chunk 1287 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:40:50] Wrote chunk 1077
+INFO [2022-05-04 12:40:50] Starting chunk 1078 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:40:50] Wrote chunk 553
+INFO [2022-05-04 12:40:50] Starting chunk 554 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:40:50] Wrote chunk 92
+INFO [2022-05-04 12:40:50] Starting chunk 93 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:40:50] Wrote chunk 864
+INFO [2022-05-04 12:40:50] Starting chunk 865 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:40:50] Wrote chunk 319
+INFO [2022-05-04 12:40:50] Starting chunk 320 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:40:51] Wrote chunk 1287
+INFO [2022-05-04 12:40:51] Starting chunk 1288 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:40:52] Wrote chunk 1078
+INFO [2022-05-04 12:40:52] Starting chunk 1079 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:40:52] Wrote chunk 865
+INFO [2022-05-04 12:40:52] Starting chunk 866 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:40:53] Wrote chunk 1079
+INFO [2022-05-04 12:40:53] Starting chunk 1080 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:40:53] Wrote chunk 1288
+INFO [2022-05-04 12:40:53] Starting chunk 1289 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:40:54] Wrote chunk 866
+INFO [2022-05-04 12:40:54] Starting chunk 867 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:40:55] Wrote chunk 93
+INFO [2022-05-04 12:40:55] Starting chunk 94 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:40:55] Wrote chunk 1289
+INFO [2022-05-04 12:40:55] Starting chunk 1290 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:40:55] Wrote chunk 1080
+INFO [2022-05-04 12:40:55] Starting chunk 1081 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:40:55] Wrote chunk 320
+INFO [2022-05-04 12:40:55] Starting chunk 321 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:40:55] Wrote chunk 554
+INFO [2022-05-04 12:40:55] Starting chunk 555 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:40:56] Wrote chunk 867
+INFO [2022-05-04 12:40:56] Starting chunk 868 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:40:57] Wrote chunk 1290
+INFO [2022-05-04 12:40:57] Starting chunk 1291 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:40:57] Wrote chunk 1081
+INFO [2022-05-04 12:40:57] Starting chunk 1082 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:40:57] Wrote chunk 868
+INFO [2022-05-04 12:40:58] Starting chunk 869 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:40:58] Wrote chunk 1291
+INFO [2022-05-04 12:40:58] Starting chunk 1292 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:40:59] Wrote chunk 1082
+INFO [2022-05-04 12:40:59] Starting chunk 1083 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:40:59] Wrote chunk 555
+INFO [2022-05-04 12:40:59] Starting chunk 556 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:40:59] Wrote chunk 94
+INFO [2022-05-04 12:40:59] Starting chunk 95 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:40:59] Wrote chunk 869
+INFO [2022-05-04 12:40:59] Starting chunk 870 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:41:00] Wrote chunk 321
+INFO [2022-05-04 12:41:00] Starting chunk 322 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:41:00] Wrote chunk 1292
+INFO [2022-05-04 12:41:00] Starting chunk 1293 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:41:01] Wrote chunk 1083
+INFO [2022-05-04 12:41:01] Starting chunk 1084 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:41:01] Wrote chunk 870
+INFO [2022-05-04 12:41:01] Starting chunk 871 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:41:02] Wrote chunk 1293
+INFO [2022-05-04 12:41:02] Starting chunk 1294 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:41:02] Wrote chunk 1084
+INFO [2022-05-04 12:41:02] Starting chunk 1085 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:41:03] Wrote chunk 871
+INFO [2022-05-04 12:41:03] Starting chunk 872 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:41:04] Wrote chunk 1294
+INFO [2022-05-04 12:41:04] Starting chunk 1295 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:41:04] Wrote chunk 556
+INFO [2022-05-04 12:41:04] Starting chunk 557 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:41:04] Wrote chunk 1085
+INFO [2022-05-04 12:41:04] Starting chunk 1086 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:41:04] Wrote chunk 95
+INFO [2022-05-04 12:41:04] Starting chunk 96 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:41:05] Wrote chunk 872
+INFO [2022-05-04 12:41:05] Starting chunk 873 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:41:05] Wrote chunk 322
+INFO [2022-05-04 12:41:05] Starting chunk 323 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:41:05] Wrote chunk 1295
+INFO [2022-05-04 12:41:05] Starting chunk 1296 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:41:06] Wrote chunk 1086
+INFO [2022-05-04 12:41:06] Starting chunk 1087 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:41:06] Wrote chunk 873
+INFO [2022-05-04 12:41:06] Starting chunk 874 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:41:07] Wrote chunk 1296
+INFO [2022-05-04 12:41:07] Starting chunk 1297 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:41:08] Wrote chunk 557
+INFO [2022-05-04 12:41:08] Starting chunk 558 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:41:08] Wrote chunk 874
+INFO [2022-05-04 12:41:09] Wrote chunk 1087
+INFO [2022-05-04 12:41:09] Starting chunk 1088 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:41:09] Starting chunk 875 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:41:09] Wrote chunk 323
+INFO [2022-05-04 12:41:09] Starting chunk 324 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:41:10] Wrote chunk 96
+INFO [2022-05-04 12:41:10] Starting chunk 97 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:41:10] Wrote chunk 1297
+INFO [2022-05-04 12:41:10] Starting chunk 1298 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:41:11] Wrote chunk 1088
+INFO [2022-05-04 12:41:11] Starting chunk 1089 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:41:11] Wrote chunk 875
+INFO [2022-05-04 12:41:11] Starting chunk 876 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:41:12] Wrote chunk 1298
+INFO [2022-05-04 12:41:12] Starting chunk 1299 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:41:12] Wrote chunk 558
+INFO [2022-05-04 12:41:12] Starting chunk 559 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:41:12] Wrote chunk 876
+INFO [2022-05-04 12:41:12] Starting chunk 877 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:41:13] Wrote chunk 1089
+INFO [2022-05-04 12:41:13] Starting chunk 1090 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:41:13] Wrote chunk 1299
+INFO [2022-05-04 12:41:13] Starting chunk 1300 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:41:14] Wrote chunk 324
+INFO [2022-05-04 12:41:14] Starting chunk 325 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:41:14] Wrote chunk 97
+INFO [2022-05-04 12:41:14] Starting chunk 98 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:41:14] Wrote chunk 877
+INFO [2022-05-04 12:41:14] Starting chunk 878 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:41:15] Wrote chunk 1090
+INFO [2022-05-04 12:41:15] Starting chunk 1091 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:41:15] Wrote chunk 1300
+INFO [2022-05-04 12:41:15] Starting chunk 1301 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:41:16] Wrote chunk 878
+INFO [2022-05-04 12:41:16] Starting chunk 879 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:41:16] Wrote chunk 1091
+INFO [2022-05-04 12:41:17] Starting chunk 1092 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:41:17] Wrote chunk 559
+INFO [2022-05-04 12:41:17] Starting chunk 560 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:41:17] Wrote chunk 1301
+INFO [2022-05-04 12:41:17] Starting chunk 1302 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:41:18] Wrote chunk 879
+INFO [2022-05-04 12:41:18] Starting chunk 880 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:41:18] Wrote chunk 325
+INFO [2022-05-04 12:41:18] Starting chunk 326 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:41:18] Wrote chunk 1092
+INFO [2022-05-04 12:41:18] Starting chunk 1093 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:41:19] Wrote chunk 1302
+INFO [2022-05-04 12:41:19] Starting chunk 1303 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:41:19] Wrote chunk 98
+INFO [2022-05-04 12:41:19] Starting chunk 99 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:41:20] Wrote chunk 880
+INFO [2022-05-04 12:41:20] Starting chunk 881 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:41:20] Wrote chunk 1093
+INFO [2022-05-04 12:41:20] Starting chunk 1094 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:41:21] Wrote chunk 1303
+INFO [2022-05-04 12:41:21] Starting chunk 1304 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:41:21] Wrote chunk 560
+INFO [2022-05-04 12:41:21] Starting chunk 561 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:41:22] Wrote chunk 881
+INFO [2022-05-04 12:41:22] Starting chunk 882 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:41:22] Wrote chunk 326
+INFO [2022-05-04 12:41:22] Starting chunk 327 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:41:22] Wrote chunk 1094
+INFO [2022-05-04 12:41:22] Starting chunk 1095 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:41:23] Wrote chunk 1304
+INFO [2022-05-04 12:41:23] Starting chunk 1305 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:41:24] Wrote chunk 882
+INFO [2022-05-04 12:41:24] Starting chunk 883 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:41:24] Wrote chunk 1095
+INFO [2022-05-04 12:41:24] Starting chunk 1096 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:41:25] Wrote chunk 1305
+INFO [2022-05-04 12:41:25] Starting chunk 1306 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:41:25] Wrote chunk 99
+INFO [2022-05-04 12:41:25] Starting chunk 100 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:41:26] Wrote chunk 883
+INFO [2022-05-04 12:41:26] Starting chunk 884 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:41:26] Wrote chunk 561
+INFO [2022-05-04 12:41:26] Starting chunk 562 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:41:26] Wrote chunk 1096
+INFO [2022-05-04 12:41:26] Starting chunk 1097 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:41:26] Wrote chunk 1306
+INFO [2022-05-04 12:41:26] Starting chunk 1307 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:41:26] Wrote chunk 327
+INFO [2022-05-04 12:41:27] Starting chunk 328 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:41:27] Wrote chunk 884
+INFO [2022-05-04 12:41:27] Starting chunk 885 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:41:28] Wrote chunk 1097
+INFO [2022-05-04 12:41:28] Starting chunk 1098 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:41:28] Wrote chunk 1307
+INFO [2022-05-04 12:41:28] Starting chunk 1308 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:41:29] Wrote chunk 885
+INFO [2022-05-04 12:41:29] Starting chunk 886 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:41:30] Wrote chunk 1098
+INFO [2022-05-04 12:41:30] Starting chunk 1099 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:41:30] Wrote chunk 562
+INFO [2022-05-04 12:41:30] Starting chunk 563 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:41:30] Wrote chunk 1308
+INFO [2022-05-04 12:41:30] Starting chunk 1309 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:41:30] Wrote chunk 100
+INFO [2022-05-04 12:41:30] Starting chunk 101 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:41:31] Wrote chunk 886
+INFO [2022-05-04 12:41:31] Starting chunk 887 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:41:31] Wrote chunk 328
+INFO [2022-05-04 12:41:31] Starting chunk 329 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:41:32] Wrote chunk 1309
+INFO [2022-05-04 12:41:32] Starting chunk 1310 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:41:32] Wrote chunk 1099
+INFO [2022-05-04 12:41:32] Starting chunk 1100 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:41:33] Wrote chunk 887
+INFO [2022-05-04 12:41:33] Wrote chunk 1310
+INFO [2022-05-04 12:41:33] Starting chunk 1311 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:41:34] Starting chunk 888 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:41:34] Wrote chunk 563
+INFO [2022-05-04 12:41:34] Starting chunk 564 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:41:34] Wrote chunk 1100
+INFO [2022-05-04 12:41:34] Starting chunk 1101 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:41:35] Wrote chunk 101
+INFO [2022-05-04 12:41:35] Starting chunk 102 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:41:35] Wrote chunk 888
+INFO [2022-05-04 12:41:35] Starting chunk 889 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:41:36] Wrote chunk 329
+INFO [2022-05-04 12:41:36] Starting chunk 330 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:41:36] Wrote chunk 1101
+INFO [2022-05-04 12:41:36] Starting chunk 1102 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:41:36] Wrote chunk 1311
+INFO [2022-05-04 12:41:36] Starting chunk 1312 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:41:37] Wrote chunk 889
+INFO [2022-05-04 12:41:37] Starting chunk 890 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:41:37] Wrote chunk 1102
+INFO [2022-05-04 12:41:37] Starting chunk 1103 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:41:38] Wrote chunk 1312
+INFO [2022-05-04 12:41:38] Starting chunk 1313 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:41:38] Wrote chunk 564
+INFO [2022-05-04 12:41:38] Starting chunk 565 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:41:39] Wrote chunk 890
+INFO [2022-05-04 12:41:39] Starting chunk 891 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:41:39] Wrote chunk 1103
+INFO [2022-05-04 12:41:39] Starting chunk 1104 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:41:39] Wrote chunk 1313
+INFO [2022-05-04 12:41:39] Starting chunk 1314 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:41:40] Wrote chunk 330
+INFO [2022-05-04 12:41:40] Starting chunk 331 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:41:40] Wrote chunk 102
+INFO [2022-05-04 12:41:40] Starting chunk 103 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:41:40] Wrote chunk 891
+INFO [2022-05-04 12:41:40] Starting chunk 892 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:41:41] Wrote chunk 1104
+INFO [2022-05-04 12:41:41] Starting chunk 1105 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:41:41] Wrote chunk 1314
+INFO [2022-05-04 12:41:41] Starting chunk 1315 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:41:42] Wrote chunk 892
+INFO [2022-05-04 12:41:42] Starting chunk 893 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:41:43] Wrote chunk 565
+INFO [2022-05-04 12:41:43] Starting chunk 566 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:41:43] Wrote chunk 1105
+INFO [2022-05-04 12:41:43] Starting chunk 1106 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:41:43] Wrote chunk 1315
+INFO [2022-05-04 12:41:43] Starting chunk 1316 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:41:44] Wrote chunk 331
+INFO [2022-05-04 12:41:44] Starting chunk 332 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:41:44] Wrote chunk 893
+INFO [2022-05-04 12:41:44] Starting chunk 894 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:41:44] Wrote chunk 1316
+INFO [2022-05-04 12:41:44] Starting chunk 1317 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:41:45] Wrote chunk 1106
+INFO [2022-05-04 12:41:45] Starting chunk 1107 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:41:45] Wrote chunk 103
+INFO [2022-05-04 12:41:45] Starting chunk 104 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:41:45] Wrote chunk 894
+INFO [2022-05-04 12:41:45] Starting chunk 895 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:41:46] Wrote chunk 1107
+INFO [2022-05-04 12:41:46] Starting chunk 1108 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:41:46] Wrote chunk 1317
+INFO [2022-05-04 12:41:46] Starting chunk 1318 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:41:46] Wrote chunk 566
+INFO [2022-05-04 12:41:46] Starting chunk 567 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:41:47] Wrote chunk 895
+INFO [2022-05-04 12:41:47] Starting chunk 896 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:41:48] Wrote chunk 1108
+INFO [2022-05-04 12:41:48] Starting chunk 1109 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:41:48] Wrote chunk 1318
+INFO [2022-05-04 12:41:48] Starting chunk 1319 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:41:48] Wrote chunk 332
+INFO [2022-05-04 12:41:48] Starting chunk 333 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:41:48] Wrote chunk 896
+INFO [2022-05-04 12:41:48] Starting chunk 897 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:41:49] Wrote chunk 1109
+INFO [2022-05-04 12:41:49] Starting chunk 1110 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:41:50] Wrote chunk 1319
+INFO [2022-05-04 12:41:50] Starting chunk 1320 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:41:50] Wrote chunk 897
+INFO [2022-05-04 12:41:50] Starting chunk 898 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:41:50] Wrote chunk 104
+INFO [2022-05-04 12:41:50] Starting chunk 105 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:41:50] Wrote chunk 1110
+INFO [2022-05-04 12:41:50] Starting chunk 1111 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:41:51] Wrote chunk 1320
+INFO [2022-05-04 12:41:51] Starting chunk 1321 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:41:52] Wrote chunk 898
+INFO [2022-05-04 12:41:52] Starting chunk 899 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:41:52] Wrote chunk 567
+INFO [2022-05-04 12:41:52] Starting chunk 568 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:41:52] Wrote chunk 1111
+INFO [2022-05-04 12:41:52] Starting chunk 1112 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:41:52] Wrote chunk 333
+INFO [2022-05-04 12:41:52] Starting chunk 334 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:41:53] Wrote chunk 1321
+INFO [2022-05-04 12:41:53] Starting chunk 1322 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:41:53] Wrote chunk 899
+INFO [2022-05-04 12:41:53] Starting chunk 900 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:41:54] Wrote chunk 1112
+INFO [2022-05-04 12:41:54] Starting chunk 1113 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:41:54] Wrote chunk 1322
+INFO [2022-05-04 12:41:54] Starting chunk 1323 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:41:55] Wrote chunk 105
+INFO [2022-05-04 12:41:55] Starting chunk 106 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:41:55] Wrote chunk 900
+INFO [2022-05-04 12:41:55] Starting chunk 901 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:41:56] Wrote chunk 1113
+INFO [2022-05-04 12:41:56] Starting chunk 1114 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:41:57] Wrote chunk 568
+INFO [2022-05-04 12:41:57] Starting chunk 569 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:41:57] Wrote chunk 1323
+INFO [2022-05-04 12:41:57] Starting chunk 1324 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:41:57] Wrote chunk 334
+INFO [2022-05-04 12:41:57] Starting chunk 335 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:41:57] Wrote chunk 901
+INFO [2022-05-04 12:41:57] Starting chunk 902 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:41:58] Wrote chunk 1114
+INFO [2022-05-04 12:41:58] Starting chunk 1115 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:41:58] Wrote chunk 1324
+INFO [2022-05-04 12:41:58] Starting chunk 1325 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:41:59] Wrote chunk 902
+INFO [2022-05-04 12:41:59] Starting chunk 903 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:42:00] Wrote chunk 1115
+INFO [2022-05-04 12:42:00] Starting chunk 1116 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:42:00] Wrote chunk 106
+INFO [2022-05-04 12:42:00] Starting chunk 107 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:42:00] Wrote chunk 1325
+INFO [2022-05-04 12:42:00] Starting chunk 1326 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:42:01] Wrote chunk 903
+INFO [2022-05-04 12:42:01] Starting chunk 904 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:42:01] Wrote chunk 569
+INFO [2022-05-04 12:42:01] Starting chunk 570 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:42:01] Wrote chunk 1116
+INFO [2022-05-04 12:42:01] Starting chunk 1117 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:42:02] Wrote chunk 335
+INFO [2022-05-04 12:42:02] Starting chunk 336 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:42:02] Wrote chunk 1326
+INFO [2022-05-04 12:42:02] Starting chunk 1327 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:42:03] Wrote chunk 904
+INFO [2022-05-04 12:42:03] Starting chunk 905 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:42:03] Wrote chunk 1117
+INFO [2022-05-04 12:42:03] Starting chunk 1118 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:42:04] Wrote chunk 1327
+INFO [2022-05-04 12:42:04] Starting chunk 1328 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:42:05] Wrote chunk 1118
+INFO [2022-05-04 12:42:05] Starting chunk 1119 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:42:05] Wrote chunk 905
+INFO [2022-05-04 12:42:05] Starting chunk 906 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:42:05] Wrote chunk 570
+INFO [2022-05-04 12:42:05] Starting chunk 571 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:42:05] Wrote chunk 107
+INFO [2022-05-04 12:42:05] Starting chunk 108 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:42:06] Wrote chunk 1328
+INFO [2022-05-04 12:42:06] Starting chunk 1329 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:42:06] Wrote chunk 336
+INFO [2022-05-04 12:42:06] Starting chunk 337 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:42:06] Wrote chunk 906
+INFO [2022-05-04 12:42:06] Starting chunk 907 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:42:06] Wrote chunk 1119
+INFO [2022-05-04 12:42:06] Starting chunk 1120 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:42:07] Wrote chunk 1329
+INFO [2022-05-04 12:42:07] Starting chunk 1330 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:42:07] Wrote chunk 907
+INFO [2022-05-04 12:42:07] Starting chunk 908 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:42:08] Wrote chunk 1120
+INFO [2022-05-04 12:42:08] Starting chunk 1121 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:42:09] Wrote chunk 1330
+INFO [2022-05-04 12:42:09] Starting chunk 1331 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:42:09] Wrote chunk 908
+INFO [2022-05-04 12:42:09] Starting chunk 909 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:42:09] Wrote chunk 108
+INFO [2022-05-04 12:42:09] Starting chunk 109 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:42:09] Wrote chunk 571
+INFO [2022-05-04 12:42:10] Starting chunk 572 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:42:10] Wrote chunk 1121
+INFO [2022-05-04 12:42:10] Starting chunk 1122 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:42:10] Wrote chunk 1331
+INFO [2022-05-04 12:42:10] Starting chunk 1332 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:42:11] Wrote chunk 909
+INFO [2022-05-04 12:42:11] Starting chunk 910 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:42:11] Wrote chunk 337
+INFO [2022-05-04 12:42:11] Starting chunk 338 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:42:12] Wrote chunk 1122
+INFO [2022-05-04 12:42:12] Starting chunk 1123 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:42:12] Wrote chunk 1332
+INFO [2022-05-04 12:42:12] Starting chunk 1333 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:42:12] Wrote chunk 910
+INFO [2022-05-04 12:42:12] Starting chunk 911 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:42:13] Wrote chunk 1123
+INFO [2022-05-04 12:42:13] Starting chunk 1124 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:42:14] Wrote chunk 572
+INFO [2022-05-04 12:42:14] Wrote chunk 1333
+INFO [2022-05-04 12:42:14] Starting chunk 573 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:42:14] Starting chunk 1334 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:42:14] Wrote chunk 911
+INFO [2022-05-04 12:42:14] Starting chunk 912 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:42:14] Wrote chunk 109
+INFO [2022-05-04 12:42:14] Starting chunk 110 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:42:15] Wrote chunk 338
+INFO [2022-05-04 12:42:15] Starting chunk 339 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:42:15] Wrote chunk 1334
+INFO [2022-05-04 12:42:15] Starting chunk 1335 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:42:15] Wrote chunk 1124
+INFO [2022-05-04 12:42:15] Starting chunk 1125 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:42:16] Wrote chunk 912
+INFO [2022-05-04 12:42:16] Starting chunk 913 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:42:17] Wrote chunk 1335
+INFO [2022-05-04 12:42:17] Starting chunk 1336 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:42:18] Wrote chunk 1125
+INFO [2022-05-04 12:42:18] Starting chunk 1126 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:42:18] Wrote chunk 573
+INFO [2022-05-04 12:42:18] Starting chunk 574 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:42:18] Wrote chunk 1336
+INFO [2022-05-04 12:42:18] Starting chunk 1337 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:42:19] Wrote chunk 913
+INFO [2022-05-04 12:42:19] Starting chunk 914 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:42:19] Wrote chunk 110
+INFO [2022-05-04 12:42:19] Starting chunk 111 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:42:19] Wrote chunk 1126
+INFO [2022-05-04 12:42:19] Starting chunk 1127 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:42:20] Wrote chunk 339
+INFO [2022-05-04 12:42:20] Starting chunk 340 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:42:20] Wrote chunk 914
+INFO [2022-05-04 12:42:20] Starting chunk 915 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:42:21] Wrote chunk 1337
+INFO [2022-05-04 12:42:21] Starting chunk 1338 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:42:21] Wrote chunk 1127
+INFO [2022-05-04 12:42:21] Starting chunk 1128 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:42:22] Wrote chunk 915
+INFO [2022-05-04 12:42:22] Starting chunk 916 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:42:22] Wrote chunk 574
+INFO [2022-05-04 12:42:22] Starting chunk 575 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:42:23] Wrote chunk 1338
+INFO [2022-05-04 12:42:23] Starting chunk 1339 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:42:23] Wrote chunk 1128
+INFO [2022-05-04 12:42:23] Starting chunk 1129 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:42:24] Wrote chunk 111
+INFO [2022-05-04 12:42:24] Starting chunk 112 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:42:24] Wrote chunk 916
+INFO [2022-05-04 12:42:24] Starting chunk 917 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:42:24] Wrote chunk 340
+INFO [2022-05-04 12:42:24] Starting chunk 341 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:42:24] Wrote chunk 1339
+INFO [2022-05-04 12:42:24] Starting chunk 1340 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:42:25] Wrote chunk 1129
+INFO [2022-05-04 12:42:25] Starting chunk 1130 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:42:25] Wrote chunk 917
+INFO [2022-05-04 12:42:25] Starting chunk 918 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:42:26] Wrote chunk 1340
+INFO [2022-05-04 12:42:26] Starting chunk 1341 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:42:27] Wrote chunk 1130
+INFO [2022-05-04 12:42:27] Starting chunk 1131 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:42:27] Wrote chunk 575
+INFO [2022-05-04 12:42:27] Starting chunk 576 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:42:27] Wrote chunk 918
+INFO [2022-05-04 12:42:27] Starting chunk 919 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:42:27] Wrote chunk 1341
+INFO [2022-05-04 12:42:27] Starting chunk 1342 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:42:28] Wrote chunk 112
+INFO [2022-05-04 12:42:28] Starting chunk 113 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:42:28] Wrote chunk 1131
+INFO [2022-05-04 12:42:28] Starting chunk 1132 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:42:29] Wrote chunk 341
+INFO [2022-05-04 12:42:29] Starting chunk 342 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:42:29] Wrote chunk 919
+INFO [2022-05-04 12:42:29] Starting chunk 920 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:42:29] Wrote chunk 1342
+INFO [2022-05-04 12:42:29] Starting chunk 1343 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:42:30] Wrote chunk 1132
+INFO [2022-05-04 12:42:30] Starting chunk 1133 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:42:31] Wrote chunk 576
+INFO [2022-05-04 12:42:31] Starting chunk 577 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:42:31] Wrote chunk 920
+INFO [2022-05-04 12:42:31] Starting chunk 921 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:42:32] Wrote chunk 1343
+INFO [2022-05-04 12:42:32] Starting chunk 1344 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:42:32] Wrote chunk 1133
+INFO [2022-05-04 12:42:32] Starting chunk 1134 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:42:33] Wrote chunk 113
+INFO [2022-05-04 12:42:33] Starting chunk 114 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:42:33] Wrote chunk 921
+INFO [2022-05-04 12:42:33] Starting chunk 922 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:42:33] Wrote chunk 1344
+INFO [2022-05-04 12:42:33] Starting chunk 1345 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:42:33] Wrote chunk 342
+INFO [2022-05-04 12:42:33] Starting chunk 343 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:42:34] Wrote chunk 1134
+INFO [2022-05-04 12:42:34] Starting chunk 1135 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:42:34] Wrote chunk 922
+INFO [2022-05-04 12:42:34] Starting chunk 923 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:42:35] Wrote chunk 1345
+INFO [2022-05-04 12:42:35] Starting chunk 1346 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:42:35] Wrote chunk 577
+INFO [2022-05-04 12:42:35] Starting chunk 578 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:42:36] Wrote chunk 1135
+INFO [2022-05-04 12:42:36] Starting chunk 1136 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:42:36] Wrote chunk 923
+INFO [2022-05-04 12:42:36] Starting chunk 924 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:42:37] Wrote chunk 1346
+INFO [2022-05-04 12:42:37] Starting chunk 1347 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:42:37] Wrote chunk 1136
+INFO [2022-05-04 12:42:37] Starting chunk 1137 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:42:37] Wrote chunk 114
+INFO [2022-05-04 12:42:37] Starting chunk 115 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:42:38] Wrote chunk 343
+INFO [2022-05-04 12:42:38] Starting chunk 344 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:42:38] Wrote chunk 924
+INFO [2022-05-04 12:42:38] Starting chunk 925 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:42:38] Wrote chunk 1347
+INFO [2022-05-04 12:42:38] Starting chunk 1348 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:42:39] Wrote chunk 578
+INFO [2022-05-04 12:42:39] Starting chunk 579 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:42:40] Wrote chunk 1137
+INFO [2022-05-04 12:42:40] Starting chunk 1138 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:42:40] Wrote chunk 1348
+INFO [2022-05-04 12:42:40] Starting chunk 1349 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:42:41] Wrote chunk 925
+INFO [2022-05-04 12:42:41] Starting chunk 926 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:42:42] Wrote chunk 1138
+INFO [2022-05-04 12:42:42] Starting chunk 1139 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:42:42] Wrote chunk 926
+INFO [2022-05-04 12:42:42] Starting chunk 927 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:42:42] Wrote chunk 344
+INFO [2022-05-04 12:42:42] Starting chunk 345 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:42:43] Wrote chunk 115
+INFO [2022-05-04 12:42:43] Starting chunk 116 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:42:43] Wrote chunk 1349
+INFO [2022-05-04 12:42:43] Starting chunk 1350 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:42:44] Wrote chunk 1139
+INFO [2022-05-04 12:42:44] Starting chunk 1140 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:42:44] Wrote chunk 579
+INFO [2022-05-04 12:42:44] Starting chunk 580 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:42:44] Wrote chunk 927
+INFO [2022-05-04 12:42:44] Starting chunk 928 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:42:45] Wrote chunk 1350
+INFO [2022-05-04 12:42:45] Starting chunk 1351 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:42:45] Wrote chunk 1140
+INFO [2022-05-04 12:42:45] Starting chunk 1141 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:42:46] Wrote chunk 928
+INFO [2022-05-04 12:42:46] Starting chunk 929 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:42:47] Wrote chunk 1351
+INFO [2022-05-04 12:42:47] Starting chunk 1352 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:42:47] Wrote chunk 345
+INFO [2022-05-04 12:42:47] Starting chunk 346 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:42:47] Wrote chunk 1141
+INFO [2022-05-04 12:42:47] Starting chunk 1142 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:42:48] Wrote chunk 116
+INFO [2022-05-04 12:42:48] Wrote chunk 929
+INFO [2022-05-04 12:42:48] Starting chunk 117 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:42:48] Starting chunk 930 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:42:49] Wrote chunk 1352
+INFO [2022-05-04 12:42:49] Starting chunk 1353 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:42:49] Wrote chunk 580
+INFO [2022-05-04 12:42:49] Starting chunk 581 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:42:49] Wrote chunk 1142
+INFO [2022-05-04 12:42:49] Starting chunk 1143 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:42:50] Wrote chunk 930
+INFO [2022-05-04 12:42:50] Starting chunk 931 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:42:50] Wrote chunk 1353
+INFO [2022-05-04 12:42:50] Starting chunk 1354 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:42:51] Wrote chunk 1143
+INFO [2022-05-04 12:42:51] Starting chunk 1144 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:42:51] Wrote chunk 931
+INFO [2022-05-04 12:42:51] Starting chunk 932 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:42:51] Wrote chunk 346
+INFO [2022-05-04 12:42:51] Starting chunk 347 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:42:52] Wrote chunk 1354
+INFO [2022-05-04 12:42:53] Starting chunk 1355 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:42:53] Wrote chunk 117
+INFO [2022-05-04 12:42:53] Starting chunk 118 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:42:53] Wrote chunk 1144
+INFO [2022-05-04 12:42:53] Starting chunk 1145 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:42:53] Wrote chunk 932
+INFO [2022-05-04 12:42:53] Starting chunk 933 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:42:53] Wrote chunk 581
+INFO [2022-05-04 12:42:53] Starting chunk 582 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:42:54] Wrote chunk 1355
+INFO [2022-05-04 12:42:54] Starting chunk 1356 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:42:55] Wrote chunk 1145
+INFO [2022-05-04 12:42:55] Starting chunk 1146 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:42:55] Wrote chunk 933
+INFO [2022-05-04 12:42:55] Starting chunk 934 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:42:56] Wrote chunk 347
+INFO [2022-05-04 12:42:56] Starting chunk 348 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:42:56] Wrote chunk 1356
+INFO [2022-05-04 12:42:56] Starting chunk 1357 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:42:56] Wrote chunk 1146
+INFO [2022-05-04 12:42:56] Starting chunk 1147 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:42:57] Wrote chunk 934
+INFO [2022-05-04 12:42:57] Starting chunk 935 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:42:57] Wrote chunk 118
+INFO [2022-05-04 12:42:57] Starting chunk 119 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:42:58] Wrote chunk 1357
+INFO [2022-05-04 12:42:58] Starting chunk 1358 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:42:58] Wrote chunk 582
+INFO [2022-05-04 12:42:58] Starting chunk 583 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:42:58] Wrote chunk 1147
+INFO [2022-05-04 12:42:58] Starting chunk 1148 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:42:59] Wrote chunk 935
+INFO [2022-05-04 12:42:59] Starting chunk 936 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:42:59] Wrote chunk 1358
+INFO [2022-05-04 12:42:59] Starting chunk 1359 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:43:00] Wrote chunk 348
+INFO [2022-05-04 12:43:00] Starting chunk 349 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:43:00] Wrote chunk 1148
+INFO [2022-05-04 12:43:01] Starting chunk 1149 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:43:01] Wrote chunk 936
+INFO [2022-05-04 12:43:01] Starting chunk 937 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:43:01] Wrote chunk 1359
+INFO [2022-05-04 12:43:01] Starting chunk 1360 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:43:02] Wrote chunk 583
+INFO [2022-05-04 12:43:02] Starting chunk 584 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:43:03] Wrote chunk 119
+INFO [2022-05-04 12:43:03] Starting chunk 120 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:43:03] Wrote chunk 937
+INFO [2022-05-04 12:43:03] Starting chunk 938 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:43:03] Wrote chunk 1360
+INFO [2022-05-04 12:43:03] Starting chunk 1361 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:43:03] Wrote chunk 1149
+INFO [2022-05-04 12:43:03] Starting chunk 1150 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:43:04] Wrote chunk 349
+INFO [2022-05-04 12:43:04] Starting chunk 350 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:43:05] Wrote chunk 938
+INFO [2022-05-04 12:43:05] Starting chunk 939 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:43:05] Wrote chunk 1361
+INFO [2022-05-04 12:43:05] Starting chunk 1362 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:43:06] Wrote chunk 1150
+INFO [2022-05-04 12:43:06] Starting chunk 1151 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:43:06] Wrote chunk 939
+INFO [2022-05-04 12:43:06] Starting chunk 940 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:43:06] Wrote chunk 584
+INFO [2022-05-04 12:43:06] Starting chunk 585 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:43:07] Wrote chunk 1362
+INFO [2022-05-04 12:43:07] Starting chunk 1363 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:43:08] Wrote chunk 120
+INFO [2022-05-04 12:43:08] Starting chunk 121 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:43:08] Wrote chunk 1151
+INFO [2022-05-04 12:43:08] Starting chunk 1152 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:43:08] Wrote chunk 940
+INFO [2022-05-04 12:43:08] Starting chunk 941 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:43:09] Wrote chunk 1363
+INFO [2022-05-04 12:43:09] Starting chunk 1364 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:43:09] Wrote chunk 350
+INFO [2022-05-04 12:43:09] Starting chunk 351 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:43:10] Wrote chunk 1152
+INFO [2022-05-04 12:43:10] Starting chunk 1153 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:43:10] Wrote chunk 941
+INFO [2022-05-04 12:43:10] Starting chunk 942 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:43:10] Wrote chunk 585
+INFO [2022-05-04 12:43:10] Starting chunk 586 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:43:11] Wrote chunk 1364
+INFO [2022-05-04 12:43:11] Starting chunk 1365 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:43:11] Wrote chunk 1153
+INFO [2022-05-04 12:43:12] Starting chunk 1154 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:43:12] Wrote chunk 942
+INFO [2022-05-04 12:43:12] Starting chunk 943 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:43:12] Wrote chunk 121
+INFO [2022-05-04 12:43:12] Starting chunk 122 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:43:13] Wrote chunk 1365
+INFO [2022-05-04 12:43:13] Starting chunk 1366 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:43:13] Wrote chunk 351
+INFO [2022-05-04 12:43:13] Starting chunk 352 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:43:13] Wrote chunk 1154
+INFO [2022-05-04 12:43:13] Starting chunk 1155 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:43:14] Wrote chunk 943
+INFO [2022-05-04 12:43:14] Starting chunk 944 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:43:14] Wrote chunk 1366
+INFO [2022-05-04 12:43:14] Starting chunk 1367 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:43:15] Wrote chunk 586
+INFO [2022-05-04 12:43:15] Starting chunk 587 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:43:15] Wrote chunk 1155
+INFO [2022-05-04 12:43:15] Starting chunk 1156 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:43:16] Wrote chunk 944
+INFO [2022-05-04 12:43:16] Starting chunk 945 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:43:16] Wrote chunk 1367
+INFO [2022-05-04 12:43:16] Starting chunk 1368 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:43:17] Wrote chunk 122
+INFO [2022-05-04 12:43:17] Starting chunk 123 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:43:17] Wrote chunk 1156
+INFO [2022-05-04 12:43:17] Starting chunk 1157 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:43:18] Wrote chunk 352
+INFO [2022-05-04 12:43:18] Starting chunk 353 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:43:18] Wrote chunk 945
+INFO [2022-05-04 12:43:18] Starting chunk 946 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:43:18] Wrote chunk 1368
+INFO [2022-05-04 12:43:18] Starting chunk 1369 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:43:19] Wrote chunk 1157
+INFO [2022-05-04 12:43:19] Starting chunk 1158 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:43:19] Wrote chunk 587
+INFO [2022-05-04 12:43:19] Starting chunk 588 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:43:19] Wrote chunk 946
+INFO [2022-05-04 12:43:19] Starting chunk 947 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:43:20] Wrote chunk 1369
+INFO [2022-05-04 12:43:20] Starting chunk 1370 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:43:21] Wrote chunk 1158
+INFO [2022-05-04 12:43:21] Starting chunk 1159 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:43:21] Wrote chunk 123
+INFO [2022-05-04 12:43:21] Starting chunk 124 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:43:22] Wrote chunk 1370
+INFO [2022-05-04 12:43:22] Starting chunk 1371 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:43:22] Wrote chunk 947
+INFO [2022-05-04 12:43:22] Starting chunk 948 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:43:22] Wrote chunk 1159
+INFO [2022-05-04 12:43:22] Starting chunk 1160 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:43:23] Wrote chunk 353
+INFO [2022-05-04 12:43:23] Starting chunk 354 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:43:23] Wrote chunk 588
+INFO [2022-05-04 12:43:23] Starting chunk 589 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:43:24] Wrote chunk 1371
+INFO [2022-05-04 12:43:24] Starting chunk 1372 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:43:24] Wrote chunk 948
+INFO [2022-05-04 12:43:24] Starting chunk 949 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:43:24] Wrote chunk 1160
+INFO [2022-05-04 12:43:25] Starting chunk 1161 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:43:25] Wrote chunk 949
+INFO [2022-05-04 12:43:25] Starting chunk 950 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:43:26] Wrote chunk 1372
+INFO [2022-05-04 12:43:26] Starting chunk 1373 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:43:26] Wrote chunk 124
+INFO [2022-05-04 12:43:26] Starting chunk 125 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:43:27] Wrote chunk 1161
+INFO [2022-05-04 12:43:27] Starting chunk 1162 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:43:27] Wrote chunk 950
+INFO [2022-05-04 12:43:27] Wrote chunk 1373
+INFO [2022-05-04 12:43:27] Wrote chunk 589
+INFO [2022-05-04 12:43:27] Starting chunk 590 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:43:27] Starting chunk 1374 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:43:27] Wrote chunk 354
+INFO [2022-05-04 12:43:27] Starting chunk 355 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:43:28] Wrote chunk 1162
+INFO [2022-05-04 12:43:28] Starting chunk 1163 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:43:30] Wrote chunk 1374
+INFO [2022-05-04 12:43:30] Starting chunk 1375 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:43:30] Wrote chunk 1163
+INFO [2022-05-04 12:43:30] Starting chunk 1164 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:43:30] Wrote chunk 125
+INFO [2022-05-04 12:43:30] Starting chunk 126 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:43:31] Wrote chunk 590
+INFO [2022-05-04 12:43:31] Starting chunk 591 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:43:31] Wrote chunk 1375
+INFO [2022-05-04 12:43:31] Starting chunk 1376 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:43:31] Wrote chunk 355
+INFO [2022-05-04 12:43:31] Starting chunk 356 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:43:32] Wrote chunk 1164
+INFO [2022-05-04 12:43:32] Starting chunk 1165 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:43:32] Wrote chunk 1376
+INFO [2022-05-04 12:43:33] Starting chunk 1377 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:43:33] Wrote chunk 1165
+INFO [2022-05-04 12:43:33] Starting chunk 1166 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:43:34] Wrote chunk 1377
+INFO [2022-05-04 12:43:34] Starting chunk 1378 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:43:34] Wrote chunk 126
+INFO [2022-05-04 12:43:34] Starting chunk 127 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:43:34] Wrote chunk 591
+INFO [2022-05-04 12:43:34] Starting chunk 592 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:43:35] Wrote chunk 1166
+INFO [2022-05-04 12:43:35] Starting chunk 1167 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:43:35] Wrote chunk 1378
+INFO [2022-05-04 12:43:35] Starting chunk 1379 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:43:35] Wrote chunk 356
+INFO [2022-05-04 12:43:35] Starting chunk 357 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:43:36] Wrote chunk 1167
+INFO [2022-05-04 12:43:36] Starting chunk 1168 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:43:37] Wrote chunk 1379
+INFO [2022-05-04 12:43:37] Starting chunk 1380 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:43:38] Wrote chunk 1168
+INFO [2022-05-04 12:43:38] Starting chunk 1169 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:43:38] Wrote chunk 127
+INFO [2022-05-04 12:43:38] Starting chunk 128 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:43:39] Wrote chunk 1380
+INFO [2022-05-04 12:43:39] Starting chunk 1381 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:43:39] Wrote chunk 1169
+INFO [2022-05-04 12:43:39] Starting chunk 1170 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:43:39] Wrote chunk 357
+INFO [2022-05-04 12:43:39] Starting chunk 358 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:43:40] Wrote chunk 1381
+INFO [2022-05-04 12:43:40] Starting chunk 1382 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:43:41] Wrote chunk 1170
+INFO [2022-05-04 12:43:41] Wrote chunk 592
+INFO [2022-05-04 12:43:41] Starting chunk 1171 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:43:41] Starting chunk 593 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:43:41] Wrote chunk 1382
+INFO [2022-05-04 12:43:41] Starting chunk 1383 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:43:42] Wrote chunk 1171
+INFO [2022-05-04 12:43:42] Starting chunk 1172 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:43:42] Wrote chunk 128
+INFO [2022-05-04 12:43:42] Starting chunk 129 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:43:43] Wrote chunk 358
+INFO [2022-05-04 12:43:43] Starting chunk 359 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:43:43] Wrote chunk 1383
+INFO [2022-05-04 12:43:43] Starting chunk 1384 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:43:44] Wrote chunk 1172
+INFO [2022-05-04 12:43:44] Starting chunk 1173 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:43:44] Wrote chunk 1384
+INFO [2022-05-04 12:43:44] Starting chunk 1385 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:43:44] Wrote chunk 593
+INFO [2022-05-04 12:43:44] Starting chunk 594 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:43:45] Wrote chunk 1385
+INFO [2022-05-04 12:43:45] Starting chunk 1386 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:43:46] Wrote chunk 359
+INFO [2022-05-04 12:43:46] Starting chunk 360 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:43:46] Wrote chunk 1173
+INFO [2022-05-04 12:43:46] Starting chunk 1174 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:43:46] Wrote chunk 129
+INFO [2022-05-04 12:43:46] Starting chunk 130 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:43:47] Wrote chunk 1386
+INFO [2022-05-04 12:43:47] Starting chunk 1387 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:43:47] Wrote chunk 1174
+INFO [2022-05-04 12:43:47] Starting chunk 1175 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:43:48] Wrote chunk 594
+INFO [2022-05-04 12:43:48] Starting chunk 595 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:43:49] Wrote chunk 1175
+INFO [2022-05-04 12:43:49] Starting chunk 1176 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:43:49] Wrote chunk 1387
+INFO [2022-05-04 12:43:49] Starting chunk 1388 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:43:50] Wrote chunk 360
+INFO [2022-05-04 12:43:50] Starting chunk 361 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:43:50] Wrote chunk 1176
+INFO [2022-05-04 12:43:50] Starting chunk 1177 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:43:51] Wrote chunk 1388
+INFO [2022-05-04 12:43:51] Starting chunk 1389 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:43:51] Wrote chunk 130
+INFO [2022-05-04 12:43:52] Starting chunk 131 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:43:52] Wrote chunk 1389
+INFO [2022-05-04 12:43:52] Starting chunk 1390 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:43:52] Wrote chunk 1177
+INFO [2022-05-04 12:43:52] Starting chunk 1178 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:43:53] Wrote chunk 595
+INFO [2022-05-04 12:43:53] Starting chunk 596 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:43:53] Wrote chunk 361
+INFO [2022-05-04 12:43:53] Starting chunk 362 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:43:54] Wrote chunk 1390
+INFO [2022-05-04 12:43:54] Starting chunk 1391 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:43:54] Wrote chunk 1178
+INFO [2022-05-04 12:43:54] Starting chunk 1179 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:43:55] Wrote chunk 1179
+INFO [2022-05-04 12:43:55] Starting chunk 1180 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:43:56] Wrote chunk 1391
+INFO [2022-05-04 12:43:56] Starting chunk 1392 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:43:56] Wrote chunk 131
+INFO [2022-05-04 12:43:56] Starting chunk 132 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:43:56] Wrote chunk 596
+INFO [2022-05-04 12:43:56] Starting chunk 597 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:43:57] Wrote chunk 362
+INFO [2022-05-04 12:43:57] Starting chunk 363 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:43:57] Wrote chunk 1392
+INFO [2022-05-04 12:43:57] Starting chunk 1393 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:43:57] Wrote chunk 1180
+INFO [2022-05-04 12:43:57] Starting chunk 1181 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:43:58] Wrote chunk 1393
+INFO [2022-05-04 12:43:58] Starting chunk 1394 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:43:58] Wrote chunk 1181
+INFO [2022-05-04 12:43:58] Starting chunk 1182 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:43:59] Wrote chunk 1182
+INFO [2022-05-04 12:43:59] Starting chunk 1183 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:44:00] Wrote chunk 1394
+INFO [2022-05-04 12:44:00] Starting chunk 1395 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:44:00] Wrote chunk 132
+INFO [2022-05-04 12:44:00] Starting chunk 133 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:44:00] Wrote chunk 363
+INFO [2022-05-04 12:44:00] Starting chunk 364 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:44:00] Wrote chunk 597
+INFO [2022-05-04 12:44:00] Starting chunk 598 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:44:01] Wrote chunk 1183
+INFO [2022-05-04 12:44:01] Starting chunk 1184 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:44:01] Wrote chunk 1395
+INFO [2022-05-04 12:44:01] Starting chunk 1396 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:44:02] Wrote chunk 1396
+INFO [2022-05-04 12:44:02] Starting chunk 1397 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:44:03] Wrote chunk 1184
+INFO [2022-05-04 12:44:03] Starting chunk 1185 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:44:04] Wrote chunk 1397
+INFO [2022-05-04 12:44:04] Starting chunk 1398 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:44:04] Wrote chunk 133
+INFO [2022-05-04 12:44:04] Starting chunk 134 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:44:04] Wrote chunk 364
+INFO [2022-05-04 12:44:04] Starting chunk 365 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:44:04] Wrote chunk 1185
+INFO [2022-05-04 12:44:04] Starting chunk 1186 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:44:04] Wrote chunk 598
+INFO [2022-05-04 12:44:04] Starting chunk 599 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:44:05] Wrote chunk 1186
+INFO [2022-05-04 12:44:05] Starting chunk 1187 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:44:06] Wrote chunk 1398
+INFO [2022-05-04 12:44:06] Starting chunk 1399 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:44:07] Wrote chunk 1187
+INFO [2022-05-04 12:44:07] Starting chunk 1188 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:44:08] Wrote chunk 599
+INFO [2022-05-04 12:44:08] Starting chunk 600 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:44:08] Wrote chunk 1399
+INFO [2022-05-04 12:44:08] Starting chunk 1400 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:44:08] Wrote chunk 365
+INFO [2022-05-04 12:44:08] Starting chunk 366 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:44:08] Wrote chunk 1188
+INFO [2022-05-04 12:44:08] Wrote chunk 134
+INFO [2022-05-04 12:44:08] Starting chunk 135 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:44:09] Wrote chunk 1400
+INFO [2022-05-04 12:44:09] Starting chunk 1401 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:44:10] Wrote chunk 1401
+INFO [2022-05-04 12:44:10] Starting chunk 1402 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:44:11] Wrote chunk 600
+INFO [2022-05-04 12:44:11] Starting chunk 601 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:44:11] Wrote chunk 366
+INFO [2022-05-04 12:44:11] Starting chunk 367 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:44:11] Wrote chunk 1402
+INFO [2022-05-04 12:44:11] Starting chunk 1403 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:44:12] Wrote chunk 135
+INFO [2022-05-04 12:44:12] Starting chunk 136 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:44:13] Wrote chunk 1403
+INFO [2022-05-04 12:44:13] Starting chunk 1404 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:44:14] Wrote chunk 1404
+INFO [2022-05-04 12:44:14] Starting chunk 1405 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:44:14] Wrote chunk 367
+INFO [2022-05-04 12:44:14] Starting chunk 368 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:44:15] Wrote chunk 601
+INFO [2022-05-04 12:44:15] Starting chunk 602 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:44:15] Wrote chunk 1405
+INFO [2022-05-04 12:44:15] Starting chunk 1406 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:44:16] Wrote chunk 136
+INFO [2022-05-04 12:44:16] Starting chunk 137 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:44:16] Wrote chunk 1406
+INFO [2022-05-04 12:44:16] Starting chunk 1407 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:44:17] Wrote chunk 368
+INFO [2022-05-04 12:44:17] Starting chunk 369 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:44:17] Wrote chunk 1407
+INFO [2022-05-04 12:44:17] Starting chunk 1408 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:44:18] Wrote chunk 602
+INFO [2022-05-04 12:44:18] Starting chunk 603 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:44:18] Wrote chunk 1408
+INFO [2022-05-04 12:44:18] Starting chunk 1409 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:44:19] Wrote chunk 137
+INFO [2022-05-04 12:44:19] Starting chunk 138 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:44:20] Wrote chunk 1409
+INFO [2022-05-04 12:44:20] Starting chunk 1410 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:44:21] Wrote chunk 603
+INFO [2022-05-04 12:44:21] Starting chunk 604 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:44:21] Wrote chunk 369
+INFO [2022-05-04 12:44:21] Starting chunk 370 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:44:21] Wrote chunk 1410
+INFO [2022-05-04 12:44:21] Starting chunk 1411 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:44:22] Wrote chunk 1411
+INFO [2022-05-04 12:44:22] Wrote chunk 138
+INFO [2022-05-04 12:44:22] Starting chunk 139 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:44:23] Starting chunk 1412 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:44:24] Wrote chunk 604
+INFO [2022-05-04 12:44:24] Starting chunk 605 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:44:24] Wrote chunk 370
+INFO [2022-05-04 12:44:24] Wrote chunk 1412
+INFO [2022-05-04 12:44:24] Starting chunk 371 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:44:24] Starting chunk 1413 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:44:26] Wrote chunk 1413
+INFO [2022-05-04 12:44:26] Starting chunk 1414 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:44:26] Wrote chunk 139
+INFO [2022-05-04 12:44:26] Starting chunk 140 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:44:27] Wrote chunk 1414
+INFO [2022-05-04 12:44:27] Starting chunk 1415 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:44:27] Wrote chunk 605
+INFO [2022-05-04 12:44:27] Starting chunk 606 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:44:27] Wrote chunk 371
+INFO [2022-05-04 12:44:27] Starting chunk 372 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:44:28] Wrote chunk 1415
+INFO [2022-05-04 12:44:28] Starting chunk 1416 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:44:29] Wrote chunk 1416
+INFO [2022-05-04 12:44:29] Starting chunk 1417 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:44:29] Wrote chunk 140
+INFO [2022-05-04 12:44:29] Starting chunk 141 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:44:30] Wrote chunk 606
+INFO [2022-05-04 12:44:30] Starting chunk 607 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:44:30] Wrote chunk 1417
+INFO [2022-05-04 12:44:30] Starting chunk 1418 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:44:30] Wrote chunk 372
+INFO [2022-05-04 12:44:30] Starting chunk 373 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:44:31] Wrote chunk 1418
+INFO [2022-05-04 12:44:32] Starting chunk 1419 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:44:33] Wrote chunk 1419
+INFO [2022-05-04 12:44:33] Starting chunk 1420 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:44:33] Wrote chunk 141
+INFO [2022-05-04 12:44:33] Starting chunk 142 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:44:34] Wrote chunk 1420
+INFO [2022-05-04 12:44:34] Starting chunk 1421 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:44:34] Wrote chunk 373
+INFO [2022-05-04 12:44:34] Starting chunk 374 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:44:34] Wrote chunk 607
+INFO [2022-05-04 12:44:34] Starting chunk 608 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:44:35] Wrote chunk 1421
+INFO [2022-05-04 12:44:35] Starting chunk 1422 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:44:37] Wrote chunk 1422
+INFO [2022-05-04 12:44:37] Starting chunk 1423 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:44:37] Wrote chunk 142
+INFO [2022-05-04 12:44:37] Starting chunk 143 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:44:37] Wrote chunk 374
+INFO [2022-05-04 12:44:37] Starting chunk 375 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:44:38] Wrote chunk 608
+INFO [2022-05-04 12:44:38] Starting chunk 609 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:44:38] Wrote chunk 1423
+INFO [2022-05-04 12:44:38] Starting chunk 1424 of 677 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:44:39] Wrote chunk 1424
+INFO [2022-05-04 12:44:39] Starting chunk 0 of 1 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:44:39] Wrote chunk 0
+INFO [2022-05-04 12:44:40] Wrote chunk 375
+INFO [2022-05-04 12:44:40] Starting chunk 376 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:44:40] Wrote chunk 143
+INFO [2022-05-04 12:44:40] Starting chunk 144 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:44:40] Wrote chunk 609
+INFO [2022-05-04 12:44:40] Starting chunk 610 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:44:43] Wrote chunk 376
+INFO [2022-05-04 12:44:43] Starting chunk 377 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:44:43] Wrote chunk 610
+INFO [2022-05-04 12:44:43] Starting chunk 611 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:44:43] Wrote chunk 144
+INFO [2022-05-04 12:44:43] Starting chunk 145 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:44:45] Wrote chunk 377
+INFO [2022-05-04 12:44:45] Starting chunk 378 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:44:46] Wrote chunk 611
+INFO [2022-05-04 12:44:46] Starting chunk 612 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:44:46] Wrote chunk 145
+INFO [2022-05-04 12:44:47] Starting chunk 146 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:44:48] Wrote chunk 378
+INFO [2022-05-04 12:44:48] Starting chunk 379 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:44:48] Wrote chunk 612
+INFO [2022-05-04 12:44:48] Starting chunk 613 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:44:50] Wrote chunk 146
+INFO [2022-05-04 12:44:50] Starting chunk 147 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:44:51] Wrote chunk 379
+INFO [2022-05-04 12:44:51] Starting chunk 380 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:44:51] Wrote chunk 613
+INFO [2022-05-04 12:44:51] Starting chunk 614 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:44:52] Wrote chunk 147
+INFO [2022-05-04 12:44:52] Starting chunk 148 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:44:53] Wrote chunk 380
+INFO [2022-05-04 12:44:53] Starting chunk 381 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:44:53] Wrote chunk 614
+INFO [2022-05-04 12:44:53] Starting chunk 615 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:44:56] Wrote chunk 148
+INFO [2022-05-04 12:44:56] Starting chunk 149 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:44:56] Wrote chunk 381
+INFO [2022-05-04 12:44:56] Starting chunk 382 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:44:56] Wrote chunk 615
+INFO [2022-05-04 12:44:56] Starting chunk 616 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:44:58] Wrote chunk 382
+INFO [2022-05-04 12:44:58] Starting chunk 383 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:44:58] Wrote chunk 149
+INFO [2022-05-04 12:44:58] Starting chunk 150 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:44:59] Wrote chunk 616
+INFO [2022-05-04 12:44:59] Starting chunk 617 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:45:01] Wrote chunk 383
+INFO [2022-05-04 12:45:01] Starting chunk 384 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:45:01] Wrote chunk 150
+INFO [2022-05-04 12:45:01] Starting chunk 151 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:45:02] Wrote chunk 617
+INFO [2022-05-04 12:45:02] Starting chunk 618 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:45:04] Wrote chunk 384
+INFO [2022-05-04 12:45:04] Wrote chunk 618
+INFO [2022-05-04 12:45:04] Starting chunk 619 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:45:04] Starting chunk 385 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:45:04] Wrote chunk 151
+INFO [2022-05-04 12:45:04] Starting chunk 152 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:45:07] Wrote chunk 619
+INFO [2022-05-04 12:45:07] Starting chunk 620 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:45:07] Wrote chunk 385
+INFO [2022-05-04 12:45:07] Starting chunk 386 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:45:07] Wrote chunk 152
+INFO [2022-05-04 12:45:07] Starting chunk 153 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:45:09] Wrote chunk 620
+INFO [2022-05-04 12:45:09] Starting chunk 621 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:45:09] Wrote chunk 386
+INFO [2022-05-04 12:45:09] Starting chunk 387 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:45:10] Wrote chunk 153
+INFO [2022-05-04 12:45:10] Starting chunk 154 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:45:12] Wrote chunk 387
+INFO [2022-05-04 12:45:12] Starting chunk 388 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:45:12] Wrote chunk 621
+INFO [2022-05-04 12:45:12] Starting chunk 622 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:45:13] Wrote chunk 154
+INFO [2022-05-04 12:45:13] Starting chunk 155 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:45:14] Wrote chunk 388
+INFO [2022-05-04 12:45:14] Starting chunk 389 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:45:15] Wrote chunk 622
+INFO [2022-05-04 12:45:15] Starting chunk 623 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:45:16] Wrote chunk 155
+INFO [2022-05-04 12:45:16] Starting chunk 156 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:45:17] Wrote chunk 389
+INFO [2022-05-04 12:45:17] Starting chunk 390 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:45:17] Wrote chunk 623
+INFO [2022-05-04 12:45:17] Starting chunk 624 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:45:19] Wrote chunk 156
+INFO [2022-05-04 12:45:19] Starting chunk 157 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:45:20] Wrote chunk 390
+INFO [2022-05-04 12:45:20] Starting chunk 391 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:45:20] Wrote chunk 624
+INFO [2022-05-04 12:45:20] Starting chunk 625 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:45:21] Wrote chunk 157
+INFO [2022-05-04 12:45:21] Starting chunk 158 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:45:22] Wrote chunk 391
+INFO [2022-05-04 12:45:22] Starting chunk 392 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:45:22] Wrote chunk 625
+INFO [2022-05-04 12:45:22] Starting chunk 626 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:45:24] Wrote chunk 158
+INFO [2022-05-04 12:45:24] Starting chunk 159 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:45:25] Wrote chunk 392
+INFO [2022-05-04 12:45:25] Starting chunk 393 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:45:25] Wrote chunk 626
+INFO [2022-05-04 12:45:25] Starting chunk 627 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:45:27] Wrote chunk 159
+INFO [2022-05-04 12:45:27] Starting chunk 160 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:45:27] Wrote chunk 393
+INFO [2022-05-04 12:45:27] Starting chunk 394 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:45:28] Wrote chunk 627
+INFO [2022-05-04 12:45:28] Starting chunk 628 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:45:30] Wrote chunk 394
+INFO [2022-05-04 12:45:30] Starting chunk 395 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:45:30] Wrote chunk 628
+INFO [2022-05-04 12:45:30] Starting chunk 629 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:45:31] Wrote chunk 160
+INFO [2022-05-04 12:45:31] Starting chunk 161 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:45:33] Wrote chunk 629
+INFO [2022-05-04 12:45:33] Starting chunk 630 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:45:33] Wrote chunk 395
+INFO [2022-05-04 12:45:33] Starting chunk 396 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:45:34] Wrote chunk 161
+INFO [2022-05-04 12:45:34] Starting chunk 162 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:45:35] Wrote chunk 630
+INFO [2022-05-04 12:45:35] Starting chunk 631 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:45:35] Wrote chunk 396
+INFO [2022-05-04 12:45:35] Starting chunk 397 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:45:37] Wrote chunk 162
+INFO [2022-05-04 12:45:37] Starting chunk 163 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:45:38] Wrote chunk 631
+INFO [2022-05-04 12:45:38] Starting chunk 632 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:45:38] Wrote chunk 397
+INFO [2022-05-04 12:45:38] Starting chunk 398 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:45:40] Wrote chunk 163
+INFO [2022-05-04 12:45:40] Starting chunk 164 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:45:40] Wrote chunk 632
+INFO [2022-05-04 12:45:40] Starting chunk 633 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:45:40] Wrote chunk 398
+INFO [2022-05-04 12:45:40] Starting chunk 399 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:45:42] Wrote chunk 164
+INFO [2022-05-04 12:45:42] Starting chunk 165 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:45:43] Wrote chunk 633
+INFO [2022-05-04 12:45:43] Starting chunk 634 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:45:44] Wrote chunk 399
+INFO [2022-05-04 12:45:44] Starting chunk 400 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:45:45] Wrote chunk 165
+INFO [2022-05-04 12:45:45] Starting chunk 166 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:45:46] Wrote chunk 634
+INFO [2022-05-04 12:45:46] Starting chunk 635 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:45:46] Wrote chunk 400
+INFO [2022-05-04 12:45:46] Starting chunk 401 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:45:48] Wrote chunk 166
+INFO [2022-05-04 12:45:48] Starting chunk 167 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:45:48] Wrote chunk 635
+INFO [2022-05-04 12:45:48] Starting chunk 636 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:45:49] Wrote chunk 401
+INFO [2022-05-04 12:45:49] Starting chunk 402 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:45:51] Wrote chunk 402
+INFO [2022-05-04 12:45:51] Starting chunk 403 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:45:51] Wrote chunk 636
+INFO [2022-05-04 12:45:51] Starting chunk 637 of 1530 lines for file en_US.news.txt
+INFO [2022-05-04 12:45:51] Wrote chunk 167
+INFO [2022-05-04 12:45:51] Starting chunk 168 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:45:53] Wrote chunk 637
+INFO [2022-05-04 12:45:53] Starting chunk 637 of 1470 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:45:53] Wrote chunk 637
+INFO [2022-05-04 12:45:53] Starting chunk 638 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:45:54] Wrote chunk 403
+INFO [2022-05-04 12:45:54] Starting chunk 404 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:45:54] Wrote chunk 638
+INFO [2022-05-04 12:45:54] Starting chunk 639 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:45:54] Wrote chunk 168
+INFO [2022-05-04 12:45:54] Starting chunk 169 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:45:55] Wrote chunk 639
+INFO [2022-05-04 12:45:55] Starting chunk 640 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:45:56] Wrote chunk 640
+INFO [2022-05-04 12:45:56] Starting chunk 641 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:45:56] Wrote chunk 404
+INFO [2022-05-04 12:45:56] Starting chunk 405 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:45:57] Wrote chunk 641
+INFO [2022-05-04 12:45:57] Starting chunk 642 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:45:57] Wrote chunk 169
+INFO [2022-05-04 12:45:57] Starting chunk 170 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:45:58] Wrote chunk 642
+INFO [2022-05-04 12:45:58] Starting chunk 643 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:45:58] Wrote chunk 643
+INFO [2022-05-04 12:45:58] Starting chunk 644 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:45:59] Wrote chunk 405
+INFO [2022-05-04 12:45:59] Starting chunk 406 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:45:59] Wrote chunk 644
+INFO [2022-05-04 12:45:59] Starting chunk 645 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:46:00] Wrote chunk 170
+INFO [2022-05-04 12:46:00] Starting chunk 171 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:46:00] Wrote chunk 645
+INFO [2022-05-04 12:46:00] Starting chunk 646 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:46:01] Wrote chunk 646
+INFO [2022-05-04 12:46:01] Starting chunk 647 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:46:01] Wrote chunk 406
+INFO [2022-05-04 12:46:01] Starting chunk 407 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:46:02] Wrote chunk 647
+INFO [2022-05-04 12:46:02] Starting chunk 648 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:46:02] Wrote chunk 171
+INFO [2022-05-04 12:46:02] Starting chunk 172 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:46:03] Wrote chunk 648
+INFO [2022-05-04 12:46:03] Starting chunk 649 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:46:03] Wrote chunk 407
+INFO [2022-05-04 12:46:03] Starting chunk 408 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:46:03] Wrote chunk 649
+INFO [2022-05-04 12:46:03] Starting chunk 650 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:46:04] Wrote chunk 650
+INFO [2022-05-04 12:46:04] Starting chunk 651 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:46:04] Wrote chunk 172
+INFO [2022-05-04 12:46:04] Starting chunk 173 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:46:05] Wrote chunk 651
+INFO [2022-05-04 12:46:05] Starting chunk 652 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:46:05] Wrote chunk 408
+INFO [2022-05-04 12:46:05] Starting chunk 409 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:46:06] Wrote chunk 652
+INFO [2022-05-04 12:46:06] Starting chunk 653 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:46:07] Wrote chunk 653
+INFO [2022-05-04 12:46:07] Starting chunk 654 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:46:07] Wrote chunk 173
+INFO [2022-05-04 12:46:07] Starting chunk 174 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:46:07] Wrote chunk 409
+INFO [2022-05-04 12:46:07] Starting chunk 410 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:46:08] Wrote chunk 654
+INFO [2022-05-04 12:46:08] Starting chunk 655 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:46:08] Wrote chunk 655
+INFO [2022-05-04 12:46:08] Starting chunk 656 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:46:09] Wrote chunk 656
+INFO [2022-05-04 12:46:09] Starting chunk 657 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:46:09] Wrote chunk 410
+INFO [2022-05-04 12:46:09] Starting chunk 411 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:46:10] Wrote chunk 657
+INFO [2022-05-04 12:46:10] Starting chunk 658 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:46:10] Wrote chunk 174
+INFO [2022-05-04 12:46:10] Starting chunk 175 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:46:11] Wrote chunk 658
+INFO [2022-05-04 12:46:11] Starting chunk 659 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:46:11] Wrote chunk 659
+INFO [2022-05-04 12:46:11] Starting chunk 660 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:46:12] Wrote chunk 411
+INFO [2022-05-04 12:46:12] Starting chunk 412 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:46:12] Wrote chunk 175
+INFO [2022-05-04 12:46:12] Starting chunk 176 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:46:13] Wrote chunk 660
+INFO [2022-05-04 12:46:13] Starting chunk 661 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:46:13] Wrote chunk 661
+INFO [2022-05-04 12:46:13] Starting chunk 662 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:46:14] Wrote chunk 412
+INFO [2022-05-04 12:46:14] Starting chunk 413 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:46:14] Wrote chunk 662
+INFO [2022-05-04 12:46:14] Starting chunk 663 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:46:15] Wrote chunk 176
+INFO [2022-05-04 12:46:15] Starting chunk 177 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:46:15] Wrote chunk 663
+INFO [2022-05-04 12:46:15] Starting chunk 664 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:46:16] Wrote chunk 664
+INFO [2022-05-04 12:46:16] Starting chunk 665 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:46:16] Wrote chunk 413
+INFO [2022-05-04 12:46:16] Starting chunk 414 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:46:16] Wrote chunk 665
+INFO [2022-05-04 12:46:16] Starting chunk 666 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:46:17] Wrote chunk 177
+INFO [2022-05-04 12:46:17] Starting chunk 178 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:46:17] Wrote chunk 666
+INFO [2022-05-04 12:46:17] Starting chunk 667 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:46:18] Wrote chunk 667
+INFO [2022-05-04 12:46:18] Starting chunk 668 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:46:19] Wrote chunk 414
+INFO [2022-05-04 12:46:19] Starting chunk 415 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:46:19] Wrote chunk 668
+INFO [2022-05-04 12:46:19] Starting chunk 669 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:46:19] Wrote chunk 178
+INFO [2022-05-04 12:46:19] Starting chunk 179 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:46:19] Wrote chunk 669
+INFO [2022-05-04 12:46:19] Starting chunk 670 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:46:20] Wrote chunk 670
+INFO [2022-05-04 12:46:20] Starting chunk 671 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:46:21] Wrote chunk 415
+INFO [2022-05-04 12:46:21] Starting chunk 416 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:46:21] Wrote chunk 671
+INFO [2022-05-04 12:46:21] Starting chunk 672 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:46:22] Wrote chunk 179
+INFO [2022-05-04 12:46:22] Starting chunk 180 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:46:22] Wrote chunk 672
+INFO [2022-05-04 12:46:22] Starting chunk 673 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:46:23] Wrote chunk 416
+INFO [2022-05-04 12:46:23] Starting chunk 417 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:46:23] Wrote chunk 673
+INFO [2022-05-04 12:46:23] Starting chunk 674 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:46:24] Wrote chunk 674
+INFO [2022-05-04 12:46:24] Starting chunk 675 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:46:24] Wrote chunk 180
+INFO [2022-05-04 12:46:24] Starting chunk 181 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:46:25] Wrote chunk 675
+INFO [2022-05-04 12:46:25] Starting chunk 676 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:46:25] Wrote chunk 417
+INFO [2022-05-04 12:46:25] Starting chunk 418 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:46:25] Wrote chunk 676
+INFO [2022-05-04 12:46:25] Starting chunk 677 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:46:26] Wrote chunk 677
+INFO [2022-05-04 12:46:26] Starting chunk 678 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:46:26] Wrote chunk 181
+INFO [2022-05-04 12:46:26] Starting chunk 182 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:46:27] Wrote chunk 678
+INFO [2022-05-04 12:46:27] Starting chunk 679 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:46:27] Wrote chunk 418
+INFO [2022-05-04 12:46:27] Starting chunk 419 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:46:28] Wrote chunk 679
+INFO [2022-05-04 12:46:28] Starting chunk 680 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:46:28] Wrote chunk 680
+INFO [2022-05-04 12:46:28] Starting chunk 681 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:46:29] Wrote chunk 182
+INFO [2022-05-04 12:46:29] Starting chunk 183 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:46:29] Wrote chunk 419
+INFO [2022-05-04 12:46:29] Starting chunk 420 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:46:29] Wrote chunk 681
+INFO [2022-05-04 12:46:29] Starting chunk 682 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:46:30] Wrote chunk 682
+INFO [2022-05-04 12:46:30] Starting chunk 683 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:46:31] Wrote chunk 683
+INFO [2022-05-04 12:46:31] Starting chunk 684 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:46:31] Wrote chunk 420
+INFO [2022-05-04 12:46:31] Starting chunk 421 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:46:31] Wrote chunk 183
+INFO [2022-05-04 12:46:31] Starting chunk 184 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:46:31] Wrote chunk 684
+INFO [2022-05-04 12:46:31] Starting chunk 685 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:46:32] Wrote chunk 685
+INFO [2022-05-04 12:46:33] Starting chunk 686 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:46:33] Wrote chunk 421
+INFO [2022-05-04 12:46:33] Starting chunk 422 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:46:33] Wrote chunk 686
+INFO [2022-05-04 12:46:33] Starting chunk 687 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:46:34] Wrote chunk 184
+INFO [2022-05-04 12:46:34] Starting chunk 185 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:46:34] Wrote chunk 687
+INFO [2022-05-04 12:46:34] Starting chunk 688 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:46:35] Wrote chunk 688
+INFO [2022-05-04 12:46:35] Starting chunk 689 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:46:36] Wrote chunk 422
+INFO [2022-05-04 12:46:36] Starting chunk 423 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:46:36] Wrote chunk 689
+INFO [2022-05-04 12:46:36] Starting chunk 690 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:46:36] Wrote chunk 185
+INFO [2022-05-04 12:46:36] Starting chunk 186 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:46:37] Wrote chunk 690
+INFO [2022-05-04 12:46:37] Starting chunk 691 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:46:37] Wrote chunk 691
+INFO [2022-05-04 12:46:37] Starting chunk 692 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:46:38] Wrote chunk 423
+INFO [2022-05-04 12:46:38] Starting chunk 424 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:46:38] Wrote chunk 692
+INFO [2022-05-04 12:46:38] Starting chunk 693 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:46:39] Wrote chunk 186
+INFO [2022-05-04 12:46:39] Starting chunk 187 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:46:39] Wrote chunk 693
+INFO [2022-05-04 12:46:39] Starting chunk 694 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:46:40] Wrote chunk 694
+INFO [2022-05-04 12:46:40] Starting chunk 695 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:46:40] Wrote chunk 424
+INFO [2022-05-04 12:46:40] Starting chunk 425 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:46:40] Wrote chunk 695
+INFO [2022-05-04 12:46:40] Starting chunk 696 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:46:41] Wrote chunk 187
+INFO [2022-05-04 12:46:41] Wrote chunk 696
+INFO [2022-05-04 12:46:41] Starting chunk 697 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:46:41] Starting chunk 188 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:46:42] Wrote chunk 697
+INFO [2022-05-04 12:46:42] Starting chunk 698 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:46:42] Wrote chunk 425
+INFO [2022-05-04 12:46:42] Starting chunk 426 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:46:43] Wrote chunk 698
+INFO [2022-05-04 12:46:43] Starting chunk 699 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:46:44] Wrote chunk 188
+INFO [2022-05-04 12:46:44] Starting chunk 189 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:46:44] Wrote chunk 699
+INFO [2022-05-04 12:46:44] Starting chunk 700 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:46:44] Wrote chunk 426
+INFO [2022-05-04 12:46:44] Starting chunk 427 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:46:45] Wrote chunk 700
+INFO [2022-05-04 12:46:45] Starting chunk 701 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:46:45] Wrote chunk 701
+INFO [2022-05-04 12:46:45] Starting chunk 702 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:46:46] Wrote chunk 189
+INFO [2022-05-04 12:46:46] Starting chunk 190 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:46:46] Wrote chunk 702
+INFO [2022-05-04 12:46:46] Starting chunk 703 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:46:46] Wrote chunk 427
+INFO [2022-05-04 12:46:46] Starting chunk 428 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:46:47] Wrote chunk 703
+INFO [2022-05-04 12:46:47] Starting chunk 704 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:46:48] Wrote chunk 704
+INFO [2022-05-04 12:46:48] Starting chunk 705 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:46:48] Wrote chunk 428
+INFO [2022-05-04 12:46:48] Starting chunk 429 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:46:49] Wrote chunk 705
+INFO [2022-05-04 12:46:49] Starting chunk 706 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:46:49] Wrote chunk 190
+INFO [2022-05-04 12:46:49] Starting chunk 191 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:46:49] Wrote chunk 706
+INFO [2022-05-04 12:46:49] Starting chunk 707 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:46:50] Wrote chunk 707
+INFO [2022-05-04 12:46:50] Starting chunk 708 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:46:51] Wrote chunk 708
+INFO [2022-05-04 12:46:51] Starting chunk 709 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:46:51] Wrote chunk 191
+INFO [2022-05-04 12:46:51] Starting chunk 192 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:46:52] Wrote chunk 709
+INFO [2022-05-04 12:46:52] Starting chunk 710 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:46:52] Wrote chunk 429
+INFO [2022-05-04 12:46:52] Starting chunk 430 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:46:53] Wrote chunk 710
+INFO [2022-05-04 12:46:53] Starting chunk 711 of 3000 lines for file en_US.twitter.txt
+INFO [2022-05-04 12:46:53] Wrote chunk 192
+INFO [2022-05-04 12:46:53] Starting chunk 193 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:46:53] Wrote chunk 711
+INFO [2022-05-04 12:46:54] Wrote chunk 430
+INFO [2022-05-04 12:46:54] Starting chunk 431 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:46:55] Wrote chunk 193
+INFO [2022-05-04 12:46:55] Starting chunk 194 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:46:56] Wrote chunk 431
+INFO [2022-05-04 12:46:56] Starting chunk 432 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:46:58] Wrote chunk 194
+INFO [2022-05-04 12:46:58] Starting chunk 195 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:46:58] Wrote chunk 432
+INFO [2022-05-04 12:46:58] Starting chunk 433 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:46:59] Wrote chunk 433
+INFO [2022-05-04 12:46:59] Starting chunk 434 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:47:00] Wrote chunk 195
+INFO [2022-05-04 12:47:00] Starting chunk 196 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:47:01] Wrote chunk 434
+INFO [2022-05-04 12:47:01] Starting chunk 435 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:47:02] Wrote chunk 196
+INFO [2022-05-04 12:47:02] Starting chunk 197 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:47:03] Wrote chunk 435
+INFO [2022-05-04 12:47:03] Starting chunk 436 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:47:04] Wrote chunk 197
+INFO [2022-05-04 12:47:04] Starting chunk 198 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:47:05] Wrote chunk 436
+INFO [2022-05-04 12:47:05] Starting chunk 437 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:47:06] Wrote chunk 198
+INFO [2022-05-04 12:47:06] Starting chunk 199 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:47:07] Wrote chunk 437
+INFO [2022-05-04 12:47:07] Starting chunk 438 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:47:08] Wrote chunk 199
+INFO [2022-05-04 12:47:08] Starting chunk 200 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:47:08] Wrote chunk 438
+INFO [2022-05-04 12:47:08] Starting chunk 439 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:47:10] Wrote chunk 200
+INFO [2022-05-04 12:47:10] Starting chunk 201 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:47:10] Wrote chunk 439
+INFO [2022-05-04 12:47:10] Starting chunk 440 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:47:12] Wrote chunk 440
+INFO [2022-05-04 12:47:12] Starting chunk 441 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:47:12] Wrote chunk 201
+INFO [2022-05-04 12:47:12] Starting chunk 202 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:47:14] Wrote chunk 441
+INFO [2022-05-04 12:47:14] Starting chunk 442 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:47:14] Wrote chunk 202
+INFO [2022-05-04 12:47:14] Starting chunk 203 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:47:15] Wrote chunk 442
+INFO [2022-05-04 12:47:15] Starting chunk 443 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:47:16] Wrote chunk 203
+INFO [2022-05-04 12:47:16] Starting chunk 204 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:47:17] Wrote chunk 443
+INFO [2022-05-04 12:47:17] Starting chunk 444 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:47:18] Wrote chunk 204
+INFO [2022-05-04 12:47:18] Starting chunk 205 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:47:19] Wrote chunk 444
+INFO [2022-05-04 12:47:19] Starting chunk 445 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:47:20] Wrote chunk 205
+INFO [2022-05-04 12:47:20] Starting chunk 206 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:47:21] Wrote chunk 445
+INFO [2022-05-04 12:47:21] Starting chunk 446 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:47:22] Wrote chunk 206
+INFO [2022-05-04 12:47:22] Starting chunk 207 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:47:23] Wrote chunk 446
+INFO [2022-05-04 12:47:23] Starting chunk 447 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:47:24] Wrote chunk 207
+INFO [2022-05-04 12:47:24] Starting chunk 208 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:47:25] Wrote chunk 447
+INFO [2022-05-04 12:47:25] Starting chunk 448 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:47:26] Wrote chunk 208
+INFO [2022-05-04 12:47:26] Starting chunk 209 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:47:27] Wrote chunk 448
+INFO [2022-05-04 12:47:27] Starting chunk 449 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:47:28] Wrote chunk 209
+INFO [2022-05-04 12:47:28] Starting chunk 210 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:47:28] Wrote chunk 449
+INFO [2022-05-04 12:47:28] Starting chunk 450 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:47:30] Wrote chunk 210
+INFO [2022-05-04 12:47:30] Starting chunk 211 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:47:30] Wrote chunk 450
+INFO [2022-05-04 12:47:30] Starting chunk 451 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:47:32] Wrote chunk 451
+INFO [2022-05-04 12:47:32] Starting chunk 452 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:47:32] Wrote chunk 211
+INFO [2022-05-04 12:47:32] Starting chunk 212 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:47:34] Wrote chunk 452
+INFO [2022-05-04 12:47:34] Starting chunk 453 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:47:34] Wrote chunk 212
+INFO [2022-05-04 12:47:34] Starting chunk 213 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:47:35] Wrote chunk 453
+INFO [2022-05-04 12:47:35] Starting chunk 454 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:47:37] Wrote chunk 454
+INFO [2022-05-04 12:47:37] Starting chunk 455 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:47:38] Wrote chunk 213
+INFO [2022-05-04 12:47:38] Starting chunk 214 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:47:39] Wrote chunk 455
+INFO [2022-05-04 12:47:39] Starting chunk 456 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:47:40] Wrote chunk 214
+INFO [2022-05-04 12:47:40] Starting chunk 215 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:47:41] Wrote chunk 456
+INFO [2022-05-04 12:47:41] Starting chunk 457 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:47:42] Wrote chunk 215
+INFO [2022-05-04 12:47:42] Starting chunk 216 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:47:43] Wrote chunk 457
+INFO [2022-05-04 12:47:43] Starting chunk 458 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:47:44] Wrote chunk 216
+INFO [2022-05-04 12:47:44] Starting chunk 217 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:47:44] Wrote chunk 458
+INFO [2022-05-04 12:47:44] Starting chunk 459 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:47:46] Wrote chunk 217
+INFO [2022-05-04 12:47:46] Starting chunk 218 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:47:46] Wrote chunk 459
+INFO [2022-05-04 12:47:46] Starting chunk 460 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:47:48] Wrote chunk 218
+INFO [2022-05-04 12:47:48] Starting chunk 219 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:47:48] Wrote chunk 460
+INFO [2022-05-04 12:47:48] Starting chunk 461 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:47:50] Wrote chunk 219
+INFO [2022-05-04 12:47:50] Starting chunk 220 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:47:50] Wrote chunk 461
+INFO [2022-05-04 12:47:50] Starting chunk 462 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:47:52] Wrote chunk 462
+INFO [2022-05-04 12:47:52] Starting chunk 463 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:47:52] Wrote chunk 220
+INFO [2022-05-04 12:47:52] Starting chunk 221 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:47:54] Wrote chunk 463
+INFO [2022-05-04 12:47:54] Starting chunk 464 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:47:54] Wrote chunk 221
+INFO [2022-05-04 12:47:54] Starting chunk 222 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:47:55] Wrote chunk 464
+INFO [2022-05-04 12:47:55] Starting chunk 465 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:47:56] Wrote chunk 222
+INFO [2022-05-04 12:47:56] Starting chunk 223 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:47:57] Wrote chunk 465
+INFO [2022-05-04 12:47:57] Starting chunk 466 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:47:58] Wrote chunk 223
+INFO [2022-05-04 12:47:58] Starting chunk 224 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:47:59] Wrote chunk 466
+INFO [2022-05-04 12:47:59] Starting chunk 467 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:48:00] Wrote chunk 224
+INFO [2022-05-04 12:48:00] Starting chunk 225 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:48:01] Wrote chunk 467
+INFO [2022-05-04 12:48:01] Starting chunk 468 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:48:02] Wrote chunk 225
+INFO [2022-05-04 12:48:02] Starting chunk 226 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:48:03] Wrote chunk 468
+INFO [2022-05-04 12:48:03] Starting chunk 469 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:48:04] Wrote chunk 226
+INFO [2022-05-04 12:48:04] Starting chunk 227 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:48:05] Wrote chunk 469
+INFO [2022-05-04 12:48:05] Starting chunk 470 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:48:06] Wrote chunk 227
+INFO [2022-05-04 12:48:06] Starting chunk 228 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:48:07] Wrote chunk 470
+INFO [2022-05-04 12:48:07] Starting chunk 471 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:48:08] Wrote chunk 228
+INFO [2022-05-04 12:48:08] Starting chunk 229 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:48:08] Wrote chunk 471
+INFO [2022-05-04 12:48:08] Starting chunk 472 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:48:10] Wrote chunk 229
+INFO [2022-05-04 12:48:10] Starting chunk 230 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:48:10] Wrote chunk 472
+INFO [2022-05-04 12:48:10] Starting chunk 473 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:48:12] Wrote chunk 473
+INFO [2022-05-04 12:48:12] Starting chunk 474 of 3000 lines for file en_US.news.txt
+INFO [2022-05-04 12:48:12] Wrote chunk 230
+INFO [2022-05-04 12:48:12] Starting chunk 231 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:48:14] Wrote chunk 474
+INFO [2022-05-04 12:48:14] Wrote chunk 231
+INFO [2022-05-04 12:48:14] Starting chunk 232 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:48:16] Wrote chunk 232
+INFO [2022-05-04 12:48:16] Starting chunk 233 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:48:18] Wrote chunk 233
+INFO [2022-05-04 12:48:18] Starting chunk 234 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:48:19] Wrote chunk 234
+INFO [2022-05-04 12:48:19] Starting chunk 235 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:48:21] Wrote chunk 235
+INFO [2022-05-04 12:48:21] Starting chunk 236 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:48:23] Wrote chunk 236
+INFO [2022-05-04 12:48:23] Starting chunk 237 of 3000 lines for file en_US.blogs.txt
+INFO [2022-05-04 12:48:24] Wrote chunk 237
+INFO [2022-05-04 12:48:24] Ended paralell processing, collecting garbage
+INFO [2022-05-04 12:48:25] Ended of sentencification process

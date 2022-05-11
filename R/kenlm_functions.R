@@ -77,7 +77,7 @@ load_arpa_as_data_table <- function(source_file, max_order = 5) {
       max_order + 3,
       lag(cumsum(lines)) + max_order + (2 * order) + 1
     )) %>%
-    pmap(function(order, lines, csum, skip, ...) {
+    ret <- pmap(function(order, lines, csum, skip, ...) {
       ret <- readr::read_tsv(
         source_file,
         n_max = lines,
@@ -111,4 +111,8 @@ load_arpa_as_data_table <- function(source_file, max_order = 5) {
 
     }) %>%
     data.table::rbindlist()
+    setindexv(ret,"order")
+    setindexv(ret,"n_gram")
+    setindexv(ret,c("order","n_gram"))
+    return(ret)
 }

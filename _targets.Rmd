@@ -38,7 +38,7 @@ xfun::pkg_attach(package_list)
 options(tidyverse.quiet = TRUE)
 targets::tar_option_set(format = 'qs')
 targets::tar_option_set(packages = c( "dplyr", "ggplot2", "readr", "tidyr","data.table","progressr","R6","pins","rsample","tidytext","purrr","furrr","magrittr","stringr","dtplyr"))
-source("R/global_variables.R")
+source("R/global_vars_and_libs.R")
 ```
 
 #### Building an iteration friendly environment
@@ -163,37 +163,56 @@ Now we have all we need toooo....
 
 We build the model exclusively on the training set. This is how to do that:
 
-```{targets kenlm-onepct-target}
+```{targets training-file-as-onepct-target}
 source("R/kenlm_functions.R")
 
 # KenLM requires a simple clean text file to build. 
 # So we do that with our training set
-list(
+
   tar_target(training_as_file_onepct,
              create_file_from_data_table_set(
                clean_training_onepct,
                'training_corpus_onepct.txt'
              ),
-             format="file"),
-  tar_target(kenlm_arpafile_onepct,
+             format="file")
+             
+```
+
+
+```{r kenlm-training-as-file-onepct-make}
+tar_make()
+```
+
+
+```{targets kenlm-arpafile-onepct-target}
+
+tar_target(kenlm_arpafile_onepct,
              create_kenlm_arpa(
                source_file = training_as_file_onepct,
                outfile = 'kenlm_model_onepct'
                                ),
-             format='file'),
+                               
+             format='file')
+
+```
+
+```{r kenlm-arpafile-onepct-make}
+tar_make()
+```
+
+```{targets kenlm-model-onepct-target}
+
   tar_target(kenlm_model_onepct,
           load_arpa_as_data_table(
             source_file = kenlm_arpafile_onepct
               ))
-)
-
-
 
 ```
 
+
 And then make those...
 
-```{r kenlm-make}
+```{r kenlm-model-onepct-make}
  tar_make()
 ```
 
@@ -201,6 +220,20 @@ And this is what this pretty pipeline, from precleaning to generating a model, l
 
 ```{r show-off-network}
 tar_visnetwork()
+```
+
+Now, modeling actually has a cutoff value, that is, a lot of monograms are not even allowed to be in the model. Aditionally, it is just plain normal that the test and devtest sets have words that are unks.
+
+Unks are not only hard to search for but also have to be replaced throughout all texts. This means its better to preprocess them.
+
+```{targets unkify-devtest-target}
+tar_target(unkified_devtest,
+tar_read(clean_devtest_onepct) %>% 
+    n_gramify_unked_all(text_dt = .,
+                        model_dt = tar_read(kenlm_model_onepct))
+
+)
+
 ```
 
 #### Model evaluation
