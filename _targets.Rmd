@@ -266,6 +266,7 @@ tar_make()
 ```
 
 Unkified:
+
 ```{targets unkified-devtest-onepct-target}
 source('./R/model_functions.R')
 tar_target(
@@ -284,10 +285,30 @@ tar_target(
 tar_make()
 ```
 
+
+#### Model evaluation
+
+So now we can actually evaluate the devtest:
+
+```{targets sentenced-devtest-onepct-target}
+source('./R/model_functions.R')
+
+tar_target(
+  devtest_onepct_sentences_probs,
+  tar_read(unkified_devtest_onepct) %>%
+    corpus_probabilities_by_sentence(model_dt = tar_read(kenlm_model_onepct))
+)
+
+```
+
+```{r sentenced-devtest-onepct-make}
+tar_make()
+```
+
+
+
 And this is what this pretty pipeline, from precleaning to generating a model, looks like:
 
 ```{r show-off-network}
 tar_visnetwork()
 ```
-
-#### Model evaluation
