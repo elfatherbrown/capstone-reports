@@ -4,7 +4,11 @@
 
 
 
+KENLM_DIR = '/home/alex/bin/kenlm/'
+
 KENLM_EXEC = '/home/alex/bin/kenlm/lmplz'
+
+KENLM_QUERY = '/home/alex/bin/kenlm/query'
 
 create_file_from_data_table_set <- function(dt_set,
                                             outfilename,
@@ -35,7 +39,8 @@ create_kenlm_arpa <-
            outfile = "kenlm_after_prune.arpa",
            max_order = 5,
            prune = 40) {
-    outfile <- glue::glue("{clean_files_dir}/{outfile}")
+    outfile <-
+      glue::glue("{clean_files_dir}/o_{max_order}_p_{prune}_{outfile}")
     res <- system(
       glue::glue(
         "{KENLM_EXEC}  --order={max_order} ",
@@ -112,8 +117,58 @@ load_arpa_as_data_table <- function(source_file, max_order = 5) {
     }) %>%
     data.table::rbindlist()
 
-    setindexv(ret,"order")
-    setindexv(ret,"n_gram")
-    setindexv(ret,c("order","n_gram"))
-    return(ret)
+  setindexv(ret, "order")
+  setindexv(ret, "n_gram")
+  setindexv(ret, c("order", "n_gram"))
+  return(ret)
 }
+
+kenlm_evaluate <-
+  function(text_dt,
+           kenlm_model_arpa_file,
+           tag) {
+    plaintext_file <- tempfile()
+    intermediate_summary_file <- tempfile()
+    sentences_scores_file <- tempfile()
+    summary_scores_file <- tempfile()
+    readr::write_lines(text_dt$text, plaintext_file)
+    glue::glue(
+      "{KENLM_QUERY} -v summary -v sentence {shQuote(kenlm_model_arpa_file)}>{intermediate_summary_file} < {plaintext_file
+plaintext_file}"
+    ) %>% system()
+    system(
+      glue::glue(
+        "grep --invert-match Total: {intermediate_summary} > {summary_scores_file}"
+      )
+    )
+    system(glue::glue(
+      "grep  Total: {intermediate_summary} > {sentences_scores_file}"
+    ))
+
+    sentences_scores_i <-
+      read_delim(sentences_scores_file,
+                 " ",
+                 col_names = c("total", 'prob', 'oov', 'oov_count')) %>%
+      mutate(sentence_id = row_number()) %>%
+      select(sentence_id, prob, oov_count)
+
+    summary_scores_i <- read_lines(summary_scores_file) %>%
+      str_remove_all("\t") %>%
+      str_split(":") %>%
+      map_df(~tibble::tibble_row(what=.x[1],value=.x[2])) %>%
+      pivot_wider(
+        names_from = "what",
+        values_from = 'value'
+      ) %>%
+      janitor::clean_names()
+
+    evaled_text <- as.data.table(sentences_scores_i) %>%
+      text_dt[.,on="sentence_id"] %>%
+        select(-text) %>%
+          as.data.table()
+
+      list(
+        evaled_text=evaled_text,
+        summary_scores=summary_scores_i
+        ) %>% return(.)
+  }

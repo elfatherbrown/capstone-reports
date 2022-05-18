@@ -46,7 +46,9 @@ package_list <-
     "furrr",
     "magrittr",
     "stringr",
-    "dtplyr"
+    "dtplyr",
+    "targets",
+    "tarchetypes"
   )
 xfun::pkg_attach2(package_list)
 ```
@@ -222,7 +224,7 @@ source("R/kenlm_functions.R")
 
 tar_target(kenlm_arpafile_onepct,
              create_kenlm_arpa(
-               source_file = training_as_file_onepct,
+               source_file = tar_read(training_as_file_onepct),
                outfile = 'kenlm_model_onepct'
                                ),
                                
@@ -274,7 +276,8 @@ tar_target(
   tar_read(ngramified_devtest_onepct) %>%
     unkify_all(
       unked_text_dt = .,
-      model_dt = tar_read(kenlm_model_onepct)
+      model_dt = tar_read(kenlm_model_onepct),
+      tok_unk='<unk>'
     )
   
 )
@@ -297,7 +300,7 @@ tar_target(
   devtest_onepct_sentences_probs,
   tar_read(unkified_devtest_onepct) %>%
     corpus_probabilities_by_sentence(model_dt = tar_read(kenlm_model_onepct))
-)
+) 
 
 ```
 
@@ -307,8 +310,99 @@ tar_make()
 
 
 
+As for the evaluation, we now have one model and one devtest and the probability of that devtest with backoff values and not. This can be seen here, as we evaluate the held-out devset:
+
+```{r corpus-probability-table}
+source('R/model_functions.R')
+tar_read(devtest_onepct_sentences_probs) %>% 
+  corpus_probability()
+```
+
+This is expressed on the log scale. We can see it for a sample of the training set here and it should be way, way higher, as the model was generated from it:
+
+```{targets ngramified-training-onepct-target}
+source('./R/model_functions.R')
+  tar_target(
+    ngramified_training_onepct,
+    tar_read(clean_training_onepct) %>%
+      n_gramify_all(text_dt = .,
+                    model_dt = tar_read(kenlm_model_onepct))
+    
+  )
+```
+
+
+```{r ngramified-training-onepct-make}
+tar_make()
+```
+
+```{targets ngramified-unkified-training-onepct-target}
+tar_target(
+    unkified_training_onepct,
+    tar_read(ngramified_training_onepct) %>%
+      unkify_all(
+        unked_text_dt = .,
+        model_dt = tar_read(kenlm_model_onepct)
+      )
+    
+  )
+```
+
+
+```{r ngramified-unkified-training-onepct-make}
+tar_make()
+```
+
+
+```{targets training-sentences-probs-target}
+tar_target(
+    training_onepct_sentences_probs,
+    tar_read(unkified_training_onepct) %>%
+      corpus_probabilities_by_sentence(model_dt = tar_read(kenlm_model_onepct))
+  )
+```
+
+```{r training-sentences-probs-make}
+tar_make()
+```
+
+##### Probability of corpuses
+
+
+The probablity of a corpus is given by the straight sum of the log odds of each sentence. What follows is the training and devtest densities of the total probability (log odds + backoff) 
+
+```{r}
+ list(
+     tar_read(training_onepct_sentences_probs) %>% .[,its:="training"],
+     tar_read(devtest_onepct_sentences_probs) %>% .[,its:="devtest"]) %>% 
+     rbindlist() %>% 
+     ggplot(aes(x=t,color=its))+
+     geom_density()
+```
+
+Bearing in mind that this kenlm model is built with 40 as cutoff value, that does not look too crazy, but it does not look too efficient.
+
 And this is what this pretty pipeline, from precleaning to generating a model, looks like:
 
 ```{r show-off-network}
 tar_visnetwork()
+```
+
+This is some sort of childish because kenlm is really much more efficient in evaluating and calculating perplexity on whole corpuses. So we have another way to construct the pipeline that takes advantage of this fact. 
+
+Here it goes.
+
+### The KenLM way
+
+In the kenLM way, we might preserve trhe strategy all the way to splits
+
+
+#### Tunning
+Ok, of to the subject of more close up analisys of this thing, we must see really what differs. For one, I want to see how does cutoff value change, and what happens if we deal with lowercase only data. 
+
+```{r}
+expand.grid(
+    to_lower=c(TRUE,FALSE),
+    kenlm_cutoff=c(10,20,30)
+)
 ```

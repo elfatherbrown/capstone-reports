@@ -1,14 +1,15 @@
-clean_texts_dt <- function(texts_dt){
-
-texts_dt %>%
+clean_texts_dt <- function(texts_dt, to_lower = FALSE) {
+  texts_dt %>%
     as_tibble() %>%
     mutate(chunk = row_number() %/% (nrow(.) / 10)) %>%
     group_by(chunk) %>%
     nest() %>%
-    furrr::future_pmap_dfr(function(chunk,data,...){
+    furrr::future_pmap_dfr(function(chunk, data, ...) {
       data %>%
         mutate(
-          text=clean_texts(data$text)
+          text = clean_texts(data$text),
+          text = case_when(to_lower ~ stringr::str_to_lower(text),
+                           TRUE ~ text)
         ) %>% drop_na()
     }) %>%
     as.data.table()
@@ -36,4 +37,9 @@ clean_texts <- function(chunk_of_text) {
     textclean::replace_symbol(at = FALSE) %>%
     textclean::replace_ordinal() %>%
     return()
+}
+
+
+quotemeta <- function(string) {
+  str_replace_all(string, "(\\W)", "\\\\\\\\1")
 }
