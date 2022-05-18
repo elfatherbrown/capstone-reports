@@ -15,7 +15,8 @@ package_list <-
     "magrittr",
     "stringr",
     "dtplyr",
-    "futile.logger"
+    "futile.logger",
+     "tarchetypes"
   )
 # options(tidyverse.quiet = TRUE)
 targets::tar_option_set(format = 'qs')

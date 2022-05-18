@@ -1,8 +1,6 @@
 ---
 title: "Targets pipeline"
-output:
-  html_document:
-    df_print: paged
+output: html_document
 editor_options:
   chunk_output_type: console
 ---
@@ -71,7 +69,8 @@ package_list <-
     "magrittr",
     "stringr",
     "dtplyr",
-    "futile.logger"
+    "futile.logger",
+     "tarchetypes"
   )
 # options(tidyverse.quiet = TRUE)
 targets::tar_option_set(format = 'qs')
@@ -96,6 +95,10 @@ source("R/preclean_functions.R")
              ))
 ```
 
+```{r make-preclean}
+tar_make()
+```
+
 After that and crucially prior to sampling, we "sentencify", that is, we split the text into sentences:
 
 ```{targets sentencify-target}
@@ -104,9 +107,12 @@ source("R/sentencify.R")
   tar_target(
     sentenced_files,
     sentencify(precleaned_files = preclean),
-    
     format = "file"
   )
+```
+
+```{r make-sentences}
+tar_make()
 ```
 
 Now here comes an interesting part. I do a quick sample of sentences of the whole corpus. Only loading 1% of it:
@@ -114,10 +120,16 @@ Now here comes an interesting part. I do a quick sample of sentences of the whol
 ```{targets sample-one-pct-target}
 source("R/simple_sample.R")
 source("R/load_text_as_table.R")
+
 tar_target(sample_one_pct,
            simple_sample(sentenced_files,pct = 0.01),
            format = "file")
+
   
+```
+
+```{r make-sample-onepct}
+tar_make()
 ```
 
 Having sampled, we can now split in training and testing set:
@@ -276,8 +288,7 @@ tar_target(
   tar_read(ngramified_devtest_onepct) %>%
     unkify_all(
       unked_text_dt = .,
-      model_dt = tar_read(kenlm_model_onepct),
-      tok_unk='<unk>'
+      model_dt = tar_read(kenlm_model_onepct)
     )
   
 )
@@ -394,10 +405,45 @@ Here it goes.
 
 ### The KenLM way
 
-In the kenLM way, we might preserve trhe strategy all the way to splits
+In the kenLM way, we might preserve the strategy all the way to splits. It is the way we unkify, model and evaluate a corpus where things change.
+
+At the end of this branch of the pipeline, we will have targets that compare corpuses lowercased to normal, different cutoff values, and different end model
+sizes.
+
+
+So, first we build two full versions of the raw corpus both lower and upper case:
+
+```{targets kenlm-pipeline-target}
+
+tarchetypes::tar_map(
+    values=tibble(to_lower=c(TRUE,FALSE)),
+    tar_target(
+        preclean_lowercase,
+        preclean_files(files = list.files(en_data_dir, pattern = '*.txt'),
+                       to_lower = to_lower)
+    ),
+    tar_target(sentencified_lowercase,
+               sentencify(preclean_lowercase),
+                format = "file")
+) %>% list()
+```
+
+
+
+```{r show-off-network-debug}
+tar_visnetwork()
+```
+
+
+
+```{r manifest}
+tar_manifest()
+```
+
 
 
 #### Tunning
+
 Ok, of to the subject of more close up analisys of this thing, we must see really what differs. For one, I want to see how does cutoff value change, and what happens if we deal with lowercase only data. 
 
 ```{r}

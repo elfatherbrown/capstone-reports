@@ -40,27 +40,32 @@ text_prob_one <- function(model_dt, text) {
     })
 }
 
-unkify <- function(model_dt, parsed_text,cols='n_gram',tok_unk=TOKEN_UNK) {
-  unks <- parsed_text[order == 1] %>%
-    .[!n_gram %chin% model_dt[order == 1, n_gram]] %>%
-    .[, .(n_gram)] %>%
-    .[, .(n_gram = str_replace_all(n_gram, c("(\\W)" = "\\\\\\1",
-                                             '\\\\' = '\\\\')) %>%
-            paste("\\b", ., "\\b"))]
-#
-#   parsed_text[, n_gram := str_replace_all(n_gram,
-#                                          setNames(rep_along(unks$n_gram,
-#                                                             paste0(" ", TOKEN_UNK, " ")),
-#                                                   unks$n_gram))]
+unkify <-
+  function(model_dt,
+           parsed_text,
+           cols = 'n_gram',
+           tok_unk = TOKEN_UNK) {
+    unks <- parsed_text[order == 1] %>%
+      .[!n_gram %chin% model_dt[order == 1, n_gram]] %>%
+      .[, .(n_gram)] %>%
+      .[, .(n_gram = str_replace_all(n_gram, c("(\\W)" = "\\\\\\1",
+                                               '\\\\' = '\\\\')) %>%
+              paste("\\b", ., "\\b"))]
+    #
+    #   parsed_text[, n_gram := str_replace_all(n_gram,
+    #                                          setNames(rep_along(unks$n_gram,
+    #                                                             paste0(" ", TOKEN_UNK, " ")),
+    #                                                   unks$n_gram))]
 
-  parsed_text[, (cols) := str_replace_all,setNames(rep_along(unks$n_gram,
-                                                             paste0(" ", tok_unk, " ")),
-                                                   unks$n_gram)]
+    parsed_text[, (cols) := lapply(.SD, str_replace_all, setNames(rep_along(unks$n_gram,
+                                                                            paste0(" ", tok_unk, " ")),
+                                                                  unks$n_gram)), .SDcols =
+                  cols]
 
-  return(parsed_text[])
+    return(parsed_text[])
 
 
-}
+  }
 
 parse_to_ngram_table <- function(intext,
                                  with_bos = TRUE,
@@ -105,20 +110,24 @@ parse_to_ngram_table <- function(intext,
 #' @export
 #'
 #' @examples
-unkify_all <- function(unked_text_dt, model_dt, order = 5,tok_unk=TOKEN_UNK) {
-  tdt <- unked_text_dt
-  tdt[, chunk := ceiling(.I %% .N / 1000)] %>%
-    group_by(chunk) %>%
-    nest() %>%
-    as_tibble() %>%
-    furrr::future_pmap(function(chunk, data, ...) {
-      data %>%
-        unkify(parsed_text = .,
-               model_dt = model_dt,
-               tok_unk = tok_unk)
-    }) %>%
-    rbindlist()
-}
+unkify_all <-
+  function(unked_text_dt,
+           model_dt,
+           order = 5,
+           tok_unk = TOKEN_UNK) {
+    tdt <- unked_text_dt
+    tdt[, chunk := ceiling(.I %% .N / 1000)] %>%
+      group_by(chunk) %>%
+      nest() %>%
+      as_tibble() %>%
+      furrr::future_pmap(function(chunk, data, ...) {
+        data %>%
+          unkify(parsed_text = .,
+                 model_dt = model_dt,
+                 tok_unk = tok_unk)
+      }) %>%
+      rbindlist()
+  }
 
 n_gramify_all <- function(text_dt, model_dt, order = 5) {
   tdt <- text_dt
@@ -163,17 +172,17 @@ evaluate_ngram <- function(model_dt, ngram_dt) {
 }
 
 corpus_probabilities_by_sentence <- function(model_dt, corpus_dt) {
-  kenlm_evaluate(corpus_dt,model_dt)
-  # corpus_dt %>%
-  #   group_by(sentence_id) %>%
-  #   nest() %>%
-  #   as_tibble() %>%
-  #   future_pmap(function(sentence_id, data, ...) {
-  #     ddt <- evaluate_ngram(model_dt, data)
-  #     ddt[, sentence_id := sentence_id][]
-  #     return(ddt)
-  #   }) %>%
-  #   rbindlist()
+
+corpus_dt %>%
+  group_by(sentence_id) %>%
+  nest() %>%
+  as_tibble() %>%
+  future_pmap(function(sentence_id, data, ...) {
+    ddt <- evaluate_ngram(model_dt, data)
+    ddt[, sentence_id := sentence_id][]
+    return(ddt)
+  }) %>%
+  rbindlist()
 }
 
 

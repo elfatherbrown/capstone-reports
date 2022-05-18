@@ -19,6 +19,7 @@
 #'
 #' @examples
 preclean_files <- function(files,
+                           to_lower=FALSE,
                         s_files_dir = en_data_dir,
                         c_files_dir = clean_files_dir,
                         outfile_tag="") {
@@ -41,7 +42,9 @@ preclean_files <- function(files,
                           str_remove_all(fixed(TOKEN_EOS)) %>%
                           str_remove_all(fixed(TOKEN_UNK)) %>%
                           str_remove_all(., fixed(''))
-
+                        if(to_lower){
+                          r <- str_to_lower(r)
+                          }
                         readr::write_file(x = r, file = y)
 
                         rm(r)
