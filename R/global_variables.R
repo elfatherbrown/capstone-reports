@@ -11,4 +11,7 @@ out_data_dir <- paste0(en_data_dir, '/', 'output_csvs')
 inter_data_dir <- paste0(raw_data_dir, "final/en_US/intermediate")
 model_data_dir <- paste0(en_data_dir, "/models/")
 future::plan(future::multisession(workers = 6))
+dummy <- value(lapply(seq_len(nbrOfWorkers()), FUN = function(ii) {
+  future(NULL, packages = "data.table", earlySignal = TRUE)
+}))
 
