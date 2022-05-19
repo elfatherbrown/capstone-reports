@@ -51,13 +51,9 @@ testing_training = c("testing", "training")
 all_splits = c("testing", "training", "devtest")
 training_splits = c("testing", "devtest")
 
-simple_samples_pars <- crossing(
-  sample_size = sample_sizes,
-  sample_target = upper_lower
-) %>%
-  mutate(
-    target_name = paste0("simple_samples_", sample_size, "_", sample_target) %>% syms
-  )
+simple_samples_pars <- crossing(sample_size = sample_sizes,
+                                sample_target = upper_lower) %>%
+  mutate(target_name = paste0("simple_samples_", sample_size, "_", sample_target) %>% syms)
 
 # Replace the target list below with your own:
 list(
@@ -83,24 +79,23 @@ list(
       format = 'file'
     ),
     values = simple_samples_pars %>% as.list()
-   ),
-  tar_target(splits_names_and_pars,simple_samples_pars %>%
-               rename(previous_target=target_name) %>%
-               mutate(
-                 target_name=paste0("splits_",as.character(previous_target)) %>% syms()
-               ) %>% as.list()),
+  ),
   tar_eval(
-    tar_target(
-      name = target_name,
-      create_our_splits(previous_target)),
-    values=tar_read(splits_names_and_pars) %>% select(target_name,previous_target) %>%  as.list()
+    tar_target(name = split_name,
+               create_our_splits(for_sample)),
+    values = list(
+      for_sample = simple_samples_pars$target_name,
+      split_name = paste0("split_",
+                          as.character(simple_samples_pars$target_name)) %>%
+        syms()
     )
-  # ,
-  # tar_target(
-  #   name = train_and_devset,
-  #   create_training_and_devset(splits),
-  #   pattern = map(splits)
-  # ),
+  ),
+  tar_map(
+    values = list(split_name=paste0("split_",
+                    as.character(simple_samples_pars$target_name)) %>% syms()),
+    tar_target(name = train_and_devtest,
+               create_training_and_devset(split_name %>% rsample::training()))
+  )
   # tar_target(
   #   testing,
   #   rsample::testing(split),
