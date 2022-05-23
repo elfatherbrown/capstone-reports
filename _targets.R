@@ -13,7 +13,9 @@ pks <- c(
   'tarchetypes',
   'doParallel',
   'tidyverse',
-  'furrr'
+  'furrr',
+  'futile.logger',
+  'glue'
 ) # Load other packages as needed. # nolint
 suppressPackageStartupMessages(xfun::pkg_attach2(pks))
 
@@ -41,76 +43,159 @@ dummy <- value(lapply(
   }
 ))
 
-origin_files <-
-  list.files(clean_files_dir, pattern = "^en_.*(blogs|news|twitter).txt$")
-
-sample_sizes = c(0.01, 0.05, 0.1, 0.2)
-upper_lower = rlang::syms(c("all_sentenced_dirty_lowercase",
-                            "all_sentenced_dirty"))
-testing_training = c("testing", "training")
-all_splits = c("testing", "training", "devtest")
-training_splits = c("testing", "devtest")
-
-simple_samples_pars <- crossing(sample_size = sample_sizes,
-                                sample_target = upper_lower) %>%
-  mutate(target_name = paste0("simple_samples_", sample_size, "_", sample_target) %>% syms)
-
+library(futile.logger)
+flog.appender(appender.file('targets.log'))
+scratch_plot <- function(){
+  tar_read(evaluate_models) %>%
+    ggplot(aes(y=perplexity_including_oo_vs,x=order,fill=case))+
+    geom_col()+
+    facet_wrap(.~evaluated_on)+
+    theme(axis.text.x = element_text(angle = -30, vjust = 1, hjust = 0))
+  }
 # Replace the target list below with your own:
 list(
-  tar_target(pre_clean_files,
-             preclean_files(files = origin_files),
+  tar_files(
+    origin,
+    list.files(en_data_dir, pattern = "^en_.*(blogs|news|twitter).txt$", full.names = TRUE)
+  ),
+  tar_target(precleaned,
+             preclean_files(
+               str_replace_all(origin, ".*/([^/]+)$" , "\\1")
+             ),
+             format = "file"),
+  tar_target(sentenced,
+             sentencify(precleaned),
+             format = 'file'),
+  tar_target(sentenced_clean,
+             sentenced %>%
+               map_chr(function(x) {
+                 ret <- read_lines(x) %>%
+                   future_map_chr(~ clean_texts(.x))
+                 of <- str_replace_all(x, ".*/([^/]+)$" , "\\1")
+                 of <- paste0(clean_files_dir, '/clean_', of)
+                 write_lines(ret, of)
+                 return(of)
+               }),
              format = 'file'),
   tar_target(
-    all_sentenced_dirty,
-    sentencify(precleaned_files = pre_clean_files),
-    format = 'file'
+    sentenced_clean_lower,
+    sentenced_clean %>% map_chr(function(x) {
+      ret <- read_lines(x) %>%
+        future_map_chr(~ str_to_lower(.x))
+      of <- str_replace_all(x, ".*/([^/]+)$" , "\\1")
+      of <- paste0(clean_files_dir, '/lower_', of)
+      write_lines(ret, of)
+      return(of)
+    }),
+    format = "file"
+  ),
+  tar_target(corpus_f, {
+    of <- filename_in("corpus_f")
+    cat_files(sentenced_clean, ofile = of)
+    return(of)
+  },
+  format = "file"),
+  tar_target(corpus_f_l, length(read_lines(corpus_f))),
+  tar_target(corpus_f_lower,
+             {
+               of <- filename_in("corpus_f_lower")
+               cat_files(sentenced_clean_lower,
+                         ofile = of)
+               return(of)
+             },
+             format = 'file'),
+  tar_target(corpus_f_lower_l, length(read_lines(corpus_f_lower))),
+  tar_target(sample_size, c(0.01, 0.05,0.1,0.2)),
+  tar_target(samples_f,
+             {
+
+               make_splits_to_files_tibble(corpus_file = corpus_f,
+                                           corpus_length = corpus_f_l,
+                                           sample_size=sample_size) %>%
+                mutate(case='no')
+             },
+             pattern = map(sample_size)),
+  tar_target(samples_f_lower,
+             {
+               make_splits_to_files_tibble(corpus_file = corpus_f_lower,
+                                           corpus_length = corpus_f_lower_l,
+                                           sample_size=sample_size)%>%
+                 mutate(case='lower')
+             },
+             pattern = map(sample_size)),
+  tar_target(
+    samples_as_files_tibble,
+    bind_rows(samples_f,samples_f_lower)
   ),
   tar_target(
-    all_sentenced_dirty_lowercase,
-    all_sentenced_dirty %>%
-      files_lowercase(),
-    format = 'file'
+    rsample_splits,
+    {
+
+      make_rsample_split_with_sizes_tibble(samples_as_files_tibble$fname,
+                                           samples_as_files_tibble$sample_size,
+                                           samples_as_files_tibble$case)
+    },
+    pattern = map(samples_as_files_tibble),
+    iteration = "list"
   ),
-  tar_eval(
-    tar_target(
-      target_name,
-      simple_sample(sample_target,
-                    sample_size),
-      format = 'file'
-    ),
-    values = simple_samples_pars %>% as.list()
+  tar_target(splits_as_files,
+             {
+               rsample_splits %>%
+                 splits_to_files_tibble()
+             },
+             pattern = map(rsample_splits)),
+  tar_target(prune, c(0, 10, 20, 40)),
+  tar_target(order, c(3, 4, 5,6)),
+  tar_target(
+    models_as_file_tibble,
+    {
+      splits_as_files %>%
+        filter(split=="training") %>%
+        pmap_df(function(sample_size,case,fname,...){
+            ofname <- create_kenlm_arpa(fname,
+                                        outfile = glue("kenlm_{sample_size}_{case}_"),
+                                        max_order = order,
+                                        prune = prune)
+            tibble(
+              order=order,
+              sample_size=sample_size,
+              case=case,
+              prune=prune,
+              fname=ofname
+            )
+          })
+
+    },
+    pattern = cross(prune, order)
   ),
-  tar_eval(
-    tar_target(name = split_name,
-               create_our_splits(for_sample)),
-    values = list(
-      for_sample = simple_samples_pars$target_name,
-      split_name = paste0("split_",
-                          as.character(simple_samples_pars$target_name)) %>%
-        syms()
+  tar_target(evaluate_on,c("devtest","testing")),
+  tar_target(
+    evaluate_models,
+    {
+      splits_as_files %>%
+        filter(split==evaluate_on) %>%
+        rename(text_file=fname) %>%
+        inner_join(
+          models_as_file_tibble %>%
+            rename(model_file=fname),
+          by=c("sample_size","case")
+        ) %>%
+      purrr::pmap_df(
+        function(sample_size,case,order,prune,text_file,model_file,...){
+          r <- kenlm_evaluate(text_file,model_file)
+          tibble(
+            evaluated_on=evaluate_on,
+            sample_size,
+            case,
+            order,
+            prune
+          ) %>%
+            bind_cols(r %>% pluck("summary_scores")) %>%
+            mutate()
+        }
+      )
+    },
+    pattern=map(evaluate_on)
     )
-  ),
-  tar_map(
-    values = list(split_name=paste0("split_",
-                    as.character(simple_samples_pars$target_name)) %>% syms()),
-    tar_target(name = train_and_devtest,
-               create_training_and_devset(split_name %>% rsample::training()))
-  )
-  # tar_target(
-  #   testing,
-  #   rsample::testing(split),
-  #   pattern=map(splits)
-  # ),
-  # tar_target(
-  #   training,
-  #   train_and_devset %>% pluck('training'),
-  #   pattern=map(train_and_devset)
-  # ),
-  # tar_target(
-  #   devset,
-  #   train_and_devset %>% pluck('devset'),
-  #   pattern=map(train_and_devset)
-  # )
-  # )
 
 )

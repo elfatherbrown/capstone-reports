@@ -36,11 +36,28 @@ create_single_cleantext_file <-
 
 create_kenlm_arpa <-
   function(source_file,
-           outfile = "kenlm_after_prune.arpa",
+           outfile = "kenlm",
            max_order = 5,
-           prune = 40) {
+           prune = 40,
+           stdin = FALSE) {
     outfile <-
-      glue::glue("{clean_files_dir}/o_{max_order}_p_{prune}_{outfile}")
+      glue::glue("o_{max_order}_p_{prune}_{outfile}")
+    outfile <- filename_in(outfile,
+                indir = model_data_dir,
+                ext = '.arpa')
+    if(stdin)
+    {
+      res <- system(
+        glue::glue(
+          "{KENLM_EXEC}  --order={max_order} ",
+          "--arpa='{outfile}' ",
+          '--prune={prune} ',
+          '--skip_symbols'
+        ),
+        intern = TRUE,
+        input = source_file
+      )
+    } else {
     res <- system(
       glue::glue(
         "{KENLM_EXEC}  --order={max_order} ",
@@ -50,7 +67,7 @@ create_kenlm_arpa <-
         '--skip_symbols'
       ),
       intern = TRUE
-    )
+    )}
     if (length(res) != 0 &&
         "status" == attributes(res) %>% names()) {
       stop(
@@ -124,25 +141,24 @@ load_arpa_as_data_table <- function(source_file, max_order = 5) {
 }
 
 kenlm_evaluate <-
-  function(text_dt,
-           kenlm_model_arpa_file,
-           tag) {
-    plaintext_file <- tempfile()
+  function(file_to_eval,
+           kenlm_model_arpa_file) {
+    plaintext_file <- file_to_eval %>% shQuote()
+    kenlm_model_arpa_file <- kenlm_model_arpa_file %>% shQuote()
     intermediate_summary_file <- tempfile()
     sentences_scores_file <- tempfile()
     summary_scores_file <- tempfile()
-    readr::write_lines(text_dt$text, plaintext_file)
     glue::glue(
-      "{KENLM_QUERY} -v summary -v sentence {shQuote(kenlm_model_arpa_file)}>{intermediate_summary_file} < {plaintext_file
-plaintext_file}"
+      "{KENLM_QUERY} -v summary -v sentence {kenlm_model_arpa_file}>{intermediate_summary_file} ",
+      "< {plaintext_file}"
     ) %>% system()
     system(
       glue::glue(
-        "grep --invert-match Total: {intermediate_summary} > {summary_scores_file}"
+        "grep --invert-match Total: {intermediate_summary_file} > {summary_scores_file}"
       )
     )
     system(glue::glue(
-      "grep  Total: {intermediate_summary} > {sentences_scores_file}"
+      "grep  Total: {intermediate_summary_file} > {sentences_scores_file}"
     ))
 
     sentences_scores_i <-
@@ -162,13 +178,11 @@ plaintext_file}"
       ) %>%
       janitor::clean_names()
 
-    evaled_text <- as.data.table(sentences_scores_i) %>%
-      text_dt[.,on="sentence_id"] %>%
-        select(-text) %>%
+    scores <- as.data.table(sentences_scores_i) %>%
           as.data.table()
 
       list(
-        evaled_text=evaled_text,
+        scores=scores,
         summary_scores=summary_scores_i
         ) %>% return(.)
   }
