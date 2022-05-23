@@ -105,7 +105,7 @@ list(
              },
              format = 'file'),
   tar_target(corpus_f_lower_l, length(read_lines(corpus_f_lower))),
-  tar_target(sample_size, c(0.01, 0.05,0.1,0.2)),
+  tar_target(sample_size, c(0.01, 0.05,0.1,0.2,0.3,0.4,0.5)),
   tar_target(samples_f,
              {
 
@@ -146,44 +146,51 @@ list(
              pattern = map(rsample_splits)),
   tar_target(prune, c(0, 10, 20, 40)),
   tar_target(order, c(3, 4, 5,6)),
+
   tar_target(
     models_as_file_tibble,
     {
       splits_as_files %>%
         filter(split=="training") %>%
-        pmap_df(function(sample_size,case,fname,...){
+        pmap_dfr (function(sample_size,case,fname,...){
+
             ofname <- create_kenlm_arpa(fname,
                                         outfile = glue("kenlm_{sample_size}_{case}_"),
                                         max_order = order,
                                         prune = prune)
+
             tibble(
               order=order,
               sample_size=sample_size,
               case=case,
               prune=prune,
-              fname=ofname
+              fname=ofname,
+              size=fs::file_size(ofname)
             )
           })
 
     },
     pattern = cross(prune, order)
   ),
+  tar_target(models_splits_matrix,
+             splits_as_files %>%
+               rename(text_file=fname) %>%
+               inner_join(
+                 models_as_file_tibble %>%
+                   rename(model_file=fname),
+                 by=c("sample_size","case")
+               )),
   tar_target(evaluate_on,c("devtest","testing")),
   tar_target(
     evaluate_models,
     {
-      splits_as_files %>%
+      models_splits_matrix %>%
         filter(split==evaluate_on) %>%
-        rename(text_file=fname) %>%
-        inner_join(
-          models_as_file_tibble %>%
-            rename(model_file=fname),
-          by=c("sample_size","case")
-        ) %>%
-      purrr::pmap_df(
+      pmap_df(
         function(sample_size,case,order,prune,text_file,model_file,...){
           r <- kenlm_evaluate(text_file,model_file)
           tibble(
+            model_file=model_file,
             evaluated_on=evaluate_on,
             sample_size,
             case,
@@ -191,11 +198,15 @@ list(
             prune
           ) %>%
             bind_cols(r %>% pluck("summary_scores")) %>%
-            mutate()
+            mutate(sentences_scores=list(r %>% pluck("sent_scores")))
         }
       )
     },
     pattern=map(evaluate_on)
+    ),
+  tar_target(
+    consolidated_evaluations,
+    evaluate_models %>%
+      inner_join(models_as_file_tibble)
     )
-
 )

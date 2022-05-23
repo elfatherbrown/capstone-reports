@@ -1,0 +1,38 @@
+---
+title: "YARGODYNE Corporation - NLP Algo"
+author: "Alejandro Borges Sanchez"
+date: "`r Sys.Date()`"
+output: slidy_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## YARGODYNE NLP Research Task Force Targets
+
+As tasked, the team has developed infrastructure for the generation and evaluation of NLP models:
+
+-   Latest stand-alone, high compression, high performance NGram algorithm called Knesser-Ney smoothing, as implemented by [Keneth Heafield](https://kheafield.com/code/kenlm/).
+
+-   This allowed us to choose the smallest possible yet performant set of n-grams to run in our constrained production environment.
+
+-   Considerable time was spent in building a thoroughly comprehensive and scalable analysis pipeline, this will enable us to update our model as the app is used.
+
+## Slide with Bullets
+
+-   Bullet 1
+-   Bullet 2
+-   Bullet 3
+
+## Slide with R Output
+
+```{r cars, echo = TRUE}
+summary(cars)
+```
+
+## Slide with Plot
+
+```{r pressure}
+plot(pressure)
+```
