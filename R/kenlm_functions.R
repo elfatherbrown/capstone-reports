@@ -168,7 +168,7 @@ kenlm_evaluate <-
       mutate(sentence_id = row_number()) %>%
       select(sentence_id, prob, oov_count)
 
-    summary_scores_i <- read_lines(summary_scores_file) %>%
+    summary_scores_i <- readr::read_lines(summary_scores_file) %>%
       str_remove_all("\t") %>%
       str_split(":") %>%
       map_df(~tibble::tibble_row(what=.x[1],value=.x[2])) %>%

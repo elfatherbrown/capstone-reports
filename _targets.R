@@ -15,7 +15,8 @@ pks <- c(
   'tidyverse',
   'furrr',
   'futile.logger',
-  'glue'
+  'glue',
+  'LaF'
 ) # Load other packages as needed. # nolint
 suppressPackageStartupMessages(xfun::pkg_attach2(pks))
 
@@ -105,7 +106,7 @@ list(
              },
              format = 'file'),
   tar_target(corpus_f_lower_l, length(read_lines(corpus_f_lower))),
-  tar_target(sample_size, c(0.01, 0.05,0.1,0.2,0.3,0.4,0.5)),
+  tar_target(sample_size, c(0.01, 0.05,0.1,0.2,0.3,0.4,0.5,0.9)),
   tar_target(samples_f,
              {
 
@@ -144,7 +145,7 @@ list(
                  splits_to_files_tibble()
              },
              pattern = map(rsample_splits)),
-  tar_target(prune, c(0, 10, 20, 40)),
+  tar_target(prune, c(0, 1,2,3,4,5,6,7,8,9,10, 20, 30, 40)),
   tar_target(order, c(3, 4, 5,6)),
 
   tar_target(
@@ -207,6 +208,16 @@ list(
   tar_target(
     consolidated_evaluations,
     evaluate_models %>%
-      inner_join(models_as_file_tibble)
-    )
+      inner_join(models_as_file_tibble) %>%
+        mutate(across(starts_with("perpl"),as.numeric))
+    ),
+  tar_target(
+    models_as_dt,
+    models_splits_matrix %>%
+      mutate(
+        model_dt=pmap(.,function(order,model_file,...){
+          load_arpa_as_data_table(model_file,order)
+        })
+      )
+  )
 )

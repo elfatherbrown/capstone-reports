@@ -1,38 +1,63 @@
 ---
-title: "YARGODYNE Corporation - NLP Algo"
+title: "YARGODYNE Predictive Keyboard App"
 author: "Alejandro Borges Sanchez"
 date: "`r Sys.Date()`"
-output: slidy_presentation
+output: ioslides_presentation
 ---
 
 ```{r setup, include=FALSE}
+library(tidyverse)
+library(targets)
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
-## YARGODYNE NLP Research Task Force Targets
+## The Algorithm
 
-As tasked, the team has developed infrastructure for the generation and evaluation of NLP models:
+-    Kneser-Ney smoothed, top of the line high performance algorithm as implemented by [Keneth Heafield](https://kheafield.com/code/kenlm) and described in his [seminal paper](https://kheafield.com/papers/edinburgh/estimate_paper.pdf).
 
--   Latest stand-alone, high compression, high performance NGram algorithm called Knesser-Ney smoothing, as implemented by [Keneth Heafield](https://kheafield.com/code/kenlm/).
+-   It allows us to estimate the language model through pruning and compute perplexity on large grids, thus yielding a small model yet with powerful estimation capability.
 
--   This allowed us to choose the smallest possible yet performant set of n-grams to run in our constrained production environment.
+-   R interfaces for language model estimation and evaluation were built to automate the process in a reproducible r {targets} pipeline.
 
--   Considerable time was spent in building a thoroughly comprehensive and scalable analysis pipeline, this will enable us to update our model as the app is used.
+## Best model
 
-## Slide with Bullets
+-   The main constraint is model size, which is kept under 400mb.
+-   Searching and finding the best model under this constraints was possible due to our algorithm implementation choice.
 
--   Bullet 1
--   Bullet 2
--   Bullet 3
+We searched through:
 
-## Slide with R Output
+-   A grid of 1792 models:
+    -   Of sample sizes from 10% to 90% of the language
+    -   Both lower/upper cases
+    -   Ngram orders ranging from 1 to 6
+    -   Pruning ranging from 0 to 40
 
-```{r cars, echo = TRUE}
-summary(cars)
+## Lowest perplexities by sample_size
+
+```{r}
+tar_read(consolidated_evaluations) %>%  
+    rename(model_size=size) %>% 
+    select(-model_file,-evaluated_on) %>% 
+    select(1:5,model_size) %>% 
+    filter(model_size<=fs::as_fs_bytes("400M")) %>% 
+    group_by(case,order,prune,sample_size) %>% 
+    filter(perplexity_including_oo_vs==min(perplexity_including_oo_vs)) %>% 
+    group_by(sample_size) %>% 
+    filter(perplexity_including_oo_vs==min(perplexity_including_oo_vs)) %>% 
+    ungroup() %>% 
+    arrange(perplexity_including_oo_vs) %>% 
+  knitr::kable()
+    
 ```
 
-## Slide with Plot
+## The best model
 
-```{r pressure}
-plot(pressure)
-```
+It seems we can get close to a 400MB size model with the best perplexity using almost the whole corpus (90%) lower cased, building a 4-gram language model, pruning all singletons (prune=1) of all orders.
+
+## The app
+
+-   You can access the app here.
+
+-   To use it, simply introduce your text and a 1 word completion should appear, representing the most probable ending to the phrase.
+
+-   An animated graph interface shows the algorithm traversing the language model in real time.

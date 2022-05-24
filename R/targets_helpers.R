@@ -69,13 +69,13 @@ make_splits_to_files_tibble <-
   function(corpus_file, corpus_length, sample_size) {
     ll <- corpus_length
     flog.info("Building samples_f corpus is of length: %s", ll)
-    cff <- read_lines(corpus_file)
-    res <- cff[sample.int(n = ll, size = ll * sample_size)]
+    lines <-sample.int(n = ll, size = ll * sample_size) %>% sort()
+    tlines <- LaF::get_lines(corpus_file,lines)
     flog.info("Building samples_f corpus of size %s results in %s lines",
               sample_size,
-              length(res))
+              length(tlines))
     of <- filename_in(glue::glue("sample_", sample_size))
-    write_lines(res, of)
+    write_lines(tlines, of)
     tibble(sample_size = sample_size, fname = of)
   }
 
@@ -88,7 +88,7 @@ make_rsample_split_with_sizes_tibble <-
     tibble(
       sample_size,
       case,
-      split = read_lines(fname) %>%
+      split = readr::read_lines(fname) %>%
                            tibble(text = .) %>%
                            rsample::initial_split() %>% list(),
 
