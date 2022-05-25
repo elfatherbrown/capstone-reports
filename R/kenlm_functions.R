@@ -182,7 +182,7 @@ kenlm_evaluate <-
           as.data.table()
 
       list(
-        scores=scores,
+        scores=NULL,
         summary_scores=summary_scores_i
         ) %>% return(.)
   }

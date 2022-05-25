@@ -13,7 +13,7 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ## The Algorithm
 
--    Kneser-Ney smoothed, top of the line high performance algorithm as implemented by [Keneth Heafield](https://kheafield.com/code/kenlm) and described in his [seminal paper](https://kheafield.com/papers/edinburgh/estimate_paper.pdf).
+-   Kneser-Ney smoothed, top of the line high performance algorithm as implemented by [Keneth Heafield](https://kheafield.com/code/kenlm) and described in his [seminal paper](https://kheafield.com/papers/edinburgh/estimate_paper.pdf).
 
 -   It allows us to estimate the language model through pruning and compute perplexity on large grids, thus yielding a small model yet with powerful estimation capability.
 

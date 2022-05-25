@@ -199,7 +199,7 @@ list(
             prune
           ) %>%
             bind_cols(r %>% pluck("summary_scores")) %>%
-            mutate(sentences_scores=list(r %>% pluck("sent_scores")))
+            mutate(sentences_scores=list(r %>% pluck("scores")))
         }
       )
     },
@@ -219,5 +219,12 @@ list(
           load_arpa_as_data_table(model_file,order)
         })
       )
-  )
+  ),
+  tar_target(
+    chosen_language_model,
+    tar_read(evaluate_models) %>%
+      filter(sample_size==0.9,case=='lower',order==4,prune==1,evaluated_on=="testing") %>%
+      pull(model_file) %>%
+      load_arpa_as_data_table()
+    )
 )
