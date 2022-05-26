@@ -16,7 +16,8 @@ pks <- c(
   'furrr',
   'futile.logger',
   'glue',
-  'LaF'
+  'LaF',
+  'duckdb'
 ) # Load other packages as needed. # nolint
 suppressPackageStartupMessages(xfun::pkg_attach2(pks))
 
@@ -46,13 +47,17 @@ dummy <- value(lapply(
 
 library(futile.logger)
 flog.appender(appender.file('targets.log'))
-scratch_plot <- function(){
+scratch_plot <- function() {
   tar_read(evaluate_models) %>%
-    ggplot(aes(y=perplexity_including_oo_vs,x=order,fill=case))+
-    geom_col()+
-    facet_wrap(.~evaluated_on)+
-    theme(axis.text.x = element_text(angle = -30, vjust = 1, hjust = 0))
-  }
+    ggplot(aes(y = perplexity_including_oo_vs, x = order, fill = case)) +
+    geom_col() +
+    facet_wrap(. ~ evaluated_on) +
+    theme(axis.text.x = element_text(
+      angle = -30,
+      vjust = 1,
+      hjust = 0
+    ))
+}
 # Replace the target list below with your own:
 list(
   tar_files(
@@ -106,35 +111,39 @@ list(
              },
              format = 'file'),
   tar_target(corpus_f_lower_l, length(read_lines(corpus_f_lower))),
-  tar_target(sample_size, c(0.01, 0.05,0.1,0.2,0.3,0.4,0.5,0.9)),
+  tar_target(sample_size, c(0.01, 0.05, 0.1, 0.2, 0.3, 0.4, 0.5, 0.9)),
   tar_target(samples_f,
              {
-
-               make_splits_to_files_tibble(corpus_file = corpus_f,
-                                           corpus_length = corpus_f_l,
-                                           sample_size=sample_size) %>%
-                mutate(case='no')
+               make_splits_to_files_tibble(
+                 corpus_file = corpus_f,
+                 corpus_length = corpus_f_l,
+                 sample_size = sample_size
+               ) %>%
+                 mutate(case = 'no')
              },
              pattern = map(sample_size)),
   tar_target(samples_f_lower,
              {
-               make_splits_to_files_tibble(corpus_file = corpus_f_lower,
-                                           corpus_length = corpus_f_lower_l,
-                                           sample_size=sample_size)%>%
-                 mutate(case='lower')
+               make_splits_to_files_tibble(
+                 corpus_file = corpus_f_lower,
+                 corpus_length = corpus_f_lower_l,
+                 sample_size = sample_size
+               ) %>%
+                 mutate(case = 'lower')
              },
              pattern = map(sample_size)),
   tar_target(
     samples_as_files_tibble,
-    bind_rows(samples_f,samples_f_lower)
+    bind_rows(samples_f, samples_f_lower)
   ),
   tar_target(
     rsample_splits,
     {
-
-      make_rsample_split_with_sizes_tibble(samples_as_files_tibble$fname,
-                                           samples_as_files_tibble$sample_size,
-                                           samples_as_files_tibble$case)
+      make_rsample_split_with_sizes_tibble(
+        samples_as_files_tibble$fname,
+        samples_as_files_tibble$sample_size,
+        samples_as_files_tibble$case
+      )
     },
     pattern = map(samples_as_files_tibble),
     iteration = "list"
@@ -145,86 +154,95 @@ list(
                  splits_to_files_tibble()
              },
              pattern = map(rsample_splits)),
-  tar_target(prune, c(0, 1,2,3,4,5,6,7,8,9,10, 20, 30, 40)),
-  tar_target(order, c(3, 4, 5,6)),
+  tar_target(prune, c(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 20, 30, 40)),
+  tar_target(order, c(3, 4, 5, 6)),
 
+  tar_target(models_as_file_tibble,
+             {
+               splits_as_files %>%
+                 filter(split == "training") %>%
+                 pmap_dfr (function(sample_size, case, fname, ...) {
+                   ofname <- create_kenlm_arpa(
+                     fname,
+                     outfile = glue("kenlm_{sample_size}_{case}_"),
+                     max_order = order,
+                     prune = prune
+                   )
+
+                   tibble(
+                     order = order,
+                     sample_size = sample_size,
+                     case = case,
+                     prune = prune,
+                     fname = ofname,
+                     size = fs::file_size(ofname)
+                   )
+                 })
+
+             },
+             pattern = cross(prune, order)),
   tar_target(
-    models_as_file_tibble,
-    {
-      splits_as_files %>%
-        filter(split=="training") %>%
-        pmap_dfr (function(sample_size,case,fname,...){
-
-            ofname <- create_kenlm_arpa(fname,
-                                        outfile = glue("kenlm_{sample_size}_{case}_"),
-                                        max_order = order,
-                                        prune = prune)
-
-            tibble(
-              order=order,
-              sample_size=sample_size,
-              case=case,
-              prune=prune,
-              fname=ofname,
-              size=fs::file_size(ofname)
-            )
-          })
-
-    },
-    pattern = cross(prune, order)
-  ),
-  tar_target(models_splits_matrix,
-             splits_as_files %>%
-               rename(text_file=fname) %>%
-               inner_join(
-                 models_as_file_tibble %>%
-                   rename(model_file=fname),
-                 by=c("sample_size","case")
-               )),
-  tar_target(evaluate_on,c("devtest","testing")),
-  tar_target(
-    evaluate_models,
-    {
-      models_splits_matrix %>%
-        filter(split==evaluate_on) %>%
-      pmap_df(
-        function(sample_size,case,order,prune,text_file,model_file,...){
-          r <- kenlm_evaluate(text_file,model_file)
-          tibble(
-            model_file=model_file,
-            evaluated_on=evaluate_on,
-            sample_size,
-            case,
-            order,
-            prune
-          ) %>%
-            bind_cols(r %>% pluck("summary_scores")) %>%
-            mutate(sentences_scores=list(r %>% pluck("scores")))
-        }
+    models_splits_matrix,
+    splits_as_files %>%
+      rename(text_file = fname) %>%
+      inner_join(
+        models_as_file_tibble %>%
+          rename(model_file = fname),
+        by = c("sample_size", "case")
       )
-    },
-    pattern=map(evaluate_on)
-    ),
+  ),
+  tar_target(evaluate_on, c("devtest", "testing")),
+  tar_target(evaluate_models,
+             {
+               models_splits_matrix %>%
+                 filter(split == evaluate_on) %>%
+                 pmap_df(function(sample_size,
+                                  case,
+                                  order,
+                                  prune,
+                                  text_file,
+                                  model_file,
+                                  ...) {
+                   r <- kenlm_evaluate(text_file, model_file)
+                   tibble(model_file = model_file,
+                          evaluated_on = evaluate_on,
+                          sample_size,
+                          case,
+                          order,
+                          prune) %>%
+                     bind_cols(r %>% pluck("summary_scores"))
+                 })
+             },
+             pattern = map(evaluate_on)),
   tar_target(
     consolidated_evaluations,
     evaluate_models %>%
       inner_join(models_as_file_tibble) %>%
-        mutate(across(starts_with("perpl"),as.numeric))
-    ),
-  tar_target(
-    models_as_dt,
-    models_splits_matrix %>%
-      mutate(
-        model_dt=pmap(.,function(order,model_file,...){
-          load_arpa_as_data_table(model_file,order)
-        })
-      )
+      mutate(across(starts_with("perpl"), as.numeric))
   ),
   tar_target(
     chosen_language_model,
-    tar_read(evaluate_models) %>%
-      filter(sample_size==0.9,case=='lower',order==4,prune==1,evaluated_on=="testing") %>%
+    tar_read(consolidated_evaluations) %>%
+      filter(size < fs::as_fs_bytes("400M") &
+               evaluated_on == 'testing') %>%
+      arrange(desc(size), perplexity_including_oo_vs) %>%
+      slice_min(perplexity_including_oo_vs) %>%
       pull(model_file) %>%
-      load_arpa_as_data_table()
-    )
+      load_arpa_as_data_table() %>%
+      select(-skip, -lines, -seq_id) %>%
+      drop_na() %>%
+      mutate(prob = as.numeric(prob)) %>%
+      as.data.table()
+  ),
+  tar_file(model_as_database_file,
+           {
+             model_name <- "chosen_model"
+             model_file <- glue("{model_data_dir}/{model_name}.ddb.sql")
+             con <- con_model_file(model_file)
+             write_dset(con = con,
+                        dset = chosen_language_model,
+                        model_name = model_name)
+             dbDisconnect(con)
+             return(model_file)
+           })
 )

@@ -29,7 +29,8 @@ get_where <- function(pvec){
 
            }) %>%
     paste0(collapse=' OR ')
-  }
+}
+
 get_query <- function(thestr){
   w <- thestr %>%
     parse_to_vec() %>%
@@ -39,3 +40,4 @@ get_query <- function(thestr){
        "WHERE rank<5",
        sep='\n')
   }
+

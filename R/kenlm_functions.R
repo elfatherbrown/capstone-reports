@@ -106,7 +106,8 @@ load_arpa_as_data_table <- function(source_file, max_order = 5) {
         skip = skip,
         col_names = c("prob", 'n_gram', 'backoff'),
         quote = "",
-        show_col_types = FALSE
+        show_col_types = FALSE,
+        na=""
 
       ) %>%
         mutate(
