@@ -2,7 +2,9 @@
 title: "YARGODYNE Predictive Keyboard App"
 author: "Alejandro Borges Sanchez"
 date: "`r Sys.Date()`"
-output: ioslides_presentation
+output: 
+    ioslides_presentation:
+        df_print: paged
 ---
 
 ```{r setup, include=FALSE}
@@ -13,9 +15,9 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ## The Algorithm
 
--   Kneser-Ney smoothed, top of the line high performance algorithm as implemented by [Keneth Heafield](https://kheafield.com/code/kenlm) and described in his [seminal paper](https://kheafield.com/papers/edinburgh/estimate_paper.pdf).
+-   Top of the line high performance algorithm Kneser-Ney n-gram model as implemented for high performance by [Keneth Heafield](https://kheafield.com/code/kenlm), described in his [seminal paper](https://kheafield.com/papers/edinburgh/estimate_paper.pdf) "Scalable Modified Kneser-Ney Language Model Estimation".
 
--   It allows us to estimate the language model through pruning and compute perplexity on large grids, thus yielding a small model yet with powerful estimation capability.
+-   It allows us to estimate the language model through pruning and compute perplexity on large combinations of parameters, thus yielding a small model yet with powerful estimation capabilities.
 
 -   R interfaces for language model estimation and evaluation were built to automate the process in a reproducible r {targets} pipeline.
 
@@ -28,11 +30,11 @@ We searched through:
 
 -   A grid of 1792 models:
     -   Of sample sizes from 10% to 90% of the language
-    -   Both lower/upper cases
+    -   lowercase and uppercase
     -   Ngram orders ranging from 1 to 6
     -   Pruning ranging from 0 to 40
 
-## Lowest perplexities by sample_size
+## Model selection 
 
 ```{r}
 tar_read(consolidated_evaluations) %>%  
@@ -46,8 +48,15 @@ tar_read(consolidated_evaluations) %>%
     filter(perplexity_including_oo_vs==min(perplexity_including_oo_vs)) %>% 
     ungroup() %>% 
     arrange(perplexity_including_oo_vs) %>% 
-  knitr::kable()
-    
+  mutate(across(where(is.numeric),~round(.x,digits=2))) %>% 
+  rename(
+         perplexity=perplexity_including_oo_vs) %>% 
+    knitr::kable(
+      digits =2,
+      row.names = FALSE,
+    align='l',
+      caption = 'We select the lowest perplexity models under 400MB for each letter case, ngram order, prune size and sample size combination. Then, out of those, we select the lowest perplexity models of each sample size.'
+    )
 ```
 
 ## The best model

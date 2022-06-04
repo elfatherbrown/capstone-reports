@@ -75,8 +75,8 @@ list(
   tar_target(sentenced_clean,
              sentenced %>%
                map_chr(function(x) {
-                 ret <- read_lines(x) %>%
-                   future_map_chr(~ clean_texts(.x))
+                 ret <- readr::read_lines(x) %>%
+                   future_map_chr( ~ clean_texts(.x))
                  of <- str_replace_all(x, ".*/([^/]+)$" , "\\1")
                  of <- paste0(clean_files_dir, '/clean_', of)
                  write_lines(ret, of)
@@ -86,8 +86,8 @@ list(
   tar_target(
     sentenced_clean_lower,
     sentenced_clean %>% map_chr(function(x) {
-      ret <- read_lines(x) %>%
-        future_map_chr(~ str_to_lower(.x))
+      ret <- readr::read_lines(x) %>%
+        future_map_chr( ~ str_to_lower(.x))
       of <- str_replace_all(x, ".*/([^/]+)$" , "\\1")
       of <- paste0(clean_files_dir, '/lower_', of)
       write_lines(ret, of)
@@ -101,7 +101,7 @@ list(
     return(of)
   },
   format = "file"),
-  tar_target(corpus_f_l, length(read_lines(corpus_f))),
+  tar_target(corpus_f_l, length(readr::read_lines(corpus_f))),
   tar_target(corpus_f_lower,
              {
                of <- filename_in("corpus_f_lower")
@@ -110,7 +110,7 @@ list(
                return(of)
              },
              format = 'file'),
-  tar_target(corpus_f_lower_l, length(read_lines(corpus_f_lower))),
+  tar_target(corpus_f_lower_l, length(readr::read_lines(corpus_f_lower))),
   tar_target(sample_size, c(0.01, 0.05, 0.1, 0.2, 0.3, 0.4, 0.5, 0.9)),
   tar_target(samples_f,
              {
@@ -234,15 +234,16 @@ list(
       mutate(prob = as.numeric(prob)) %>%
       as.data.table()
   ),
+  tar_target(main_table_name,'chosen_model'),
   tar_file(model_as_database_file,
            {
-             model_name <- "chosen_model"
-             model_file <- glue("{model_data_dir}/{model_name}.ddb.sql")
-             con <- con_model_file(model_file)
-             write_dset(con = con,
+             model_name <- main_table_name
+             model_file <-
+               glue("{model_data_dir}/{model_name}.ddb.sql")
+             write_dset(model_file = model_file,
                         dset = chosen_language_model,
                         model_name = model_name)
-             dbDisconnect(con)
+
              return(model_file)
            })
 )
