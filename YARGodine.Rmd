@@ -10,53 +10,53 @@ output:
 ```{r setup, include=FALSE}
 library(tidyverse)
 library(targets)
+library(plotly)
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
 ## The Algorithm
 
--   Top of the line high performance algorithm Kneser-Ney n-gram model as implemented for high performance by [Keneth Heafield](https://kheafield.com/code/kenlm), described in his [seminal paper](https://kheafield.com/papers/edinburgh/estimate_paper.pdf) "Scalable Modified Kneser-Ney Language Model Estimation".
+-   High performance algorithm modified Kneser-Ney (MKN) n-gram model as implemented by [Keneth Heafield](https://kheafield.com/code/kenlm), described in his [seminal paper](https://kheafield.com/papers/edinburgh/estimate_paper.pdf) "Scalable Modified Kneser-Ney Language Model Estimation".
 
--   It allows us to estimate the language model through pruning and compute perplexity on large combinations of parameters, thus yielding a small model yet with powerful estimation capabilities.
+-   Allows us to control the size of the resulting model through variables:
 
--   R interfaces for language model estimation and evaluation were built to automate the process in a reproducible r {targets} pipeline.
+    -   Pruning: minimum number of times an ngram appears in the training set.
+
+    -   Sample size of the original data.
+
+    -   Do we ignore case? Disregarding it should result in less data if the rest of the variables remain the same.
+
+    -   Ngram order: smaller 'n' result in smaller n-gram models
 
 ## Best model
 
--   The main constraint is model size, which is kept under 400mb.
--   Searching and finding the best model under this constraints was possible due to our algorithm implementation choice.
-
-We searched through:
-
--   A grid of 1792 models:
+-   We searched though 1792 models of these variables combinations:
     -   Of sample sizes from 10% to 90% of the language
-    -   lowercase and uppercase
+    -   Lowercase and uppercase
     -   Ngram orders ranging from 1 to 6
     -   Pruning ranging from 0 to 40
 
 ## Model selection 
 
+The leftmost point is the lowest perplexity model on this grid. Through this interactive graph you can see the best model is a 90% sample of lowercase ngrams with no singletons and n=4.
+
 ```{r}
 tar_read(consolidated_evaluations) %>%  
     rename(model_size=size) %>% 
-    select(-model_file,-evaluated_on) %>% 
+    filter(evaluated_on=='testing') %>% 
+    select(-model_file,-evaluated_on) %>%
     select(1:5,model_size) %>% 
+    rename(perplexity=perplexity_including_oo_vs) %>% 
     filter(model_size<=fs::as_fs_bytes("400M")) %>% 
-    group_by(case,order,prune,sample_size) %>% 
-    filter(perplexity_including_oo_vs==min(perplexity_including_oo_vs)) %>% 
-    group_by(sample_size) %>% 
-    filter(perplexity_including_oo_vs==min(perplexity_including_oo_vs)) %>% 
-    ungroup() %>% 
-    arrange(perplexity_including_oo_vs) %>% 
-  mutate(across(where(is.numeric),~round(.x,digits=2))) %>% 
-  rename(
-         perplexity=perplexity_including_oo_vs) %>% 
-    knitr::kable(
-      digits =2,
-      row.names = FALSE,
-    align='l',
-      caption = 'We select the lowest perplexity models under 400MB for each letter case, ngram order, prune size and sample size combination. Then, out of those, we select the lowest perplexity models of each sample size.'
-    )
+    ggplot(aes(x=perplexity,y=model_size,
+               group=prune,
+               color=sample_size,
+               fill=factor(order),
+               label=case
+               ))+
+  theme(legend.position = "none")+
+    geom_point() -> p
+ggplotly(p = p)
 ```
 
 ## The best model

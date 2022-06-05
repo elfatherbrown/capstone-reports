@@ -12,6 +12,8 @@
 #' @examples
 load_text_as_data_table <-
   function(thefiles) {
+    flog.info(glue("loading {length(thefiles)} files as data.table"))
+    begins <- Sys.time()
    ret <- thefiles %>%
       future_map(function(x) {
         fread(
@@ -31,5 +33,6 @@ load_text_as_data_table <-
       .progress = FALSE) %>%
       rbindlist()
     gc()
+    flog.info(glue('loading {nrow(ret)} took {as.numeric(Sys.time()-begins)} seconds'))
     return(ret)
   }

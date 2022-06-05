@@ -17,7 +17,8 @@ pks <- c(
   'futile.logger',
   'glue',
   'LaF',
-  'duckdb'
+  'duckdb',
+  'plotly'
 ) # Load other packages as needed. # nolint
 suppressPackageStartupMessages(xfun::pkg_attach2(pks))
 
@@ -73,15 +74,27 @@ list(
              sentencify(precleaned),
              format = 'file'),
   tar_target(sentenced_clean,
-             sentenced %>%
-               map_chr(function(x) {
-                 ret <- readr::read_lines(x) %>%
-                   future_map_chr( ~ clean_texts(.x))
-                 of <- str_replace_all(x, ".*/([^/]+)$" , "\\1")
-                 of <- paste0(clean_files_dir, '/clean_', of)
-                 write_lines(ret, of)
-                 return(of)
-               }),
+             {
+               done <- sentenced %>%
+               load_text_as_data_table() %>%
+                   clean_texts_dt()%>%
+                 group_by(file) %>%
+                 nest() %>%
+                 as_tibble()
+
+               final <- tar_read(sentenced) %>%
+                 enframe(name=NULL,value="fpath") %>%
+                 mutate(ifname=fs::path_file(fpath),
+                        ofname=paste0(clean_files_dir,'/clean_',ifname)) %>%
+                 select(ifname,ofname) %>%
+                 inner_join(done,
+                            by=c('ifname'='file'))
+               final %>%
+                 pwalk(function(ofname,data,...){
+                   readr::write_lines(x = data$text,file = ofname)
+                 })
+               return(final$ofname)
+             },
              format = 'file'),
   tar_target(
     sentenced_clean_lower,
