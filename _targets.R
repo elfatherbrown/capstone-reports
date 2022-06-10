@@ -13,6 +13,13 @@ pks <- c(
   'tarchetypes',
   'doParallel',
   'tidyverse',
+  'dplyr',
+  'tidyr',
+  'ggplot2',
+  'tibble',
+  'readr',
+  'purrr',
+  'stringr',
   'furrr',
   'futile.logger',
   'glue',
@@ -124,7 +131,7 @@ list(
              },
              format = 'file'),
   tar_target(corpus_f_lower_l, length(readr::read_lines(corpus_f_lower))),
-  tar_target(sample_size, c(0.01, 0.05, 0.1, 0.2, 0.3, 0.4, 0.5, 0.9)),
+  tar_target(sample_size, c(0.01, 0.05, 0.1, 0.2, 0.3, 0.4, 0.5, 0.9,1)),
   tar_target(samples_f,
              {
                make_splits_to_files_tibble(
@@ -204,19 +211,22 @@ list(
         by = c("sample_size", "case")
       )
   ),
-  tar_target(evaluate_on, c("devtest", "testing")),
+  tar_target(evaluate_on, c("testing")),
   tar_target(evaluate_models,
              {
-               models_splits_matrix %>%
-                 filter(split == evaluate_on) %>%
-                 pmap_df(function(sample_size,
+               tmatrix <- models_splits_matrix %>%
+                 filter(split == evaluate_on)
+               tmatrix %>%
+                 pmap_dfr(function(sample_size,
                                   case,
                                   order,
                                   prune,
                                   text_file,
                                   model_file,
                                   ...) {
+
                    r <- kenlm_evaluate(text_file, model_file)
+
                    tibble(model_file = model_file,
                           evaluated_on = evaluate_on,
                           sample_size,

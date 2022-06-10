@@ -1,0 +1,22 @@
+.title-slide {
+  background-image:
+  linear-gradient(to bottom,  transparent 6%,  rgba(0,0,0,0.4) 9% ),
+  url(firstpage-bg.jpg);
+  background-size: contain;
+}
+
+.smaller-text {
+  font-size: 80% !important;
+  padding-bottom: 0px !important;
+  margin-bottom: 0px !important;
+}
+
+body {
+  color:alicewhite;
+}
+
+h3#model-selection {
+  padding-bottom: 0px !important;
+  margin-block-start: 0px !important;
+  margin-block-end:0px !important;
+}

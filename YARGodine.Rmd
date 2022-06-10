@@ -1,72 +1,186 @@
 ---
-title: "YARGODYNE Predictive Keyboard App"
+title: "YARG-o-Dyne"
+subtitle: "Predictive Keyboard Model Exploration App"
 author: "Alejandro Borges Sanchez"
 date: "`r Sys.Date()`"
-output: 
-    ioslides_presentation:
-        df_print: paged
+output:
+    xaringan::moon_reader:
+        lib_dir: libs
+        css: [tamu,tamu-fonts,my-theme.css]
+        nature:
+            highlightStyle: github
+            highlightLines: true
+            countIncrementalSlides: false
 ---
 
-```{r setup, include=FALSE}
+```{r setup, include=FALSE} 
 library(tidyverse)
 library(targets)
 library(plotly)
+library(glue)
 knitr::opts_chunk$set(echo = FALSE)
+options(htmltools.dir.version = FALSE) 
 ```
 
-## The Algorithm
 
+#### The Algorithm
+
+.smaller-text[
 -   High performance algorithm modified Kneser-Ney (MKN) n-gram model as implemented by [Keneth Heafield](https://kheafield.com/code/kenlm), described in his [seminal paper](https://kheafield.com/papers/edinburgh/estimate_paper.pdf) "Scalable Modified Kneser-Ney Language Model Estimation".
 
 -   Allows us to control the size of the resulting model through variables:
 
     -   Pruning: minimum number of times an ngram appears in the training set.
 
-    -   Sample size of the original data.
-
-    -   Do we ignore case? Disregarding it should result in less data if the rest of the variables remain the same.
+    -   Do we ignore case? Disregarding it should result in less data for better performance if the rest of the variables remain the same.
 
     -   Ngram order: smaller 'n' result in smaller n-gram models
+    ]
 
-## Best model
+#### Best model
 
--   We searched though 1792 models of these variables combinations:
-    -   Of sample sizes from 10% to 90% of the language
-    -   Lowercase and uppercase
-    -   Ngram orders ranging from 1 to 6
-    -   Pruning ranging from 0 to 40
+.smaller-text[
+* We searched though 1792 models of these variables combinations in order to find the 👌 *best* 👌 perplexity within the 400MB model size constraint 🙌.
 
-## Model selection 
+* To that effect, we generated models by variying:
 
-The leftmost point is the lowest perplexity model on this grid. Through this interactive graph you can see the best model is a 90% sample of lowercase ngrams with no singletons and n=4.
+    1. Sub sample sizes of the corpus, from 1% to 90% in about 10% increments
+    2. Lowercase and uppercase
+    3. Ngram orders ranging from 1 to 6
+    4. Pruning ranging from 0 to 40
+    
 
-```{r}
+* The {targets} pipeline for this whole process is available here.
+
+]
+---
+
+### Model selection
+
+.smaller-text[As the model size constraint is quite arbitrary, we just selected the best perplexity model for our combinations.]
+
+```{r include=FALSE}
+
+
 tar_read(consolidated_evaluations) %>%  
     rename(model_size=size) %>% 
     filter(evaluated_on=='testing') %>% 
     select(-model_file,-evaluated_on) %>%
     select(1:5,model_size) %>% 
     rename(perplexity=perplexity_including_oo_vs) %>% 
-    filter(model_size<=fs::as_fs_bytes("400M")) %>% 
+    filter(model_size<=fs::as_fs_bytes("400M") & sample_size==1) %>% 
+  mutate(case=if_else(case=='lower','Lower Cased','Untouched'),
+         order=as.character(order)) %>% 
     ggplot(aes(x=perplexity,y=model_size,
-               group=prune,
-               color=sample_size,
-               fill=factor(order),
-               label=case
+               group=prune, 
+               shape=case,
+               color=order
                ))+
-  theme(legend.position = "none")+
-    geom_point() -> p
-ggplotly(p = p)
+  ggthemes::theme_hc()+
+  theme(
+       plot.margin = margin(0, 0, 0, 0, "cm"),
+       axis.text=element_text(size=8),
+       axis.title = element_text(size=10),
+       axis.text.y = element_text(angle = -30, vjust = 1, hjust = 0),
+       legend.text = element_text(size=8),
+       legend.title = element_text(size=8))+
+  scale_y_continuous(labels = scales::label_bytes())+
+    geom_point() +
+  labs(x='Perplexity',y='Model Size in bytes')  -> p
+
+chosen_model_point <- tar_read(consolidated_evaluations) %>%
+    filter(size < fs::as_fs_bytes("400M") &
+               evaluated_on == 'testing') %>%
+    arrange(desc(size), perplexity_including_oo_vs) %>%
+    slice_min(perplexity_including_oo_vs) %>% 
+    select(model_size=size,perplexity=perplexity_including_oo_vs) %>% 
+    mutate(across(-model_size,as.numeric))
+
+ggp <- ggplotly(p = p)
+ggp <- ggp %>%
+    add_annotations(
+        ax=-30,
+        ay=0,
+        axref="pixel",
+        ayref="pixel",
+        xref='x',
+        yref='y',
+        x=chosen_model_point$perplexity,
+        y=chosen_model_point$model_size-100000,
+        text='😎'
+    )
+# 
+# htmlwidgets::saveWidget(ggp,"plotly.html") ->ting
+# 
+# htmltools::tags$iframe(
+#     src="plotly.html",
+#     width="100%", 
+#     height="400",
+#     scrolling="no", 
+#     seamless="seamless", 
+#     frameBorder="0"
+#   )
+
 ```
 
-## The best model
+```{r}
 
-It seems we can get close to a 400MB size model with the best perplexity using almost the whole corpus (90%) lower cased, building a 4-gram language model, pruning all singletons (prune=1) of all orders.
+ggp %>%
+  layout(
+    annotations =
+      list(
+        x = 1,
+        y = 1,
+        text = str_wrap("Hover over the points in this interactive graph to see what the best perplexity model under 400MB is.",width = 40),
+        showarrow = F,
+        xref = 'paper',
+        yref = 'paper',
+        xanchor = 'right',
+        yanchor = 'auto',
+        xshift = 0,
+        yshift = 0,
+        font = list(size = 10, color = "red")
+      )
+  )
 
-## The app
+```
 
--   You can access the app here.
+---
 
--   To use it, simply introduce your text and a 1 word completion should appear, representing the most probable ending to the phrase.
+### The best model
 
--   An animated graph interface shows the algorithm traversing the language model in real time.
+- It seems we can get an under 400MB size model with the best perplexity when transforming to lower case, for an n=4 ngram language model, pruning all singletons (prune=1) of all orders.
+
+- However, this runs into diminishing returns pretty quick as, at the lower ends of perplexity, a decrement in perplexity corresponds to big jumps in model size.
+
+For example:
+
+|Model |Size  | Perplexity|
+|:---: | :---: | :---: |
+|p=1,n=4,|394M|251|
+|p=2,n=6|246M|266|
+
+So, a little decrease in perplexity drastically lowers memory consumed by the model and will very likely be much more efficient. 
+
+Our final model will be chosen by direct testing of the app in the production platform shinyapps.io taking this relationship into account.
+
+---
+
+### The app
+
+.smaller-text[
+-   The app is a model exploration tool, not ready to face consumers. 
+
+- It does, however, allow researchers to explore how the algorithm works by backing off through lower orders of ngrams when a hit is not found on the upper orders.
+
+-   To use it, simply introduce a phrase in the input box and press enter or use the button.
+
+-   At most 5 word completions ordered from most to least probable will appear in the dropdown box, where you can select it to be completed in the text box. After you press enter or the button, a new calculation will be produced.
+
+-   An animated graph network interface shows the next 5 options in all applicable ngram orders that the algorithm recommends as completion for the input phrase.
+
+- The more probable an ngram is, the wider the arrow pointing to it will be. 
+
+- The model's choice for completion is the one pointed to by the shadowed arrow (it stands out, you will see)
+
+-   You can access the app here.]

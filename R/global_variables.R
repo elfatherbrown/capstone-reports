@@ -17,3 +17,9 @@ dummy <- value(lapply(seq_len(nbrOfWorkers()), FUN = function(ii) {
   future(NULL, packages = "data.table", earlySignal = TRUE)
 }))
 
+
+KENLM_DIR = '/home/alex/bin/kenlm/'
+
+KENLM_EXEC = '/home/alex/bin/kenlm/lmplz'
+
+KENLM_QUERY = '/home/alex/bin/kenlm/query'

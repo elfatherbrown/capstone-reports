@@ -5,7 +5,9 @@ connect_to_ddb <- function(model_file){
 }
 
 write_dset <- function(dset,model_name,model_file){
-  fs::file_delete(model_file)
+  if(fs::file_exists(model_file)){
+    fs::file_delete(model_file)
+    }
   con <- connect_to_ddb(model_file)
   dbWriteTable(conn = con,
                name=model_name,
